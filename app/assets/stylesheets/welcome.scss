@@ -1,0 +1,80 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), image-url('Copertina.jpg');
+    overflow-y: auto;
+}
+
+.navbar {
+    background-color:rgba(0, 0, 0, 0.8) !important;
+    border-bottom: 1px solid white;
+}
+
+.container {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.banner {
+    width: 100%;
+    padding-top: calc(128px + 1vmax);
+    text-align:center;
+    padding-bottom: calc(32px + 1vmax);;
+}
+
+h1 {
+    font-size: calc(32px + 1vmax);
+    font-weight: bold;
+    color: white;
+}
+
+p {
+    font-size: calc(16px + 1vmax);
+    color:white; 
+}
+
+.footer {
+    position: absolute;
+    font-size: calc(16px + 1vmax);
+    bottom: 0px;
+    width: 100%;
+    background-color:rgba(0, 0, 0, 0.8) !important;
+    border-top: 1px solid white;
+    text-align: center;
+}
+
+.navbar-toggler {
+    margin-right: 10px !important;
+}
+
+.nav-item {
+    border: solid 1px #fff;
+    border-radius: 5px 5px 5px 5px;
+    margin-right: 5px;
+}
+
+a {
+    color: #fff;
+    text-decoration:none;
+}
+
+a:visited {
+    color: #fff; 
+
+}
+
+a:hover {
+    color: #fff;
+    background-color:rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 992px) {
+    .nav-item {
+        border: none;
+        margin-right: 0px;
+    }
+}
+
+
+
