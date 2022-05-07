@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+}
+@media screen and (max-width: 800px) {
+  .menu_main{
+    width: 100%;}
+  }
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+  height: 10%
+}
+div.PasswType#PasswAlert{
+  display: none;
+  background-color: #ff9999;
+  text-align:left;
+
+}
+div.PasswType#PasswAlert h1{
+  font-size:medium;
+}
+#alert{
+  background-color: rgb(117, 255, 255);
+  font-size: large;
+  font-weight: bold;
+  color: red;
+}
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.checkbox{
+  color:black;
+}
+.label{
+  text-align:center;
+}
