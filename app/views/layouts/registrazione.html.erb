@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Margherita Di Dionisio </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="css/bootstrap-grid.css" type="text/css">
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+
+    <body>
+        <hr>
+        <div id="FormContainer" class="container">
+                <h1 class="h3"> Registrati</h1>
+                <label for="">Nome</label>
+                <br>
+                <input type="text" name="inputNome" required placeholder="Nome">
+                <br>
+                <label for="">Cognome</label>
+                <br>
+                <input type="text" name="inputCognome" required placeholder="Cognome">
+                <br>
+                <label for="">E-mail</label>
+                <br>
+                <input type="email" name="inputEmail" required placeholder="Email">
+                <br>
+                <label for="">Password</label>
+                <br>
+                <div id="PasswAlert" class="PasswType">
+                    <h1>La Password DEVE:</h1>
+                    <ul>
+                    <li>contenere un numero</li>
+                    <li>contenere una lettere minuscola</li>
+                    <li>contenere una lettera maiuscola</li>
+                    <li>contenere un carattere speciale</li>
+                    <li>NON deve avere spazi</li>
+                    <li>DEVE essere lunga almeno 10 caratteri</li>
+                    <ul>
+                </div>      
+                <input type="password" id="password" onkeyup="isPassw()" onfocus="PasswTypeON()" onblur="PasswTypeOFF()" name="inputPassword" placeholder="Password" required>
+               
+                <p id="alert"></p>
+                
+                <label for="">Ripeti la Password</label>
+                <br>
+                <input type="password" name="inputPasswordR" required placeholder="Ripeti Password" >
+                <div id="divRemember" class="checkbox">
+                    <input id="checkRemember" type="checkbox" name="remember">
+                    <label for="remember">Ricordami</label>
+                </div>
+                <div id="divRemember" class="checkbox">
+                    <input id="checkRemember" type="checkbox" name="remember">
+                    <label for="remember">Accetto l'informativa per la privacy</label>
+                </div>
+                <div id="divRemember" class="checkbox">
+                    <input id="checkRemember" type="checkbox" name="remember">
+                    <label for="remember">Voglio far parte della newsletter</label>
+                </div>
+                <br>
+                <button class="btn btn-lg btn-primary" name="RegistrationButton" type="submit" > Registrati </button>
+                <br>
+                <br>
+                <label>Hai già un account?</label>
+                
+                <a href="../Login/index.html">LOG IN</a>
+            <br>
+                <label>Oppure accedi con Google</label>
+                <br>
+                <button class="btn btn-lg btn-primary" name="RegistrationButton" type="submit" > Google </button>
+                
+
+            </form>
+        </div>
+    </body>
+</html>
