@@ -2,7 +2,7 @@ body{
     margin: 0;
     padding: 0;
     /*background: url(../images/user.png);*/
-    background-color: lightseagreen;
+    background-color: white;
     background-size:150%;
     background-position:52% 24%;
     font-family:'Times New Roman', Times, serif ;
@@ -97,6 +97,7 @@ h1{
 
 .loginbox a:hover{
     color:white;
+    background-color: lightskyblue;
 }
 
 

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users, only:[:new,:create,:edit,:update,:show,:destroy]
-
+  resources :condominios
+  root 'welcome#index'
   get 'sign_in', to: "sessions#new"
- post 'sign_in', to: "sessions#create"
-
+  post 'sign_in', to: "sessions#create"
+ 
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
