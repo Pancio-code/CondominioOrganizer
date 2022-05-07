@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_07_095931) do
+ActiveRecord::Schema.define(version: 2022_05_07_104510) do
 
   create_table "condominios", force: :cascade do |t|
     t.string "condo_id"
@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 2022_05_07_095931) do
     t.string "comune_condo"
     t.string "coord_condo"
     t.string "via_condo"
-    t.integer "fk_utenti_condo_id", null: false
-    t.integer "fk_superutenti_condo_id", null: false
+    t.integer "fk_utenti_condo_id_id", null: false
+    t.integer "fk_superutenti_condo_id_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["fk_superutenti_condo_id"], name: "index_condominios_on_fk_superutenti_condo_id"
-    t.index ["fk_utenti_condo_id"], name: "index_condominios_on_fk_utenti_condo_id"
+    t.index ["fk_superutenti_condo_id_id"], name: "index_condominios_on_fk_superutenti_condo_id_id"
+    t.index ["fk_utenti_condo_id_id"], name: "index_condominios_on_fk_utenti_condo_id_id"
   end
 
-  add_foreign_key "condominios", "fk_superutenti_condos"
-  add_foreign_key "condominios", "fk_utenti_condos"
+  add_foreign_key "condominios", "fk_superutenti_condo_ids"
+  add_foreign_key "condominios", "fk_utenti_condo_ids"
 end
