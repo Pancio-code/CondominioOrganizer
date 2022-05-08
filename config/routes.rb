@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'access/register'
+  get 'access/login'
   devise_for :users
   resources :condominios
   root 'welcome#index'
