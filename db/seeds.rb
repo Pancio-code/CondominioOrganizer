@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+condominiii = [{ :condo_id => '12rfaw41', :nome_cond => 'testnome1', :comune_condo => 'sambuceto' }]
+
+condominiii.each do |strutt|
+	Condominio.create!(strutt)
+end
