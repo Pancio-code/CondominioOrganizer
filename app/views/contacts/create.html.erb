@@ -1,0 +1,10 @@
+<div class="container">
+    <br>
+    <% flash.each do |key, message| %>
+        <p class="alert alert-<%= key %>"><%= message %></p>
+    <% end %>
+    <h1>Contact Form</h1>
+
+    <h3>Thank you for your message!</h3>
+    <%= link_to "Torna alla Home", root_path %>
+</div>

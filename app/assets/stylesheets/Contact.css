@@ -1,4 +1,4 @@
-* {
+/** {
     box-sizing: border-box;
   }
   @media screen and (max-width: 800px) {
@@ -66,4 +66,4 @@
   }
   .label{
     text-align:center;
-  }
+  }*/
