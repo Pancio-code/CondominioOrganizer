@@ -16,3 +16,14 @@
 .hidden {
     display: none;
 }
+
+.btn {
+    background-color: chocolate !important;
+    border: solid 1px chocolate;
+}
+
+.btn:hover {
+    background-color: #fff !important;
+    color: chocolate;
+    border: solid 1px chocolate;
+}
