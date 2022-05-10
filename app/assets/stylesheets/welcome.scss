@@ -76,4 +76,17 @@
         border: none;
         margin-right: 0px;
     }
+    .welcome-navbar-brand {
+        display: none;
+    }
+}
+
+@media (max-width: 304px) {
+    .welcome-nav-item {
+        border: none;
+        margin-right: 0px;
+    }
+    .navbar-brand {
+        display: none;
+    }
 }
