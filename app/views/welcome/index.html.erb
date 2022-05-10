@@ -22,6 +22,10 @@
 </nav>
 <div class="container-fluid welcome-container">
     <div class="welcome-banner">
+        <% flash.each do |key, message| %>
+            <p class="welcome-messages alert alert-<%= key %>"><%= message %></p>
+        <% end %>
+        <br>
         <h1 class="welcome-h1">Condominio Organizer</h1>
         <p class="welcome-p">Un sito che punta a fornire un’applicazione unica dove aggregare tutte le informazioni di  interesse di un condominio, con un sistema di “gruppi condominio” gestiti da un Leader Condominio forniti di bacheca dove inserire comunicazioni condominiali. Clicca su Iscriviti o Login,per usufruire di tutte le funzioni.</p>
     </div>
