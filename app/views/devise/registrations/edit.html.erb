@@ -1,4 +1,9 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container">
+  <% flash.each do |key, message| %>
+      <p class="alert alert-<%= key %>"><%= message %></p>
+  <% end %>
+  <br>
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -48,3 +53,5 @@
 <%= button_to "logout", destroy_user_session_path, method: :delete  %>
 
 <%= link_to "Back", :back %>
+
+</div>
