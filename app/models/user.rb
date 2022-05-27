@@ -16,5 +16,8 @@ class User < ApplicationRecord
   			password: Devise.friendly_token[0,20]
   		)
   	end
-	end
+   end
+
+
+   has_one_attached :avatar
 end

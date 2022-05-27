@@ -1522,3 +1522,199 @@ Completed 200 OK in 88ms (Views: 85.0ms | ActiveRecord: 0.2ms | Allocations: 159
   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
   [1m[36mUser Destroy (7.0ms)[0m  [1m[31mDELETE FROM "users" WHERE "users"."id" = ?[0m  [["id", 1]]
   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+Started GET "/" for 127.0.0.1 at 2022-05-26 17:31:09 +0200
+  [1m[35m (14.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (12.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WelcomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (Duration: 171.6ms | Allocations: 13026)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /home/ema/prog/ruby/progetto/terzo/public/packs
+[Webpacker] Hash: 87f37ed7da2fbd74573e
+Version: webpack 4.46.0
+Time: 7881ms
+Built at: 26/05/2022 17:31:27
+                                     Asset       Size       Chunks                         Chunk Names
+    js/application-81208a037a5c38d361c2.js    454 KiB  application  [emitted] [immutable]  application
+js/application-81208a037a5c38d361c2.js.map    437 KiB  application  [emitted] [dev]        application
+                             manifest.json  364 bytes               [emitted]              
+Entrypoint application = js/application-81208a037a5c38d361c2.js js/application-81208a037a5c38d361c2.js.map
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/application.js] 512 bytes {application} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} [built]
+    + 62 hidden modules
+
+  Rendered layout layouts/application.html.erb (Duration: 18247.3ms | Allocations: 23303)
+Completed 200 OK in 18379ms (Views: 18265.1ms | ActiveRecord: 0.0ms | Allocations: 27440)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-26 17:31:32 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 2.3ms | Allocations: 610)
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 39.5ms | Allocations: 5033)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 89.5ms | Allocations: 13554)
+Completed 200 OK in 166ms (Views: 94.3ms | ActiveRecord: 0.9ms | Allocations: 21691)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2022-05-26 17:31:35 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 11.0ms | Allocations: 242)
+  Rendered devise/shared/_links.html.erb (Duration: 10.6ms | Allocations: 152)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 71.4ms | Allocations: 2853)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 212.7ms | Allocations: 11376)
+Completed 200 OK in 273ms (Views: 270.5ms | ActiveRecord: 0.0ms | Allocations: 13286)
+
+
+Started POST "/users/auth/google_oauth2" for 127.0.0.1 at 2022-05-26 17:31:37 +0200
+Started GET "/users/sign_up" for 127.0.0.1 at 2022-05-26 17:31:47 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.9ms | Allocations: 45)
+  Rendered devise/shared/_links.html.erb (Duration: 0.3ms | Allocations: 110)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1623)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 35.5ms | Allocations: 10172)
+Completed 200 OK in 44ms (Views: 42.9ms | ActiveRecord: 0.0ms | Allocations: 10806)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-26 17:31:50 +0200
+Processing by WelcomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (Duration: 2.0ms | Allocations: 901)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 62.0ms | Allocations: 9094)
+Completed 200 OK in 67ms (Views: 62.6ms | ActiveRecord: 0.0ms | Allocations: 9573)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2022-05-26 17:31:55 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.1ms | Allocations: 45)
+  Rendered devise/shared/_links.html.erb (Duration: 3.1ms | Allocations: 110)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 49.9ms | Allocations: 1623)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 114.4ms | Allocations: 9971)
+Completed 200 OK in 119ms (Views: 117.6ms | ActiveRecord: 0.0ms | Allocations: 10533)
+
+
+Started POST "/users/auth/google_oauth2" for 127.0.0.1 at 2022-05-26 17:31:56 +0200
+Started GET "/users/sign_up" for 127.0.0.1 at 2022-05-26 17:32:01 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.2ms | Allocations: 45)
+  Rendered devise/shared/_links.html.erb (Duration: 0.4ms | Allocations: 110)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 21.7ms | Allocations: 1623)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 97.1ms | Allocations: 9972)
+Completed 200 OK in 101ms (Views: 100.2ms | ActiveRecord: 0.0ms | Allocations: 10531)
+
+
+Started POST "/users/auth/google_oauth2" for 127.0.0.1 at 2022-05-26 17:32:04 +0200
+Started GET "/" for 127.0.0.1 at 2022-05-26 17:33:00 +0200
+Processing by WelcomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (Duration: 2.1ms | Allocations: 901)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 119.1ms | Allocations: 9300)
+Completed 200 OK in 137ms (Views: 128.2ms | ActiveRecord: 0.0ms | Allocations: 9774)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2022-05-26 17:33:04 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 19.8ms | Allocations: 164)
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 30.6ms | Allocations: 1386)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 160.6ms | Allocations: 9902)
+Completed 200 OK in 172ms (Views: 170.7ms | ActiveRecord: 0.0ms | Allocations: 10519)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2022-05-26 17:33:08 +0200
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.1ms | Allocations: 45)
+  Rendered devise/shared/_links.html.erb (Duration: 11.4ms | Allocations: 110)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 48.0ms | Allocations: 1623)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 212.4ms | Allocations: 9971)
+Completed 200 OK in 216ms (Views: 213.8ms | ActiveRecord: 0.0ms | Allocations: 10535)
+
+
+Started POST "/users/auth/google_oauth2" for 127.0.0.1 at 2022-05-26 17:33:14 +0200
+Started GET "/users/auth/google_oauth2/callback?state=6459629f6f5943e2f59e6e31ab9414ce57507658690a741e&code=4%2F0AX4XfWhWVvpjQSBWM5F9EOc4QmYId8WhjhpCWQlsciL3M6xRauiqriIOqS0CLxZPsjjTbA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=consent" for 127.0.0.1 at 2022-05-26 17:36:30 +0200
+Processing by Users::OmniauthCallbacksController#google_oauth2 as HTML
+  Parameters: {"state"=>"6459629f6f5943e2f59e6e31ab9414ce57507658690a741e", "code"=>"4/0AX4XfWhWVvpjQSBWM5F9EOc4QmYId8WhjhpCWQlsciL3M6xRauiqriIOqS0CLxZPsjjTbA", "scope"=>"email profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid", "authuser"=>"0", "prompt"=>"consent"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "emanuele.roncioni7@gmail.com"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:11:in `da_omniauth'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/models/user.rb:14:in `da_omniauth'
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."uname") = LOWER(?) LIMIT ?[0m  [["uname", "BlueS7 _"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:14:in `da_omniauth'
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "emanuele.roncioni7@gmail.com"], ["LIMIT", 1]]
+  ↳ app/models/user.rb:14:in `da_omniauth'
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "uname") VALUES (?, ?, ?, ?, ?)[0m  [["email", "emanuele.roncioni7@gmail.com"], ["encrypted_password", "$2a$12$rnb7Nv9Pn9/FpcLtr3gNGu3Xp70pCqqqVWAZfkzuzb.Q25LcoJvD2"], ["created_at", "2022-05-26 15:36:31.798784"], ["updated_at", "2022-05-26 15:36:31.798784"], ["uname", "BlueS7 _"]]
+  ↳ app/models/user.rb:14:in `da_omniauth'
+  [1m[36mTRANSACTION (164.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/models/user.rb:14:in `da_omniauth'
+Redirected to http://localhost:3000/
+Completed 302 Found in 1203ms (ActiveRecord: 165.9ms | Allocations: 11574)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-26 17:36:32 +0200
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/welcome_controller.rb:5:in `check_signed_in'
+Redirected to http://localhost:3000/users/edit
+Filter chain halted as :check_signed_in rendered or redirected
+Completed 302 Found in 16ms (ActiveRecord: 0.3ms | Allocations: 1643)
+
+
+Started GET "/users/edit" for 127.0.0.1 at 2022-05-26 17:36:32 +0200
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/edit.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.1ms | Allocations: 48)
+  Rendered devise/registrations/edit.html.erb within layouts/application (Duration: 28.0ms | Allocations: 2992)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 53.4ms | Allocations: 11618)
+Completed 200 OK in 88ms (Views: 58.2ms | ActiveRecord: 0.2ms | Allocations: 13855)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2022-05-26 17:36:37 +0200
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Redirected to http://localhost:3000/
+Completed 302 Found in 64ms (ActiveRecord: 0.2ms | Allocations: 2654)
+
+
+Started GET "/" for 127.0.0.1 at 2022-05-26 17:36:37 +0200
+Processing by WelcomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering welcome/index.html.erb within layouts/application
+  Rendered welcome/index.html.erb within layouts/application (Duration: 25.9ms | Allocations: 1010)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 185.2ms | Allocations: 9424)
+Completed 200 OK in 188ms (Views: 186.0ms | ActiveRecord: 0.0ms | Allocations: 9983)
+
+
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Destroy (470.4ms)[0m  [1m[31mDELETE FROM "users"[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
