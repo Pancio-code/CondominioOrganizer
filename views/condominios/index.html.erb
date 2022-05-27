@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Condominios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Condo</th>
+      <th>Nome cond</th>
+      <th>Comune condo</th>
+      <th>Coord condo</th>
+      <th>Via condo</th>
+      <th>Fk utenti condo</th>
+      <th>Fk superutenti condo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @condominios.each do |condominio| %>
+      <tr>
+        <td><%= condominio.condo_id %></td>
+        <td><%= condominio.nome_cond %></td>
+        <td><%= condominio.comune_condo %></td>
+        <td><%= condominio.coord_condo %></td>
+        <td><%= condominio.via_condo %></td>
+        <td><%= condominio.fk_utenti_condo_id_id %></td>
+        <td><%= condominio.fk_superutenti_condo_id_id %></td>
+        <td><%= link_to 'Show', condominio %></td>
+        <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+        <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Condominio', new_condominio_path %>

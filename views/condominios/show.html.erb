@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Condo:</strong>
+  <%= @condominio.condo_id %>
+</p>
+
+<p>
+  <strong>Nome cond:</strong>
+  <%= @condominio.nome_cond %>
+</p>
+
+<p>
+  <strong>Comune condo:</strong>
+  <%= @condominio.comune_condo %>
+</p>
+
+<p>
+  <strong>Coord condo:</strong>
+  <%= @condominio.coord_condo %>
+</p>
+
+<p>
+  <strong>Via condo:</strong>
+  <%= @condominio.via_condo %>
+</p>
+
+<p>
+  <strong>Fk utenti condo:</strong>
+  <%= @condominio.fk_utenti_condo_id_id %>
+</p>
+
+<p>
+  <strong>Fk superutenti condo:</strong>
+  <%= @condominio.fk_superutenti_condo_id_id %>
+</p>
+
+<%= link_to 'Edit', edit_condominio_path(@condominio) %> |
+<%= link_to 'Back', condominios_path %>

@@ -1,0 +1,43 @@
+<div class="container">
+  <% flash.each do |key, message| %>
+      <p class="alert alert-<%= key %>"><%= message %></p>
+  <% end %>
+  <br>
+  <h2>Sign up</h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <%= f.label :Username %><br />
+      <%= f.text_field :uname %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.text_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br/>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up", :class => "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <%# omniauth-google-oauth2 1.0.x uses OmniAuth 2 and requires using HTTP Post to initiate authentication: %>
+  <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, method: :post %>
+
+  <%= render "devise/shared/links" %>
+</div>
