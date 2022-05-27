@@ -8,17 +8,16 @@ class User < ApplicationRecord
 
   def self.da_omniauth(acc_token)
   	data = acc_token.info
-  	user = User.where(email: data['email']).first
-
-  	unless user
-  		user = User.create(uname: data['name'],
-  			email: data['email'],
-  			password: Devise.friendly_token[0,20]
-  		)
-  	 end
-  	user
+  	user = User.find_by(uname: data['name'],email: data['email'])
+       return user if user
+       user = User.create(uname: data['name'],
+              email: data['email'],
+              password: Devise.friendly_token[0,20]
+       )
    end
 
 
    has_one_attached :avatar
+   validates :avatar, file_size: { less_than_or_equal_to: 5.megabytes },
+              file_content_type: { allow: ['image/jpeg', 'image/png', 'image/gif'] }
 end
