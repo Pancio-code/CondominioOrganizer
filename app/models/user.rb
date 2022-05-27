@@ -1,12 +1,10 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  validates :uname, presence: true
+  validates :uname, presence: true, uniqueness: { scope: :email, case_sensitive: false }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-
-  validates :uname, :email, uniqueness: { case_sensitive: false }
 
   def self.da_omniauth(acc_token)
   	data = acc_token.info
