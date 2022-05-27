@@ -15,7 +15,8 @@ class User < ApplicationRecord
   			email: data['email'],
   			password: Devise.friendly_token[0,20]
   		)
-  	end
+  	 end
+  	user
    end
 
 
