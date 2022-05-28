@@ -13,6 +13,7 @@ class User < ApplicationRecord
        user = User.create(uname: data['name'],
               email: data['email'],
               password: Devise.friendly_token[0,20]
+              from_oauth: true
        )
    end
 
