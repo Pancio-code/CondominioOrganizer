@@ -17,6 +17,10 @@ class User < ApplicationRecord
        )
    end
 
+   def valid_password?(password)  
+       from_oauth? || super(password)  
+   end
+
 
    has_one_attached :avatar
    validates :avatar, file_size: { less_than_or_equal_to: 5.megabytes },
