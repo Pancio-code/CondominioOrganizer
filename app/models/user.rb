@@ -12,7 +12,7 @@ class User < ApplicationRecord
        return user if user
        user = User.create(uname: data['name'],
               email: data['email'],
-              password: Devise.friendly_token[0,20]
+              password: Devise.friendly_token[0,20],
               from_oauth: true
        )
    end
