@@ -40,20 +40,6 @@ ActiveRecord::Schema.define(version: 2022_05_28_102005) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "condominios", force: :cascade do |t|
-    t.string "condo_id"
-    t.string "nome_cond"
-    t.string "comune_condo"
-    t.string "coord_condo"
-    t.string "via_condo"
-    t.integer "fk_utenti_condo_id_id", null: false
-    t.integer "fk_superutenti_condo_id_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["fk_superutenti_condo_id_id"], name: "index_condominios_on_fk_superutenti_condo_id_id"
-    t.index ["fk_utenti_condo_id_id"], name: "index_condominios_on_fk_utenti_condo_id_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -71,6 +57,4 @@ ActiveRecord::Schema.define(version: 2022_05_28_102005) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "condominios", "fk_superutenti_condo_ids"
-  add_foreign_key "condominios", "fk_utenti_condo_ids"
 end
