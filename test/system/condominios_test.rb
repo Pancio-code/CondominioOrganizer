@@ -14,13 +14,12 @@ class CondominiosTest < ApplicationSystemTestCase
     visit condominios_url
     click_on "New Condominio"
 
-    fill_in "Comune condo", with: @condominio.comune_condo
-    fill_in "Condo", with: @condominio.condo_id
-    fill_in "Coord condo", with: @condominio.coord_condo
-    fill_in "Fk superutenti condo id", with: @condominio.fk_superutenti_condo_id_id
-    fill_in "Fk utenti condo id", with: @condominio.fk_utenti_condo_id_id
-    fill_in "Nome cond", with: @condominio.nome_cond
-    fill_in "Via condo", with: @condominio.via_condo
+    fill_in "Codice", with: @condominio.codice
+    fill_in "Comune", with: @condominio.comune
+    fill_in "Indirizzo", with: @condominio.indirizzo
+    fill_in "Latitudine", with: @condominio.latitudine
+    fill_in "Longitudine", with: @condominio.longitudine
+    fill_in "Nome", with: @condominio.nome
     click_on "Create Condominio"
 
     assert_text "Condominio was successfully created"
@@ -31,13 +30,12 @@ class CondominiosTest < ApplicationSystemTestCase
     visit condominios_url
     click_on "Edit", match: :first
 
-    fill_in "Comune condo", with: @condominio.comune_condo
-    fill_in "Condo", with: @condominio.condo_id
-    fill_in "Coord condo", with: @condominio.coord_condo
-    fill_in "Fk superutenti condo id", with: @condominio.fk_superutenti_condo_id_id
-    fill_in "Fk utenti condo id", with: @condominio.fk_utenti_condo_id_id
-    fill_in "Nome cond", with: @condominio.nome_cond
-    fill_in "Via condo", with: @condominio.via_condo
+    fill_in "Codice", with: @condominio.codice
+    fill_in "Comune", with: @condominio.comune
+    fill_in "Indirizzo", with: @condominio.indirizzo
+    fill_in "Latitudine", with: @condominio.latitudine
+    fill_in "Longitudine", with: @condominio.longitudine
+    fill_in "Nome", with: @condominio.nome
     click_on "Update Condominio"
 
     assert_text "Condominio was successfully updated"

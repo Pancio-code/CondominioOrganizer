@@ -1,38 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Condo:</strong>
-  <%= @condominio.condo_id %>
+  <strong>Nome:</strong>
+  <%= @condominio.nome %>
 </p>
 
 <p>
-  <strong>Nome cond:</strong>
-  <%= @condominio.nome_cond %>
+  <strong>Comune:</strong>
+  <%= @condominio.comune %>
 </p>
 
 <p>
-  <strong>Comune condo:</strong>
-  <%= @condominio.comune_condo %>
+  <strong>Indirizzo:</strong>
+  <%= @condominio.indirizzo %>
 </p>
 
 <p>
-  <strong>Coord condo:</strong>
-  <%= @condominio.coord_condo %>
+  <strong>Latitudine:</strong>
+  <%= @condominio.latitudine %>
 </p>
 
 <p>
-  <strong>Via condo:</strong>
-  <%= @condominio.via_condo %>
+  <strong>Longitudine:</strong>
+  <%= @condominio.longitudine %>
 </p>
 
 <p>
-  <strong>Fk utenti condo:</strong>
-  <%= @condominio.fk_utenti_condo_id_id %>
-</p>
-
-<p>
-  <strong>Fk superutenti condo:</strong>
-  <%= @condominio.fk_superutenti_condo_id_id %>
+  <strong>Codice:</strong>
+  <%= @condominio.codice %>
 </p>
 
 <%= link_to 'Edit', edit_condominio_path(@condominio) %> |

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  comune: MyString
+  indirizzo: MyString
+  latitudine: 1.5
+  longitudine: 1.5
+  codice: MyString
+
+two:
+  nome: MyString
+  comune: MyString
+  indirizzo: MyString
+  latitudine: 1.5
+  longitudine: 1.5
+  codice: MyString

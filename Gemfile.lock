@@ -144,6 +144,7 @@ GEM
     file_validators (3.0.0)
       activemodel (>= 3.2)
       mime-types (>= 1.0)
+    geocoder (1.8.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -350,6 +351,7 @@ DEPENDENCIES
   devise
   figaro
   file_validators
+  geocoder (~> 1.3)
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   listen (~> 3.3)

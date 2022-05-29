@@ -17,7 +17,7 @@ class CondominiosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create condominio" do
     assert_difference('Condominio.count') do
-      post condominios_url, params: { condominio: { comune_condo: @condominio.comune_condo, condo_id: @condominio.condo_id, coord_condo: @condominio.coord_condo, fk_superutenti_condo_id_id: @condominio.fk_superutenti_condo_id_id, fk_utenti_condo_id_id: @condominio.fk_utenti_condo_id_id, nome_cond: @condominio.nome_cond, via_condo: @condominio.via_condo } }
+      post condominios_url, params: { condominio: { codice: @condominio.codice, comune: @condominio.comune, indirizzo: @condominio.indirizzo, latitudine: @condominio.latitudine, longitudine: @condominio.longitudine, nome: @condominio.nome } }
     end
 
     assert_redirected_to condominio_url(Condominio.last)
@@ -34,7 +34,7 @@ class CondominiosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update condominio" do
-    patch condominio_url(@condominio), params: { condominio: { comune_condo: @condominio.comune_condo, condo_id: @condominio.condo_id, coord_condo: @condominio.coord_condo, fk_superutenti_condo_id_id: @condominio.fk_superutenti_condo_id_id, fk_utenti_condo_id_id: @condominio.fk_utenti_condo_id_id, nome_cond: @condominio.nome_cond, via_condo: @condominio.via_condo } }
+    patch condominio_url(@condominio), params: { condominio: { codice: @condominio.codice, comune: @condominio.comune, indirizzo: @condominio.indirizzo, latitudine: @condominio.latitudine, longitudine: @condominio.longitudine, nome: @condominio.nome } }
     assert_redirected_to condominio_url(@condominio)
   end
 
