@@ -1,5 +1,5 @@
 class CondominiosController < ApplicationController
-  before_action :set_condominio, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, :set_condominio, only: %i[ show edit update destroy ]
 
   # GET /condominios or /condominios.json
   def index
