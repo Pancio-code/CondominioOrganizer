@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_29_090353) do
+ActiveRecord::Schema.define(version: 2022_05_29_094126) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 2022_05_29_090353) do
   end
 
   create_table "condominios", force: :cascade do |t|
-    t.string "nome", null: false
-    t.string "comune", null: false
-    t.string "indirizzo", null: false
-    t.float "latitudine", null: false, unique: true
-    t.float "longitudine", null: false, unique: true
-    t.string "codice", null: false
+    t.string "nome"
+    t.string "comune"
+    t.string "indirizzo"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "codice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

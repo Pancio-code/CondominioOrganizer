@@ -2274,3 +2274,40 @@ Migrating to CreateCondominios (20220529090353)
   [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
   [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CondominioProva (20220529094126)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acondominios" ("id" integer NOT NULL PRIMARY KEY, "nome" varchar DEFAULT NULL, "comune" varchar DEFAULT NULL, "indirizzo" varchar DEFAULT NULL, "latitude" float DEFAULT NULL, "longitudine" float DEFAULT NULL, "codice" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acondominios" ("id","nome","comune","indirizzo","latitude","longitudine","codice","created_at","updated_at")
+                     SELECT "id","nome","comune","indirizzo","latitudine","longitudine","codice","created_at","updated_at" FROM "condominios"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mDROP TABLE "condominios"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "condominios" ("id" integer NOT NULL PRIMARY KEY, "nome" varchar DEFAULT NULL, "comune" varchar DEFAULT NULL, "indirizzo" varchar DEFAULT NULL, "latitude" float DEFAULT NULL, "longitudine" float DEFAULT NULL, "codice" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "condominios" ("id","nome","comune","indirizzo","latitude","longitudine","codice","created_at","updated_at")
+                     SELECT "id","nome","comune","indirizzo","latitude","longitudine","codice","created_at","updated_at" FROM "acondominios"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "acondominios"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acondominios" ("id" integer NOT NULL PRIMARY KEY, "nome" varchar DEFAULT NULL, "comune" varchar DEFAULT NULL, "indirizzo" varchar DEFAULT NULL, "latitude" float DEFAULT NULL, "longitude" float DEFAULT NULL, "codice" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acondominios" ("id","nome","comune","indirizzo","latitude","longitude","codice","created_at","updated_at")
+                     SELECT "id","nome","comune","indirizzo","latitude","longitudine","codice","created_at","updated_at" FROM "condominios"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "condominios"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "condominios" ("id" integer NOT NULL PRIMARY KEY, "nome" varchar DEFAULT NULL, "comune" varchar DEFAULT NULL, "indirizzo" varchar DEFAULT NULL, "latitude" float DEFAULT NULL, "longitude" float DEFAULT NULL, "codice" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "condominios" ("id","nome","comune","indirizzo","latitude","longitude","codice","created_at","updated_at")
+                     SELECT "id","nome","comune","indirizzo","latitude","longitude","codice","created_at","updated_at" FROM "acondominios"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "acondominios"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220529094126"]]
+  [1m[36mTRANSACTION (6.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
