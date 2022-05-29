@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 2022_05_29_095520) do
     t.string "nome"
     t.string "comune"
     t.string "indirizzo"
-    t.float "latitudine"
-    t.float "longitudine"
+    t.float "latitude"
+    t.float "longitude"
     t.string "codice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
