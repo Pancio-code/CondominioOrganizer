@@ -23,11 +23,13 @@
     </div>
   </div>
   <!--Avatar Upload Field-->
-
+  <br />
   <div class="field">
     <%= f.label :Username %><br />
-    <%= f.text_field :uname %>
+    <p><%= current_user.uname %></p>
   </div>
+
+  <%if !current_user.from_oauth? %>
 
   <div class="field">
     <%= f.label :email %><br />
@@ -38,11 +40,9 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <%if !current_user.from_oauth? %>
-
     <div class="field">
-      <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-      <%= f.password_field :password, autocomplete: "new-password" %>
+      <%= f.label :change_password %><br />
+      <%= f.password_field :change_password, autocomplete: "new-password" %>
       <% if @minimum_password_length %>
         <br />
         <em><%= @minimum_password_length %> characters minimum</em>
@@ -50,12 +50,12 @@
     </div>
 
     <div class="field">
-      <%= f.label :password_confirmation, :class => "confirm"  %><br />
+      <%= f.label :password_confirmation  %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password"%>
     </div>
 
     <div class="field">
-      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.label :current_password, :class => "confirm" %> <i>(we need your current password to confirm your changes)</i><br />
       <%= f.password_field :current_password, autocomplete: "current-password" %>
     </div>
 

@@ -15,6 +15,7 @@ class User < ApplicationRecord
               password: Devise.friendly_token[0,20],
               from_oauth: true
        )
+       
    end
 
    def valid_password?(password)  
