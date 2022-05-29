@@ -50,8 +50,11 @@ ActiveRecord::Schema.define(version: 2022_05_29_095520) do
     t.string "indirizzo"
     t.float "latitude"
     t.float "longitude"
+<<<<<<< HEAD
     t.float "latitudine"
     t.float "longitudine"
+=======
+>>>>>>> 2d2f7b6d209ca5f4c7c1ef991e98f7408abe9b4c
     t.string "codice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
