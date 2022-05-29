@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2022_05_29_094126) do
-=======
 ActiveRecord::Schema.define(version: 2022_05_29_095520) do
->>>>>>> 5fbf985d7322731a9fef295a1cb5df421858f7cf
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -50,11 +46,6 @@ ActiveRecord::Schema.define(version: 2022_05_29_095520) do
     t.string "indirizzo"
     t.float "latitude"
     t.float "longitude"
-<<<<<<< HEAD
-    t.float "latitudine"
-    t.float "longitudine"
-=======
->>>>>>> 2d2f7b6d209ca5f4c7c1ef991e98f7408abe9b4c
     t.string "codice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
