@@ -4,6 +4,7 @@ class Condominio < ApplicationRecord
 
 	def create_code
 		self.flat_code = [*('a'..'z'),*('0'..'9')].shuffle[0,5].join
+	end
 	
     def address
         [indirizzo, comune].compact.join(', ')
