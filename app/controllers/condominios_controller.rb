@@ -66,6 +66,6 @@ class CondominiosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def condominio_params
-      params.require(:condominio).permit(:nome, :comune, :indirizzo, :latitudine, :longitudine, :codice)
+      params.require(:condominio).permit(:nome, :comune, :indirizzo, :latitudine, :longitudine, :codice,:avatar)
     end
 end

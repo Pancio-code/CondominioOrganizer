@@ -11,13 +11,19 @@
     </div>
   <% end %>
 
+  <% if condominio.avatar.present? %>
+    <%= image_tag(condominio.avatar.variant(resize_to_fill: [1000, 150])) %>
+  <% else %>
+    <%= image_tag("banner.png", width: 1000, height: 150) %>
+  <% end %>
+
       <!--Avatar Upload Field-->
-  <div class="form-group">
-    <label class="col-sm-4 col-form-label">Avatar:
-      <% if current_user.avatar.present? %><br />Current: <%= current_user.avatar.filename.to_s %><% end %>
+  <div class="field">
+    <label class="col-sm-4 col-form-label">Banner:
+      <% if condominio.avatar.present? %><br />Current: <%= condominio.avatar.filename.to_s %><% end %>
     </label>
     <div class="col-sm-8">
-      <%= f.file_field :avatar, class: "form-control" %>
+      <%= form.file_field :avatar, class: "form-control" %>
     </div>
   </div>
   <!--Avatar Upload Field-->
