@@ -1,14 +1,14 @@
 class Condominio < ApplicationRecord
 
-	before_validation :create_code, :create_condomino
+	before_validation :create_code
 
 	def create_code
 		self.flat_code = [*('a'..'z'),*('0'..'9')].shuffle[0,5].join
 	end
 
-	def create_condomino
-		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
-	end
+#	def create_condomino
+#		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
+#	end
 	
     def address
         [indirizzo, comune].compact.join(', ')
