@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+  <% if @condominio.avatar.present? %>
+    <%= image_tag(@condominio.avatar.variant(resize_to_fill: [1000, 150])) %>
+  <% else %>
+    <%= image_tag("banner.png", width: 1000, height: 150) %>
+  <% end %>
+
 <p>
   <strong>Nome:</strong>
   <%= @condominio.nome %>

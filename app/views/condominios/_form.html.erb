@@ -11,6 +11,17 @@
     </div>
   <% end %>
 
+      <!--Avatar Upload Field-->
+  <div class="form-group">
+    <label class="col-sm-4 col-form-label">Avatar:
+      <% if current_user.avatar.present? %><br />Current: <%= current_user.avatar.filename.to_s %><% end %>
+    </label>
+    <div class="col-sm-8">
+      <%= f.file_field :avatar, class: "form-control" %>
+    </div>
+  </div>
+  <!--Avatar Upload Field-->
+
   <div class="field">
     <%= form.label :nome %>
     <%= form.text_field :nome %>
