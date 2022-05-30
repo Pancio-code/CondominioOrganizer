@@ -23,6 +23,7 @@ class CondominiosController < ApplicationController
   # POST /condominios or /condominios.json
   def create
     @condominio = Condominio.new(condominio_params)
+    @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id) 
 
     respond_to do |format|
       if @condominio.save
