@@ -29,6 +29,7 @@ gem 'mail_form'
 gem 'figaro'
 gem 'geocoder', '~> 1.3'
 gem 'mailcatcher'
+gem 'cancancan'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'

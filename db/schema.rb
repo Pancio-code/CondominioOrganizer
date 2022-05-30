@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 2022_05_30_124821) do
     t.string "codice"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "houseNumber"
     t.string "flat_code"
   end
 
