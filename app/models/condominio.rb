@@ -1,7 +1,14 @@
 class Condominio < ApplicationRecord
+
+	before_validation :create_code
+
+	def create_code
+		self.flat_code = [*('a'..'z'),*('0'..'9')].shuffle[0,5].join
+	
     def address
         [indirizzo, comune].compact.join(', ')
-      end
+    end
+      
     geocoded_by :address
     after_validation :geocode
 
