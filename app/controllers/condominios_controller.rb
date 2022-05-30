@@ -14,6 +14,7 @@ class CondominiosController < ApplicationController
   # GET /condominios/new
   def new
     @condominio = Condominio.new
+    @condominio.condomino.build
   end
 
   # GET /condominios/1/edit
@@ -23,10 +24,13 @@ class CondominiosController < ApplicationController
   # POST /condominios or /condominios.json
   def create
     @condominio = Condominio.new(condominio_params)
-    @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id) 
+#    @condominio.condominos_attributes = [{ condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true }]
+    
 
     respond_to do |format|
-      if @condominio.save
+      if @condominio.save!
+      	@condomino = Condomino.new(condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true)
+      	@condomino.save
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio was successfully created." }
         format.json { render :show, status: :created, location: @condominio }
       else
