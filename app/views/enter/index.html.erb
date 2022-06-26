@@ -6,7 +6,7 @@
         <%= form_with url: '/enter', method: :post do |form| %>
             <%= form.label :codice, "Codice d'invito:" %>
             <%= form.text_field :codice %>
-            <%= form.submit "Entra" %>
+            <%= form.submit "Entra", :class => "btn btn-primary"  %>
         <% end %>
     <br>
 
@@ -25,7 +25,7 @@
         <%= form.select :distanza, [10,50,100], selected: 100 %>
         </div>
         <div class="row py-2">
-        <%= form.submit "Cerca" %>
+        <%= form.submit "Cerca", :class => "btn btn-primary"  %>
          </div>
     <% end %>
     </div>
@@ -55,9 +55,9 @@
             <td><%= condominio.comune %></td>
             <td><%= condominio.indirizzo %></td>
             <td> 
-                <%= form_with url: '/enter', method: :get do |f| %>
-                    <%= f.hidden_field :some_column %>
-                    <%= hidden_field_tag 'selected', 'none'  %>
+                <%= form_for Request.new, url: url_for(controller: 'requests', action: 'create') do |f| %>
+                    <%= f.hidden_field :condominio_id, value: condominio.id %>
+                    <%= f.hidden_field :user_id, value: current_user.id %>
                     <%= f.submit "Richiedi accesso", :class => "btn btn-primary" %>
                 <% end %>
             </td>
@@ -68,4 +68,3 @@
     </div>
     </div>
 </div>
-

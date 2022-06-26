@@ -70,3 +70,4 @@ gem 'tzinfo-data'
 gem 'net-smtp' # to send email
 gem 'net-imap' # for rspec
 gem 'net-pop'  # for rspec
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?

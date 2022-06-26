@@ -16,6 +16,10 @@ class EnterController < ApplicationController
     # GET /condominios/1 or /condominios/1.json
     def show
     end
+
+    def new
+      @request = Request.new
+    end
   
     # POST /condominios or /condominios.json
     def create  
