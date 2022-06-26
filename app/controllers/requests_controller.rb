@@ -23,7 +23,7 @@ class RequestsController < ApplicationController
   # POST /requests or /requests.json
   def create
     @request = Request.new(request_params)
-
+    @request.user_id = current_user.id
     respond_to do |format|
       if @request.save
         format.html { redirect_to request_url(@request), notice: "Request was successfully created." }
@@ -66,6 +66,6 @@ class RequestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def request_params
-      params.require(:request).permit(:condominio_id,:user_id)
+      params.require(:request).permit(:condominio_id)
     end
 end

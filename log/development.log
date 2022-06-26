@@ -8629,3 +8629,228 @@ Processing by RequestsController#show as HTML
 Completed 200 OK in 127ms (Views: 118.4ms | ActiveRecord: 1.0ms | Allocations: 12254)
 
 
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:17:50 +0200
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 240.8ms | Allocations: 34627)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 328.5ms | Allocations: 45026)
+Completed 200 OK in 389ms (Views: 338.1ms | ActiveRecord: 3.4ms | Allocations: 62972)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-06-26 15:17:54 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1", "user_id"=>"999"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.4ms | Allocations: 2421)
+
+
+  
+ArgumentError (When assigning attributes, you must pass a hash as an argument, Integer passed.):
+  
+app/controllers/requests_controller.rb:25:in `create'
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:18:16 +0200
+Processing by EnterController#index as HTML
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 30.8ms | Allocations: 17026)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 99.1ms | Allocations: 26561)
+Completed 200 OK in 125ms (Views: 98.8ms | ActiveRecord: 4.6ms | Allocations: 40576)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-06-26 15:18:21 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1", "user_id"=>"999"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mRequest Create (0.8ms)[0m  [1m[32mINSERT INTO "requests" ("condominio_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["condominio_id", 1], ["user_id", 999], ["created_at", "2022-06-26 13:18:21.979674"], ["updated_at", "2022-06-26 13:18:21.979674"]]
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 1.2ms | Allocations: 5875)
+
+
+  
+ActiveRecord::InvalidForeignKey (SQLite3::ConstraintException: FOREIGN KEY constraint failed):
+  
+app/controllers/requests_controller.rb:28:in `block in create'
+app/controllers/requests_controller.rb:27:in `create'
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:18:45 +0200
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 14.4ms | Allocations: 7329)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 91.5ms | Allocations: 16980)
+Completed 200 OK in 107ms (Views: 98.4ms | ActiveRecord: 0.7ms | Allocations: 19907)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-06-26 15:18:46 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1", "user_id"=>"1"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mRequest Create (4.9ms)[0m  [1m[32mINSERT INTO "requests" ("condominio_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["condominio_id", 1], ["user_id", 1], ["created_at", "2022-06-26 13:18:46.564319"], ["updated_at", "2022-06-26 13:18:46.564319"]]
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (7.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+Redirected to http://127.0.0.1:3000/requests/1
+Completed 302 Found in 31ms (ActiveRecord: 12.5ms | Allocations: 4939)
+
+
+Started GET "/requests/1" for 127.0.0.1 at 2022-06-26 15:18:46 +0200
+Processing by RequestsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.3ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:64:in `set_request'
+  Rendering layout layouts/application.html.erb
+  Rendering requests/show.html.erb within layouts/application
+  Rendered requests/show.html.erb within layouts/application (Duration: 0.9ms | Allocations: 408)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 79.3ms | Allocations: 10437)
+Completed 200 OK in 95ms (Views: 85.5ms | ActiveRecord: 0.5ms | Allocations: 13682)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:18:55 +0200
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 15.8ms | Allocations: 7326)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 88.3ms | Allocations: 16876)
+Completed 200 OK in 101ms (Views: 93.5ms | ActiveRecord: 0.8ms | Allocations: 20020)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:21:51 +0200
+Processing by EnterController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 33.1ms | Allocations: 17000)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 103.2ms | Allocations: 26533)
+Completed 200 OK in 128ms (Views: 102.7ms | ActiveRecord: 4.5ms | Allocations: 40513)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-06-26 15:21:54 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1", "user_id"=>"999"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[31mUnpermitted parameter: :user_id[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mRequest Create (2.0ms)[0m  [1m[32mINSERT INTO "requests" ("condominio_id", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["condominio_id", 1], ["created_at", "2022-06-26 13:21:55.009758"], ["updated_at", "2022-06-26 13:21:55.009758"]]
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (7.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+Redirected to http://127.0.0.1:3000/requests/2
+Completed 302 Found in 27ms (ActiveRecord: 9.9ms | Allocations: 5380)
+
+
+Started GET "/requests/2" for 127.0.0.1 at 2022-06-26 15:21:55 +0200
+Processing by RequestsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.2ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:64:in `set_request'
+  Rendering layout layouts/application.html.erb
+  Rendering requests/show.html.erb within layouts/application
+  Rendered requests/show.html.erb within layouts/application (Duration: 1.4ms | Allocations: 395)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 87.6ms | Allocations: 10425)
+Completed 200 OK in 105ms (Views: 95.1ms | ActiveRecord: 0.5ms | Allocations: 13664)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:27:53 +0200
+Processing by EnterController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 29.5ms | Allocations: 16804)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 111.6ms | Allocations: 26573)
+Completed 200 OK in 144ms (Views: 119.2ms | ActiveRecord: 1.4ms | Allocations: 40254)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-06-26 15:30:54 +0200
+Processing by EnterController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 41.8973103 AND 41.8973103 AND condominios.longitude BETWEEN 12.5131378 AND 12.5131378) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  Rendered enter/index.html.erb within layouts/application (Duration: 27.2ms | Allocations: 16930)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 110.0ms | Allocations: 26463)
+Completed 200 OK in 134ms (Views: 109.6ms | ActiveRecord: 4.4ms | Allocations: 40443)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-06-26 15:31:03 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mRequest Create (1.0ms)[0m  [1m[32mINSERT INTO "requests" ("condominio_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["condominio_id", 1], ["user_id", 1], ["created_at", "2022-06-26 13:31:03.554136"], ["updated_at", "2022-06-26 13:31:03.554136"]]
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+  [1m[36mTRANSACTION (7.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:28:in `block in create'
+Redirected to http://127.0.0.1:3000/requests/3
+Completed 302 Found in 26ms (ActiveRecord: 9.0ms | Allocations: 5312)
+
+
+Started GET "/requests/3" for 127.0.0.1 at 2022-06-26 15:31:03 +0200
+Processing by RequestsController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.8ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:64:in `set_request'
+  Rendering layout layouts/application.html.erb
+  Rendering requests/show.html.erb within layouts/application
+  Rendered requests/show.html.erb within layouts/application (Duration: 0.8ms | Allocations: 397)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 78.4ms | Allocations: 10426)
+Completed 200 OK in 92ms (Views: 83.0ms | ActiveRecord: 0.9ms | Allocations: 13665)
+
+
