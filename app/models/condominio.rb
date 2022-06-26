@@ -10,7 +10,8 @@ class Condominio < ApplicationRecord
     has_many :users, through: :condominos
 
     accepts_nested_attributes_for :condominos
-
+    
+    has_many :posts
 #	def create_condomino
 #		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
 #	end

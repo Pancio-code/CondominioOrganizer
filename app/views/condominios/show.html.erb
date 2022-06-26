@@ -36,5 +36,34 @@
   <%= @condominio.flat_code %>
 </p>
 
+<h2>Bacheca dei post:</h2>
+<% @condominio.posts.each do |post| %>
+  <p>
+    <strong>Titolo:</strong>
+    <%= post.title %>
+  </p>
+  <p>
+    <strong>Post:</strong>
+    <%= post.body %>
+  </p>
+
+<% end %>
+
+<h2>Aggiungi un Post:</h2>
+<%= form_with model: [@condominio, @condominio.posts.build ] do |form|
+%>
+  <p>
+    <%= form.label :title  %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_condominio_path(@condominio) %> |
 <%= link_to 'Back', condominios_path %>
