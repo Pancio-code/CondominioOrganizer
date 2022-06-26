@@ -14,7 +14,6 @@ class CondominiosController < ApplicationController
   # GET /condominios/new
   def new
     @condominio = Condominio.new
-    @condominio.condomino.build
   end
 
   # GET /condominios/1/edit
@@ -29,7 +28,7 @@ class CondominiosController < ApplicationController
 
     respond_to do |format|
       if @condominio.save!
-      	@condomino = Condomino.new(condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true)
+      	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
       	@condomino.save
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio was successfully created." }
         format.json { render :show, status: :created, location: @condominio }
@@ -55,9 +54,11 @@ class CondominiosController < ApplicationController
 
   # DELETE /condominios/1 or /condominios/1.json
   def destroy
+    @condominio_id = @condominio.id
     @condominio.destroy
 
     respond_to do |format|
+      Condomino.where(condominio_id: @condominio_id).destroy_all
       format.html { redirect_to condominios_url, notice: "Condominio was successfully destroyed." }
       format.json { head :no_content }
     end

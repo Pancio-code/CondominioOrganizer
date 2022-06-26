@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   authenticate(:users) do
   	resources :users
   end
+  resources :enter
   resources :condominios
   resources :contacts, only: [:new, :create]
   root 'welcome#index'
