@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_request, only: %i[ show edit update destroy ]
+  before_action :set_request, only: %i[ show destroy ]
 
   # GET /requests or /requests.json
   def index
@@ -26,11 +26,11 @@ class RequestsController < ApplicationController
     @request.user_id = current_user.id
     respond_to do |format|
       if @request.save
-        format.html { redirect_to request_url(@request), notice: "Request was successfully created." }
+        format.html { redirect_to request_url(@request), notice: "Richiesta mandata con successo." }
         format.json { render :show, status: :created, location: @request }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
+        format.html { redirect_to '/enter', notice: "Errore nella richiesta." }
+          format.json {  render :show, status: :unprocessable_entity}
       end
     end
   end
@@ -53,7 +53,7 @@ class RequestsController < ApplicationController
     @request.destroy
 
     respond_to do |format|
-      format.html { redirect_to requests_url, notice: "Request was successfully destroyed." }
+      format.html { redirect_to requests_url, notice: "Richiesta è stata cancellata." }
       format.json { head :no_content }
     end
   end

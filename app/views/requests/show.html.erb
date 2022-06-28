@@ -1,14 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <br>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Condominio:</strong>
-  <%= @request.condominio_id %>
-</p>
+  <h3>Richiesta d'accesso:</h3>
+  <br>
+  <p>
+    <strong>Condominio:</strong>
+    <%= Condominio.find_by(id:@request.condominio_id).nome %>
+  </p>
 
-<p>
-  <strong>User:</strong>
-  <%= @request.user_id %>
-</p>
+  <p>
+    <strong>User:</strong>
+    <%= User.find_by(id:@request.user_id).uname %>
+  </p>
 
-<%= link_to 'Edit', edit_request_path(@request) %> |
-<%= link_to 'Back', requests_path %>
+  <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
+  <%= link_to 'Back', requests_path %>
+</div>
