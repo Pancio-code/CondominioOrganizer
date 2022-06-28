@@ -101,11 +101,8 @@ ActiveRecord::Schema.define(version: 2022_06_28_092650) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-<<<<<<< HEAD
-=======
   add_foreign_key "posts", "condominios"
   add_foreign_key "posts", "users"
->>>>>>> ba84cbf316191585306ea257183121ae3fdc34ad
   add_foreign_key "requests", "condominios"
   add_foreign_key "requests", "users"
 end
