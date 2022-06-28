@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_request, only: %i[ show destroy ]
+  before_action :set_request, only: %i[ show destroy edit ]
 
   # GET /requests or /requests.json
   def index
@@ -18,6 +18,14 @@ class RequestsController < ApplicationController
 
   # GET /requests/1/edit
   def edit
+    @condomino=Condomino.new()
+    @condomino.condominio_id = @request.condominio_id
+    @condomino.user_id = @request.user_id 
+    @condomino.is_condo_admin = false
+    if @condomino.save 
+      redirect_to condominio_url(@request.condominio_id), notice: "tabella condomino aggiornata"
+      @request.destroy
+    end
   end
 
   # POST /requests or /requests.json
