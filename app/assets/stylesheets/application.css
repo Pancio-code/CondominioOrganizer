@@ -18,13 +18,14 @@
 }
 
 .btn {
+    color: #fff !important;
     background-color: chocolate !important;
     border: solid 1px chocolate;
 }
 
 .btn:hover {
     background-color: #fff !important;
-    color: chocolate;
+    color: chocolate !important;
     border: solid 1px chocolate;
 }
 
