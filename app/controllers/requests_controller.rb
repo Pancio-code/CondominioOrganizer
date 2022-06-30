@@ -23,7 +23,7 @@ class RequestsController < ApplicationController
     @condomino.user_id = @request.user_id 
     @condomino.is_condo_admin = false
     if @condomino.save 
-      redirect_to condominio_url(@request.condominio_id), notice: "tabella condomino aggiornata"
+      redirect_to condominio_url(@request.condominio_id), notice: "Richiesta accettata"
       @request.destroy
     end
   end
