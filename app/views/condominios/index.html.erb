@@ -1,9 +1,11 @@
 <div class="container">
   <br>
   <p id="notice"><%= notice %></p>
-
+  <br>
+  <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %>
+  <br>
   <h1>Condomini</h1>
-
+  <h2>Amministratore:</h2>
   <table>
     <thead>
       <tr>
@@ -33,8 +35,41 @@
       <% end %>
     </tbody>
   </table>
+  <%= link_to 'New Condominio', new_condominio_path ,:class => "btn btn-primary" %>
 
   <br>
+  <h2>Condomino:</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Comune</th>
+        <th>Indirizzo</th>
+        <th>Latitudine</th>
+        <th>Longitudine</th>
+        <th>Codice</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
 
-  <%= link_to 'New Condominio', new_condominio_path %>
+    <tbody>
+      <% @condominios.each do |condominio| %>
+        <tr>
+          <td><%= condominio.nome %></td>
+          <td><%= condominio.comune %></td>
+          <td><%= condominio.indirizzo %></td>
+          <td><%= condominio.latitude %></td>
+          <td><%= condominio.longitude %></td>
+          <td><%= condominio.flat_code %></td>
+          <td><%= link_to 'Show', condominio %></td>
+          <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+          <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+
+  <%= link_to 'Cerca condominio', '/enter' ,:class => "btn btn-primary" %>
+  <%= link_to 'Richieste', '/requests' ,:class => "btn btn-primary" %>
 </div>

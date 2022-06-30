@@ -32,3 +32,11 @@
 .confirm {
     color: red;
 }
+
+th {
+    font-size: large;
+}
+
+td {
+    font-size: medium;
+}
