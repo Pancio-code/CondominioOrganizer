@@ -13,7 +13,8 @@
     <strong>User:</strong>
     <%= User.find_by(id:@request.user_id).uname %>
   </p>
-  
+
+  <%= link_to 'accept', @request, method: :edit%> |
   <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
   <%= link_to 'Back', requests_path %>
 </div>
