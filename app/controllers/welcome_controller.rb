@@ -3,7 +3,7 @@ class WelcomeController < ApplicationController
 
   def check_signed_in
     if(current_user != nil && Condomino.where(user_id: current_user.id).exists?)
-      redirect_to '/users/edit' if signed_in?
+      redirect_to '/condominios' if signed_in?
     else
       redirect_to '/enter' if signed_in?
     end
