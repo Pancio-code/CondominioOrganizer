@@ -5,6 +5,8 @@ class CondominiosController < ApplicationController
   # GET /condominios or /condominios.json
   def index
     @condominios = Condominio.all
+    @condomini_amministrati = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",current_user.id)
+    @condomini_partecipante = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = false) ",current_user.id)
   end
 
   # GET /condominios/1 or /condominios/1.json

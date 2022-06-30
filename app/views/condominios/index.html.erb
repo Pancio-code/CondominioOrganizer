@@ -12,21 +12,17 @@
         <th>Nome</th>
         <th>Comune</th>
         <th>Indirizzo</th>
-        <th>Latitudine</th>
-        <th>Longitudine</th>
         <th>Codice</th>
         <th colspan="3"></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @condominios.each do |condominio| %>
+      <% @condomini_amministrati.each do |condominio| %>
         <tr>
           <td><%= condominio.nome %></td>
           <td><%= condominio.comune %></td>
           <td><%= condominio.indirizzo %></td>
-          <td><%= condominio.latitude %></td>
-          <td><%= condominio.longitude %></td>
           <td><%= condominio.flat_code %></td>
           <td><%= link_to 'Show', condominio %></td>
           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
@@ -45,22 +41,16 @@
         <th>Nome</th>
         <th>Comune</th>
         <th>Indirizzo</th>
-        <th>Latitudine</th>
-        <th>Longitudine</th>
-        <th>Codice</th>
         <th colspan="3"></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @condominios.each do |condominio| %>
+      <% @condomini_partecipante.each do |condominio| %>
         <tr>
           <td><%= condominio.nome %></td>
           <td><%= condominio.comune %></td>
           <td><%= condominio.indirizzo %></td>
-          <td><%= condominio.latitude %></td>
-          <td><%= condominio.longitude %></td>
-          <td><%= condominio.flat_code %></td>
           <td><%= link_to 'Show', condominio %></td>
           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>

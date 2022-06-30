@@ -57,7 +57,7 @@
             <td> 
                 <%= form_for Request.new, url: url_for(controller: 'requests', action: 'create') do |f| %>
                     <%= f.hidden_field :condominio_id, value: condominio.id %>
-                    <% if Request.where(condominio_id: condominio.id,user_id:current_user.id).exists? %>
+                    <% if (Condomino.where(condominio_id: condominio.id,user_id: current_user.id).exists? || Request.where(condominio_id: condominio.id,user_id:current_user.id).exists?) %>
                        <%= f.submit "Richiedi accesso", :class => "btn btn-primary",:disabled => true %>
                     <% else %>
                         <%= f.submit "Richiedi accesso", :class => "btn btn-primary"%>
