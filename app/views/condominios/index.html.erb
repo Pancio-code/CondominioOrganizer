@@ -1,6 +1,7 @@
 <div class="container">
   <br>
   <p id="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
   <br>
   <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %>
   <br>
@@ -52,8 +53,10 @@
           <td><%= condominio.comune %></td>
           <td><%= condominio.indirizzo %></td>
           <td><%= link_to 'Show', condominio %></td>
-          <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
-          <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% if can? :Destroy, condominio%>
+            <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+            <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

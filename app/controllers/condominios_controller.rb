@@ -1,18 +1,18 @@
 class CondominiosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_condominio, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /condominios or /condominios.json
   def index
     @condominios = Condominio.all
     @condomini_amministrati = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",current_user.id)
     @condomini_partecipante = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = false) ",current_user.id)
+    authorize! :index, Condominio
   end
 
   # GET /condominios/1 or /condominios/1.json
   def show
-    @condominio_ids = Condominio.find(params[:id])
-    authorize! :show, @condominio_ids
   end
 
   # GET /condominios/new
