@@ -20,7 +20,7 @@ class Ability
   private
     
     def anyone_abilities
-      # define abilities for everyone, both logged users and visitors
+      can :index, :all
     end
 
     def guest_abilities
@@ -30,12 +30,10 @@ class Ability
     end
 
     def authenticated_abilities(user)
-      can :manage, Condominio do |c|
+      can [:show,:update,:destroy], Condominio do |c|
         c.condominos.exists?(is_condo_admin: true, user_id: user.id)
       end
-      can :manage, Request do |r|
-        r.requests.exists?(condominos.exists?(is_condo_admin: true, user_id: user.id))
-      end
+      can :show, Condominio
     end
 
     def admin_abilities
