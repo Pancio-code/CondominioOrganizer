@@ -25,11 +25,16 @@ class Ability
 
     def guest_abilities
       can :read, :sign_up
+      can :read, Request do |r|
+        r.requests.exists?(user_id: user.id)
     end
 
     def authenticated_abilities(user)
-      can :show, Condominio do |c|
+      can :manage, Condominio do |c|
         c.condominos.exists?(is_condo_admin: true, user_id: user.id)
+      end
+      can :manage, Request do |r|
+        r.requests.exists?(condominos.exists?(is_condo_admin: true, user_id: user.id))
       end
     end
 
