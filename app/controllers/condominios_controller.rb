@@ -11,6 +11,8 @@ class CondominiosController < ApplicationController
 
   # GET /condominios/1 or /condominios/1.json
   def show
+    @condominio_ids = Condominio.find(params[:id])
+    authorize! :show, @condominio_ids
   end
 
   # GET /condominios/new

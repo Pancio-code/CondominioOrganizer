@@ -15847,3 +15847,1508 @@ Processing by RequestsController#index as HTML
 Completed 200 OK in 87ms (Views: 83.7ms | ActiveRecord: 0.5ms | Allocations: 11862)
 
 
+Started GET "/" for 127.0.0.1 at 2022-06-30 14:57:05 +0200
+  [1m[35m (4.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WelcomeController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/welcome_controller.rb:5:in `check_signed_in'
+  [1m[36mCondomino Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/welcome_controller.rb:5:in `check_signed_in'
+Redirected to http://127.0.0.1:3000/condominios
+Filter chain halted as :check_signed_in rendered or redirected
+Completed 302 Found in 124ms (ActiveRecord: 3.9ms | Allocations: 12536)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 14:57:05 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 90.5ms | Allocations: 7808)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 935.9ms | Allocations: 32585)
+Completed 200 OK in 1130ms (Views: 1004.8ms | ActiveRecord: 7.6ms | Allocations: 39975)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-06-30 15:01:09 +0200
+Processing by EnterController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.4ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 40.99798869408127 AND 42.79663190591873 AND condominios.longitude BETWEEN 11.304929042340238 AND 13.721346557659764) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mCondomino Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mRequest Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "requests" WHERE "requests"."condominio_id" = ? AND "requests"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:49
+  [1m[36mCondomino Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 2], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  Rendered enter/index.html.erb within layouts/application (Duration: 198.1ms | Allocations: 40778)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 280.8ms | Allocations: 50398)
+Completed 200 OK in 323ms (Views: 281.2ms | ActiveRecord: 10.8ms | Allocations: 65637)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQVpacE53PT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--9a342e92570ff1da6d78abb7dd7383340a9393cd/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:13 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.6ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "VCf8TAphsAcNTIbMG3zaUc1utKk="], ["LIMIT", 1]]
+[36m  Disk Storage (8.1ms) [0m[34mDownloaded file from key: c1dnt8azgl6bycs5y5q8fu6psn4t[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveStorage::VariantRecord Create (3.3ms)[0m  [1m[32mINSERT INTO "active_storage_variant_records" ("blob_id", "variation_digest") VALUES (?, ?)[0m  [["blob_id", 3], ["variation_digest", "VCf8TAphsAcNTIbMG3zaUc1utKk="]]
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" INNER JOIN "active_storage_attachments" ON "active_storage_blobs"."id" = "active_storage_attachments"."blob_id" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 3], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 3], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Create (0.3ms)[0m  [1m[32mINSERT INTO "active_storage_blobs" ("key", "filename", "content_type", "metadata", "service_name", "byte_size", "checksum", "created_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["key", "oqipq8mg1p7dfh47onogek6vzsxe"], ["filename", "Copertina.jpg"], ["content_type", "image/jpeg"], ["metadata", "{\"identified\":true}"], ["service_name", "local"], ["byte_size", 6189], ["checksum", "EOhTlINNVjNm9ccFu0539w=="], ["created_at", "2022-06-30 13:01:13.765372"]]
+  [1m[36mActiveStorage::Attachment Create (0.3ms)[0m  [1m[32mINSERT INTO "active_storage_attachments" ("name", "record_type", "record_id", "blob_id", "created_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "image"], ["record_type", "ActiveStorage::VariantRecord"], ["record_id", 3], ["blob_id", 5], ["created_at", "2022-06-30 13:01:13.772599"]]
+  [1m[36mTRANSACTION (21.9ms)[0m  [1m[36mcommit transaction[0m
+[36m  Disk Storage (8.5ms) [0m[32mUploaded file to key: oqipq8mg1p7dfh47onogek6vzsxe (checksum: EOhTlINNVjNm9ccFu0539w==)[0m
+[ActiveJob] Enqueued ActiveStorage::AnalyzeJob (Job ID: 714dc243-3059-4d0c-989f-b9a1f43b9d5e) to Async(default) with arguments: #<GlobalID:0x000001a435961e70 @uri=#<URI::GID gid://condominio-organizer/ActiveStorage::Blob/5>>
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e] Performing ActiveStorage::AnalyzeJob (Job ID: 714dc243-3059-4d0c-989f-b9a1f43b9d5e) from Async(default) enqueued at 2022-06-30T13:01:13Z with arguments: #<GlobalID:0x000001a435a11988 @uri=#<URI::GID gid://condominio-organizer/ActiveStorage::Blob/5>>
+[36m  Disk Storage (50.8ms) [0m[34mGenerated URL for file at key: oqipq8mg1p7dfh47onogek6vzsxe (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjEzLjg4M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--caad9800760782892ac56b955b9954d89df7edb6/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjEzLjg4M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--caad9800760782892ac56b955b9954d89df7edb6/Copertina.jpg
+Completed 302 Found in 786ms (ActiveRecord: 28.6ms | Allocations: 38721)
+
+
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e] [36m  Disk Storage (4.4ms) [0m[34mDownloaded file from key: oqipq8mg1p7dfh47onogek6vzsxe[0m
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjEzLjg4M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--caad9800760782892ac56b955b9954d89df7edb6/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:13 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 491)
+
+
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e]   [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e]   [1m[36mActiveStorage::Blob Update (1.3ms)[0m  [1m[33mUPDATE "active_storage_blobs" SET "metadata" = ? WHERE "active_storage_blobs"."id" = ?[0m  [["metadata", "{\"identified\":true,\"width\":150,\"height\":50,\"analyzed\":true}"], ["id", 5]]
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e]   [1m[36mTRANSACTION (28.9ms)[0m  [1m[36mcommit transaction[0m
+[ActiveJob] [ActiveStorage::AnalyzeJob] [714dc243-3059-4d0c-989f-b9a1f43b9d5e] Performed ActiveStorage::AnalyzeJob (Job ID: 714dc243-3059-4d0c-989f-b9a1f43b9d5e) from Async(default) in 256.88ms
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:01:15 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 8.4ms | Allocations: 2056)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 112.1ms | Allocations: 11783)
+Completed 200 OK in 120ms (Views: 113.7ms | ActiveRecord: 1.3ms | Allocations: 14216)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjEzLjg4M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--caad9800760782892ac56b955b9954d89df7edb6/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:15 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms | Allocations: 560)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:01:23 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:73:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 34.9ms | Allocations: 11829)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 126.2ms | Allocations: 21335)
+Completed 200 OK in 137ms (Views: 126.0ms | ActiveRecord: 2.5ms | Allocations: 23994)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQXVnRGFRR1ciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--2395721c7bc049afb6ad363b7325261b56b02875/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:24 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.3ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "MEQMo90vUbaBUv2and4Oal+ca/I="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+[36m  Disk Storage (2.0ms) [0m[34mGenerated URL for file at key: hhtnz3g7t6f92jl5aw2ewgl124wt (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjI0LjIwM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--769698700779bc32a9fbc26709399f60a5262f04/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjI0LjIwM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--769698700779bc32a9fbc26709399f60a5262f04/Copertina.jpg
+Completed 302 Found in 22ms (ActiveRecord: 1.2ms | Allocations: 7610)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjI0LjIwM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--769698700779bc32a9fbc26709399f60a5262f04/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:24 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 312)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjA2OjI0LjIwM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--769698700779bc32a9fbc26709399f60a5262f04/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:01:25 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 303)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:02:09 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 16.4ms | Allocations: 6767)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 97.6ms | Allocations: 16641)
+Completed 200 OK in 130ms (Views: 98.2ms | ActiveRecord: 3.1ms | Allocations: 29674)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:03:21 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 19.8ms | Allocations: 6806)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 97.3ms | Allocations: 16677)
+Completed 200 OK in 119ms (Views: 97.4ms | ActiveRecord: 3.2ms | Allocations: 29684)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:03:42 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 12.1ms | Allocations: 6767)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 98.6ms | Allocations: 16660)
+Completed 200 OK in 122ms (Views: 98.9ms | ActiveRecord: 3.3ms | Allocations: 29689)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:04:36 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 12.5ms | Allocations: 6786)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 89.8ms | Allocations: 16659)
+Completed 200 OK in 119ms (Views: 90.4ms | ActiveRecord: 3.1ms | Allocations: 29747)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:04:40 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.5ms | Allocations: 3099)
+
+
+  
+SyntaxError (C:/Users/ACER/Desktop/condominioOrganizer/CondominioOrganizer/app/models/ability.rb:15: syntax error, unexpected `end', expecting end-of-input):
+  
+app/models/ability.rb:15: syntax error, unexpected `end', expecting end-of-input
+app/models/ability.rb:15: syntax error, unexpected `end', expecting end-of-input
+app/models/ability.rb:15: syntax error, unexpected `end', expecting end-of-input
+app/controllers/condominios_controller.rb:14:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:05:01 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+Completed 500 Internal Server Error in 47ms (ActiveRecord: 2.3ms | Allocations: 18958)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:14:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:05:16 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+Completed 500 Internal Server Error in 43ms (ActiveRecord: 2.3ms | Allocations: 18605)
+
+
+  
+CanCan::Error (Subject is required for show):
+  
+app/models/ability.rb:9:in `initialize'
+app/controllers/condominios_controller.rb:14:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:05:47 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+Completed 500 Internal Server Error in 40ms (ActiveRecord: 3.0ms | Allocations: 18922)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:14:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:06:40 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 404 Not Found in 37ms (ActiveRecord: 3.4ms | Allocations: 20720)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Post with 'id'=2):
+  
+app/controllers/condominios_controller.rb:14:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:06:53 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 37ms (ActiveRecord: 3.3ms | Allocations: 19415)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:08:07 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 49ms (ActiveRecord: 3.1ms | Allocations: 19118)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 2+)):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:08:38 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 69.7ms | Allocations: 24449)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 168.6ms | Allocations: 34214)
+Completed 200 OK in 210ms (Views: 166.9ms | ActiveRecord: 7.7ms | Allocations: 53604)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQXVnRGFRR1ciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--2395721c7bc049afb6ad363b7325261b56b02875/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:08:41 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.4ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "MEQMo90vUbaBUv2and4Oal+ca/I="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+[36m  Disk Storage (1.9ms) [0m[34mGenerated URL for file at key: hhtnz3g7t6f92jl5aw2ewgl124wt (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjEzOjQyLjA1NVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--0238aa6f4b44b1316b5053f47280bb488561c87e/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjEzOjQyLjA1NVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--0238aa6f4b44b1316b5053f47280bb488561c87e/Copertina.jpg
+Completed 302 Found in 30ms (ActiveRecord: 2.4ms | Allocations: 11256)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjEzOjQyLjA1NVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--0238aa6f4b44b1316b5053f47280bb488561c87e/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:08:42 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 476)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:08:59 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 4.3ms | Allocations: 19506)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/2" for 127.0.0.1 at 2022-06-30 15:09:36 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 75.9ms | Allocations: 24450)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 170.9ms | Allocations: 34215)
+Completed 200 OK in 238ms (Views: 167.9ms | ActiveRecord: 10.8ms | Allocations: 53625)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjEzOjQyLjA1NVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--0238aa6f4b44b1316b5053f47280bb488561c87e/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:09:40 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 5ms (ActiveRecord: 0.0ms | Allocations: 628)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:09:43 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.7ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 10.0ms | Allocations: 1850)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 111.1ms | Allocations: 11634)
+Completed 200 OK in 118ms (Views: 111.8ms | ActiveRecord: 1.5ms | Allocations: 13619)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA2LTMwVDEzOjEzOjQyLjA1NVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--0238aa6f4b44b1316b5053f47280bb488561c87e/Copertina.jpg" for 127.0.0.1 at 2022-06-30 15:09:43 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 6ms (ActiveRecord: 0.0ms | Allocations: 400)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:10:17 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.7ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 19.4ms | Allocations: 6767)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 120.0ms | Allocations: 16636)
+Completed 200 OK in 156ms (Views: 120.6ms | ActiveRecord: 5.6ms | Allocations: 29702)
+
+
+Started DELETE "/condominios/2" for 127.0.0.1 at 2022-06-30 15:10:28 +0200
+Processing by CondominiosController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "id"=>"2"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 0.6ms | Allocations: 3284)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:61:in `destroy'
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:10:34 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 7.9ms | Allocations: 1793)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 92.4ms | Allocations: 11573)
+Completed 200 OK in 102ms (Views: 93.9ms | ActiveRecord: 1.4ms | Allocations: 13530)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-06-30 15:25:42 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 14.0ms | Allocations: 7090)
+  Rendered layout layouts/application.html.erb (Duration: 15.3ms | Allocations: 7170)
+Completed 500 Internal Server Error in 50ms (ActiveRecord: 1.2ms | Allocations: 20292)
+
+
+  
+SyntaxError (C:/Users/ACER/Desktop/condominioOrganizer/CondominioOrganizer/app/models/ability.rb:12: void value expression
+      return unless user.is_admin?  # add...
+      ^~~~~~
+):
+  
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:38:20 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.7ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 529.4ms | Allocations: 14177)
+  Rendered layout layouts/application.html.erb (Duration: 531.4ms | Allocations: 14257)
+Completed 500 Internal Server Error in 595ms (ActiveRecord: 2.9ms | Allocations: 18201)
+
+
+  
+SyntaxError (C:/Users/ACER/Desktop/condominioOrganizer/CondominioOrganizer/app/models/ability.rb:12: void value expression
+      return unless user.is_admin?  # add...
+      ^~~~~~
+):
+  
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:38:50 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 30.2ms | Allocations: 2831)
+  Rendered layout layouts/application.html.erb (Duration: 33.1ms | Allocations: 2911)
+Completed 500 Internal Server Error in 102ms (ActiveRecord: 3.1ms | Allocations: 5667)
+
+
+  
+SyntaxError (C:/Users/ACER/Desktop/condominioOrganizer/CondominioOrganizer/app/models/ability.rb:12: void value expression
+      return unless user.is_admin?  # add...
+      ^~~~~~
+):
+  
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/models/ability.rb:12: void value expression
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:50:13 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 144.5ms | Allocations: 12522)
+  Rendered layout layouts/application.html.erb (Duration: 146.1ms | Allocations: 12611)
+Completed 500 Internal Server Error in 276ms (ActiveRecord: 3.4ms | Allocations: 24998)
+
+
+  
+ActionView::Template::Error (undefined method `admin?' for #<User id: 1, email: "panceri.1884749@studenti.uniroma1.it", created_at: "2022-05-30 18:08:23.301029000 +0000", updated_at: "2022-05-30 18:08:23.301029000 +0000", uname: "andrea panceri", from_oauth: true, is_admin: false>):
+    26:           <td><%= condominio.flat_code %></td>
+    27:           <td><%= link_to 'Show', condominio %></td>
+    28:           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+    29:           <% if can? :show,condominio,current_user.id %>
+    30:           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    31:           <% end %>
+    32:         </tr>
+  
+app/models/ability.rb:12:in `initialize'
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:50:40 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 46.3ms | Allocations: 6957)
+  Rendered layout layouts/application.html.erb (Duration: 49.0ms | Allocations: 7031)
+Completed 500 Internal Server Error in 65ms (ActiveRecord: 2.6ms | Allocations: 8950)
+
+
+  
+ActionView::Template::Error (undefined method `admin?' for #<User id: 1, email: "panceri.1884749@studenti.uniroma1.it", created_at: "2022-05-30 18:08:23.301029000 +0000", updated_at: "2022-05-30 18:08:23.301029000 +0000", uname: "andrea panceri", from_oauth: true, is_admin: false>):
+    26:           <td><%= condominio.flat_code %></td>
+    27:           <td><%= link_to 'Show', condominio %></td>
+    28:           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+    29:           <% if can? :show,condominio,current_user.id %>
+    30:           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    31:           <% end %>
+    32:         </tr>
+  
+app/models/ability.rb:12:in `initialize'
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:50:44 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 25.3ms | Allocations: 6912)
+  Rendered layout layouts/application.html.erb (Duration: 27.0ms | Allocations: 6986)
+Completed 500 Internal Server Error in 36ms (ActiveRecord: 1.1ms | Allocations: 8692)
+
+
+  
+ActionView::Template::Error (undefined method `admin?' for #<User id: 1, email: "panceri.1884749@studenti.uniroma1.it", created_at: "2022-05-30 18:08:23.301029000 +0000", updated_at: "2022-05-30 18:08:23.301029000 +0000", uname: "andrea panceri", from_oauth: true, is_admin: false>):
+    26:           <td><%= condominio.flat_code %></td>
+    27:           <td><%= link_to 'Show', condominio %></td>
+    28:           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+    29:           <% if can? :show,condominio,current_user.id %>
+    30:           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    31:           <% end %>
+    32:         </tr>
+  
+app/models/ability.rb:12:in `initialize'
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:50:54 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:51
+  Rendered condominios/index.html.erb within layouts/application (Duration: 40.7ms | Allocations: 7875)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 389.3ms | Allocations: 18001)
+Completed 200 OK in 435ms (Views: 390.2ms | ActiveRecord: 4.4ms | Allocations: 31060)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:52:06 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.8ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 62.8ms | Allocations: 13832)
+  Rendered layout layouts/application.html.erb (Duration: 64.7ms | Allocations: 13921)
+Completed 500 Internal Server Error in 114ms (ActiveRecord: 6.1ms | Allocations: 26910)
+
+
+  
+ActionView::Template::Error (undefined method `public' for #<Condominio id: 2, nome: "conde", comune: "Roma", indirizzo: "Via tiburtina 214", latitude: 41.9046356, longitude: 12.5210994, codice: nil, created_at: "2022-06-28 10:59:51.792572000 +0000", updated_at: "2022-06-28 10:59:51.827136000 +0000", flat_code: "5c078">
+Did you mean?  public_send):
+    26:           <td><%= condominio.flat_code %></td>
+    27:           <td><%= link_to 'Show', condominio %></td>
+    28:           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+    29:           <% if can? :show,condominio,current_user.id %>
+    30:           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    31:           <% end %>
+    32:         </tr>
+  
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:52:40 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  Rendered condominios/index.html.erb within layouts/application (Duration: 61.6ms | Allocations: 8555)
+  Rendered layout layouts/application.html.erb (Duration: 67.0ms | Allocations: 8635)
+Completed 500 Internal Server Error in 131ms (ActiveRecord: 2.2ms | Allocations: 11474)
+
+
+  
+ActionView::Template::Error (undefined method `public' for #<Condominio id: 2, nome: "conde", comune: "Roma", indirizzo: "Via tiburtina 214", latitude: 41.9046356, longitude: 12.5210994, codice: nil, created_at: "2022-06-28 10:59:51.792572000 +0000", updated_at: "2022-06-28 10:59:51.827136000 +0000", flat_code: "5c078">
+Did you mean?  public_send):
+    26:           <td><%= condominio.flat_code %></td>
+    27:           <td><%= link_to 'Show', condominio %></td>
+    28:           <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
+    29:           <% if can? :show,condominio %>
+    30:           <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    31:           <% end %>
+    32:         </tr>
+  
+app/views/condominios/index.html.erb:29
+app/views/condominios/index.html.erb:21
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:53:10 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:51
+  Rendered condominios/index.html.erb within layouts/application (Duration: 11.6ms | Allocations: 2563)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 116.3ms | Allocations: 12667)
+Completed 200 OK in 135ms (Views: 125.2ms | ActiveRecord: 1.3ms | Allocations: 15500)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:53:46 +0200
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 10:53:49 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:51
+  Rendered condominios/index.html.erb within layouts/application (Duration: 38.0ms | Allocations: 7873)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 130.2ms | Allocations: 17747)
+Completed 200 OK in 166ms (Views: 130.6ms | ActiveRecord: 4.5ms | Allocations: 30811)
+
+
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.8ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:51
+  Rendered condominios/index.html.erb within layouts/application (Duration: 74.7ms | Allocations: 7809)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 218.5ms | Allocations: 17704)
+Completed 200 OK in 304ms (Views: 219.0ms | ActiveRecord: 8.7ms | Allocations: 30707)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:48:35 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.7ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.8ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 39.0ms | Allocations: 6783)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 218.7ms | Allocations: 16867)
+Completed 200 OK in 332ms (Views: 237.3ms | ActiveRecord: 4.6ms | Allocations: 29975)
+
+
+Started GET "/requests" for 127.0.0.1 at 2022-07-01 11:49:24 +0200
+Processing by RequestsController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering requests/index.html.erb within layouts/application
+  [1m[36mRequest Load (0.7ms)[0m  [1m[34mSELECT "requests".* FROM "requests"[0m
+  ↳ app/views/requests/index.html.erb:17
+  Rendered requests/index.html.erb within layouts/application (Duration: 50.6ms | Allocations: 1227)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 194.1ms | Allocations: 11096)
+Completed 200 OK in 300ms (Views: 205.8ms | ActiveRecord: 6.4ms | Allocations: 22144)
+
+
+Started GET "/enter" for 127.0.0.1 at 2022-07-01 11:49:34 +0200
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.0ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 40.99798869408127 AND 42.79663190591873 AND condominios.longitude BETWEEN 11.304929042340238 AND 13.721346557659764) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mCondomino Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mRequest Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "requests" WHERE "requests"."condominio_id" = ? AND "requests"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:49
+  [1m[36mCondomino Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 2], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  Rendered enter/index.html.erb within layouts/application (Duration: 698.1ms | Allocations: 39346)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 828.4ms | Allocations: 48970)
+Completed 200 OK in 880ms (Views: 828.9ms | ActiveRecord: 13.3ms | Allocations: 55568)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQVpacE53PT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--9a342e92570ff1da6d78abb7dd7383340a9393cd/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:49:35 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.7ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "VCf8TAphsAcNTIbMG3zaUc1utKk="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 3], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[36m  Disk Storage (5.5ms) [0m[34mGenerated URL for file at key: oqipq8mg1p7dfh47onogek6vzsxe (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg
+Completed 302 Found in 120ms (ActiveRecord: 4.0ms | Allocations: 11293)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:49:35 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms | Allocations: 476)
+
+
+Started POST "/requests" for 127.0.0.1 at 2022-07-01 11:49:36 +0200
+Processing by RequestsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "request"=>{"condominio_id"=>"1"}, "commit"=>"Richiedi accesso"}
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:36:in `block in create'
+  [1m[36mRequest Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "requests" WHERE "requests"."condominio_id" = ? AND "requests"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:36:in `block in create'
+  [1m[36mRequest Create (2.2ms)[0m  [1m[32mINSERT INTO "requests" ("condominio_id", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["condominio_id", 1], ["user_id", 1], ["created_at", "2022-07-01 09:49:36.874758"], ["updated_at", "2022-07-01 09:49:36.874758"]]
+  ↳ app/controllers/requests_controller.rb:36:in `block in create'
+  [1m[36mTRANSACTION (10.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:36:in `block in create'
+Redirected to http://127.0.0.1:3000/requests/1
+Completed 302 Found in 61ms (ActiveRecord: 13.9ms | Allocations: 6277)
+
+
+Started GET "/requests/1" for 127.0.0.1 at 2022-07-01 11:49:36 +0200
+Processing by RequestsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.7ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:72:in `set_request'
+  Rendering layout layouts/application.html.erb
+  Rendering requests/show.html.erb within layouts/application
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/requests/show.html.erb:9
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/requests/show.html.erb:14
+  Rendered requests/show.html.erb within layouts/application (Duration: 53.4ms | Allocations: 2423)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 177.9ms | Allocations: 11996)
+Completed 200 OK in 203ms (Views: 179.3ms | ActiveRecord: 2.3ms | Allocations: 14568)
+
+
+Started GET "/requests/1/edit" for 127.0.0.1 at 2022-07-01 11:49:39 +0200
+Processing by RequestsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.4ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:72:in `set_request'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:25:in `edit'
+  [1m[36mCondomino Create (2.0ms)[0m  [1m[32mINSERT INTO "condominos" ("condominio_id", "user_id", "is_condo_admin", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["condominio_id", 1], ["user_id", 1], ["is_condo_admin", 0], ["created_at", "2022-07-01 09:49:39.101023"], ["updated_at", "2022-07-01 09:49:39.101023"]]
+  ↳ app/controllers/requests_controller.rb:25:in `edit'
+  [1m[36mTRANSACTION (10.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:25:in `edit'
+Redirected to http://127.0.0.1:3000/condominios/1
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/requests_controller.rb:27:in `edit'
+  [1m[36mRequest Destroy (3.3ms)[0m  [1m[31mDELETE FROM "requests" WHERE "requests"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/requests_controller.rb:27:in `edit'
+  [1m[36mTRANSACTION (10.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/requests_controller.rb:27:in `edit'
+Completed 302 Found in 86ms (ActiveRecord: 28.0ms | Allocations: 10539)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:49:39 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 1.0ms | Allocations: 3875)
+
+
+  
+SyntaxError (C:/Users/ACER/Desktop/condominioOrganizer/CondominioOrganizer/app/models/ability.rb:40: syntax error, unexpected `end', expecting end-of-input):
+  
+app/models/ability.rb:40: syntax error, unexpected `end', expecting end-of-input
+app/models/ability.rb:40: syntax error, unexpected `end', expecting end-of-input
+app/models/ability.rb:40: syntax error, unexpected `end', expecting end-of-input
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/requests/1" for 127.0.0.1 at 2022-07-01 11:50:34 +0200
+Processing by RequestsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRequest Load (0.2ms)[0m  [1m[34mSELECT "requests".* FROM "requests" WHERE "requests"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/requests_controller.rb:72:in `set_request'
+Completed 404 Not Found in 32ms (ActiveRecord: 3.5ms | Allocations: 11793)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Request with 'id'=1):
+  
+app/controllers/requests_controller.rb:72:in `set_request'
+Started GET "/enter" for 127.0.0.1 at 2022-07-01 11:50:42 +0200
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (42.8ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 40.99798869408127 AND 42.79663190591873 AND condominios.longitude BETWEEN 11.304929042340238 AND 13.721346557659764) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mCondomino Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:49
+  [1m[36mCondomino Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 2], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  Rendered enter/index.html.erb within layouts/application (Duration: 476.5ms | Allocations: 36824)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 597.5ms | Allocations: 46442)
+Completed 200 OK in 622ms (Views: 534.1ms | ActiveRecord: 67.9ms | Allocations: 52569)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:50:43 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 4ms (ActiveRecord: 0.0ms | Allocations: 628)
+
+
+Started GET "/requests" for 127.0.0.1 at 2022-07-01 11:50:46 +0200
+Processing by RequestsController#index as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering requests/index.html.erb within layouts/application
+  [1m[36mRequest Load (1.1ms)[0m  [1m[34mSELECT "requests".* FROM "requests"[0m
+  ↳ app/views/requests/index.html.erb:17
+  Rendered requests/index.html.erb within layouts/application (Duration: 13.5ms | Allocations: 927)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 272.5ms | Allocations: 10614)
+Completed 200 OK in 298ms (Views: 278.8ms | ActiveRecord: 1.9ms | Allocations: 12757)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:50:47 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms | Allocations: 428)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:50:48 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (1.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 20.4ms | Allocations: 2211)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 191.2ms | Allocations: 11898)
+Completed 200 OK in 206ms (Views: 194.5ms | ActiveRecord: 2.6ms | Allocations: 14272)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:50:51 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (1.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 111ms (ActiveRecord: 1.8ms | Allocations: 8465)
+
+
+  
+NoMethodError (undefined method `condomino' for #<Condominio id: 1, nome: "comune roma", comune: "Roma", indirizzo: "via dei latini 18", latitude: 41.8973103, longitude: 12.5131378, codice: nil, created_at: "2022-05-30 13:05:25.116317000 +0000", updated_at: "2022-05-30 13:05:25.116317000 +0000", flat_code: "q1k89">
+Did you mean?  condominos
+               condominos=):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:51:29 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 94ms (ActiveRecord: 5.6ms | Allocations: 24092)
+
+
+  
+NoMethodError (undefined method `condomino' for #<Condominio id: 1, nome: "comune roma", comune: "Roma", indirizzo: "via dei latini 18", latitude: 41.8973103, longitude: 12.5131378, codice: nil, created_at: "2022-05-30 13:05:25.116317000 +0000", updated_at: "2022-05-30 13:05:25.116317000 +0000", flat_code: "q1k89">
+Did you mean?  condominos
+               condominos=):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:51:43 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:75:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 38ms (ActiveRecord: 0.8ms | Allocations: 7980)
+
+
+  
+NoMethodError (undefined method `condomino' for #<Condominio id: 1, nome: "comune roma", comune: "Roma", indirizzo: "via dei latini 18", latitude: 41.8973103, longitude: 12.5131378, codice: nil, created_at: "2022-05-30 13:05:25.116317000 +0000", updated_at: "2022-05-30 13:05:25.116317000 +0000", flat_code: "q1k89">
+Did you mean?  condominos
+               condominos=):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:53:01 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 1]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 105.4ms | Allocations: 12810)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 209.6ms | Allocations: 22426)
+Completed 200 OK in 260ms (Views: 208.6ms | ActiveRecord: 7.1ms | Allocations: 41088)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:53:09 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (1.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (1.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 25.2ms | Allocations: 1972)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 228.3ms | Allocations: 11426)
+Completed 200 OK in 246ms (Views: 230.4ms | ActiveRecord: 3.0ms | Allocations: 13286)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:53:12 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 1]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 18.2ms | Allocations: 3460)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 142.8ms | Allocations: 12788)
+Completed 200 OK in 153ms (Views: 143.9ms | ActiveRecord: 1.3ms | Allocations: 15035)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-07-01 11:53:15 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (1.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.8ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (4.9ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 130.0ms | Allocations: 16182)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 261.7ms | Allocations: 25880)
+Completed 200 OK in 288ms (Views: 254.9ms | ActiveRecord: 12.1ms | Allocations: 28141)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQXVnRGFRR1ciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--2395721c7bc049afb6ad363b7325261b56b02875/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:53:16 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.5ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "MEQMo90vUbaBUv2and4Oal+ca/I="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+[36m  Disk Storage (2.6ms) [0m[34mGenerated URL for file at key: hhtnz3g7t6f92jl5aw2ewgl124wt (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg
+Completed 302 Found in 55ms (ActiveRecord: 3.7ms | Allocations: 11265)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:53:16 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms | Allocations: 476)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:53:17 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms | Allocations: 305)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:53:45 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 16.5ms | Allocations: 6922)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 119.5ms | Allocations: 16799)
+Completed 200 OK in 155ms (Views: 120.5ms | ActiveRecord: 4.5ms | Allocations: 29807)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:53:50 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 1]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 72.3ms | Allocations: 12129)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 225.7ms | Allocations: 21699)
+Completed 200 OK in 246ms (Views: 224.2ms | ActiveRecord: 6.4ms | Allocations: 24236)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-07-01 11:53:53 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 82.9ms | Allocations: 16198)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 209.2ms | Allocations: 25694)
+Completed 200 OK in 223ms (Views: 207.1ms | ActiveRecord: 5.1ms | Allocations: 28068)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:53:54 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 6ms (ActiveRecord: 0.0ms | Allocations: 628)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU4OjE2LjMyN1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--fbd63a509ba7f63079d24091297a2f1b8aa51b68/Copertina.jpg" for 127.0.0.1 at 2022-07-01 11:53:55 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 326)
+
+
+Started GET "/condominios/1/edit" for 127.0.0.1 at 2022-07-01 11:54:34 +0200
+Processing by CondominiosController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/edit.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/_form.html.erb:14
+  Rendered condominios/_form.html.erb (Duration: 397.8ms | Allocations: 16129)
+  Rendered condominios/edit.html.erb within layouts/application (Duration: 461.0ms | Allocations: 16595)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 580.2ms | Allocations: 25969)
+Completed 200 OK in 609ms (Views: 583.0ms | ActiveRecord: 1.7ms | Allocations: 28593)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:54:59 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.3ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:72:in `set_condominio'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 1]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 21.5ms | Allocations: 3536)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 129.9ms | Allocations: 12865)
+Completed 200 OK in 144ms (Views: 130.7ms | ActiveRecord: 1.4ms | Allocations: 15323)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:57:44 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 22.8ms | Allocations: 6922)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 164.3ms | Allocations: 16792)
+Completed 200 OK in 213ms (Views: 165.3ms | ActiveRecord: 6.1ms | Allocations: 29857)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:57:51 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 38ms (ActiveRecord: 1.1ms | Allocations: 3775)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:57:56 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 24.0ms | Allocations: 1947)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 162.9ms | Allocations: 11728)
+Completed 200 OK in 176ms (Views: 164.2ms | ActiveRecord: 2.6ms | Allocations: 13682)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-07-01 11:57:59 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 30ms (ActiveRecord: 1.3ms | Allocations: 3180)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:58:06 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.7ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 17.1ms | Allocations: 1912)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 164.6ms | Allocations: 11559)
+Completed 200 OK in 173ms (Views: 165.2ms | ActiveRecord: 1.6ms | Allocations: 13293)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 11:58:21 +0200
+Processing by CondominiosController#index as HTML
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 28.7ms | Allocations: 6922)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 139.1ms | Allocations: 16791)
+Completed 200 OK in 190ms (Views: 138.6ms | ActiveRecord: 5.3ms | Allocations: 29855)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:58:27 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 101ms (ActiveRecord: 2.0ms | Allocations: 6484)
+
+
+  
+NameError (undefined local variable or method `user' for #<Ability:0x000001a4353c04d0 @rules=[#<CanCan::Rulecan [:show], [Condominio(id: integer, nome: string, comune: string, indirizzo: string, latitude: float, longitude: float, codice: string, created_at: datetime, updated_at: datetime, flat_code: string)], [], {}>], @rules_index={Condominio(id: integer, nome: string, comune: string, indirizzo: string, latitude: float, longitude: float, codice: string, created_at: datetime, updated_at: datetime, flat_code: string)=>[0]}, @expanded_actions={[:show]=>[:show]}, @aliased_actions={:read=>[:index, :show], :create=>[:new], :update=>[:edit]}>
+
+        c.condominos.exists?(is_admin: true, user_id: user.id)
+                                                      ^^^^
+Did you mean?  super):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 11:59:12 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+Completed 500 Internal Server Error in 126ms (ActiveRecord: 6.7ms | Allocations: 22180)
+
+
+  
+NameError (undefined local variable or method `current_user' for #<Ability:0x000001a4352af0c8 @rules=[#<CanCan::Rulecan [:show], [Condominio(id: integer, nome: string, comune: string, indirizzo: string, latitude: float, longitude: float, codice: string, created_at: datetime, updated_at: datetime, flat_code: string)], [], {}>], @rules_index={Condominio(id: integer, nome: string, comune: string, indirizzo: string, latitude: float, longitude: float, codice: string, created_at: datetime, updated_at: datetime, flat_code: string)=>[0]}, @expanded_actions={[:show]=>[:show]}, @aliased_actions={:read=>[:index, :show], :create=>[:new], :update=>[:edit]}>
+
+        c.condominos.exists?(is_admin: true, user_id: current_user.id)
+                                                      ^^^^^^^^^^^^):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 12:00:12 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.5ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  [1m[36mCondomino Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."is_admin" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["is_admin", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/ability.rb:32:in `block in authenticated_abilities'
+Completed 500 Internal Server Error in 111ms (ActiveRecord: 7.0ms | Allocations: 22564)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: condominos.is_admin):
+  
+app/models/ability.rb:32:in `block in authenticated_abilities'
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 12:00:57 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  [1m[36mCondomino Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."is_condo_admin" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["is_condo_admin", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/ability.rb:32:in `block in authenticated_abilities'
+Completed 500 Internal Server Error in 72ms (ActiveRecord: 5.5ms | Allocations: 22289)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/enter" for 127.0.0.1 at 2022-07-01 12:01:07 +0200
+Processing by EnterController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering enter/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT condominios.*, (111.19492664455873 * ABS(condominios.latitude - 41.8973103) * 0.7071067811865475) + (96.29763124613503 * ABS(condominios.longitude - 12.5131378) * 0.7071067811865475) AS distance, CASE WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude >= 12.5131378) THEN  45.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude >= 12.5131378) THEN 135.0 WHEN (condominios.latitude <  41.8973103 AND condominios.longitude <  12.5131378) THEN 225.0 WHEN (condominios.latitude >= 41.8973103 AND condominios.longitude <  12.5131378) THEN 315.0 END AS bearing FROM "condominios" WHERE (condominios.latitude BETWEEN 40.99798869408127 AND 42.79663190591873 AND condominios.longitude BETWEEN 11.304929042340238 AND 13.721346557659764) ORDER BY "distance" ASC[0m
+  ↳ app/views/enter/index.html.erb:45
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mCondomino Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:48
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:49
+  [1m[36mCondomino Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 2], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/enter/index.html.erb:60
+  Rendered enter/index.html.erb within layouts/application (Duration: 109.2ms | Allocations: 29470)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 206.0ms | Allocations: 39088)
+Completed 200 OK in 214ms (Views: 201.1ms | ActiveRecord: 7.2ms | Allocations: 41786)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhiM0ZwY0hFNGJXY3hjRGRrWm1nME4yOXViMmRsYXpaMmVuTjRaUVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDA5OjU0OjM1LjYyM1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--a4a67e1b325722e549abaf8fa208124ede020b35/Copertina.jpg" for 127.0.0.1 at 2022-07-01 12:01:07 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 404 Not Found in 6ms (ActiveRecord: 0.0ms | Allocations: 618)
+
+
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 12:01:15 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.9ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (2.2ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 21.0ms | Allocations: 2145)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 186.5ms | Allocations: 11832)
+Completed 200 OK in 202ms (Views: 187.9ms | ActiveRecord: 3.6ms | Allocations: 14061)
+
+
+Started GET "/condominios/2" for 127.0.0.1 at 2022-07-01 12:01:24 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (0.4ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.0ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  [1m[36mCondomino Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."is_condo_admin" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 2], ["is_condo_admin", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/ability.rb:32:in `block in authenticated_abilities'
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Condominio"], ["name", "avatar"], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:3
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/condominios/show.html.erb:4
+  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."condominio_id" = ?[0m  [["condominio_id", 2]]
+  ↳ app/views/condominios/show.html.erb:39
+  Rendered condominios/show.html.erb within layouts/application (Duration: 44.1ms | Allocations: 10080)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 158.5ms | Allocations: 19579)
+Completed 200 OK in 184ms (Views: 157.6ms | ActiveRecord: 4.5ms | Allocations: 23487)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQXVnRGFRR1ciLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--2395721c7bc049afb6ad363b7325261b56b02875/Copertina.jpg" for 127.0.0.1 at 2022-07-01 12:01:24 +0200
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3f940a1cd3ee7793fcb0c9b9737d53fcae33a9e3", "variation_key"=>"[FILTERED]", "filename"=>"Copertina"}
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.4ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = ? AND "active_storage_variant_records"."variation_digest" = ? LIMIT ?[0m  [["blob_id", 3], ["variation_digest", "MEQMo90vUbaBUv2and4Oal+ca/I="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+[36m  Disk Storage (1.7ms) [0m[34mGenerated URL for file at key: hhtnz3g7t6f92jl5aw2ewgl124wt (http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDEwOjA2OjI0LjQ4OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--86f70a621b4c167532aad16ae2fde6a386d24c3e/Copertina.jpg)[0m
+Redirected to http://127.0.0.1:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDEwOjA2OjI0LjQ4OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--86f70a621b4c167532aad16ae2fde6a386d24c3e/Copertina.jpg
+Completed 302 Found in 42ms (ActiveRecord: 3.3ms | Allocations: 11092)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDEwOjA2OjI0LjQ4OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--86f70a621b4c167532aad16ae2fde6a386d24c3e/Copertina.jpg" for 127.0.0.1 at 2022-07-01 12:01:24 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms | Allocations: 359)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9JYTJWNVNTSWhhR2gwYm5velp6ZDBObVk1TW1wc05XRjNNbVYzWjJ3eE1qUjNkQVk2QmtWVU9oQmthWE53YjNOcGRHbHZia2tpUldsdWJHbHVaVHNnWm1sc1pXNWhiV1U5SWtOdmNHVnlkR2x1WVM1cWNHY2lPeUJtYVd4bGJtRnRaU285VlZSR0xUZ25KME52Y0dWeWRHbHVZUzVxY0djR093WlVPaEZqYjI1MFpXNTBYM1I1Y0dWSklnOXBiV0ZuWlM5cWNHVm5CanNHVkRvUmMyVnlkbWxqWlY5dVlXMWxPZ3BzYjJOaGJBPT0iLCJleHAiOiIyMDIyLTA3LTAxVDEwOjA2OjI0LjQ4OVoiLCJwdXIiOiJibG9iX2tleSJ9fQ==--86f70a621b4c167532aad16ae2fde6a386d24c3e/Copertina.jpg" for 127.0.0.1 at 2022-07-01 12:01:26 +0200
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"Copertina"}
+Completed 200 OK in 5ms (ActiveRecord: 0.0ms | Allocations: 305)
+
+
+Started GET "/condominios/1" for 127.0.0.1 at 2022-07-01 12:01:28 +0200
+Processing by CondominiosController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCondominio Load (1.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:74:in `set_condominio'
+  [1m[36mCACHE Condominio Load (0.1ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE "condominios"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/condominios_controller.rb:14:in `show'
+  [1m[36mCondomino Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "condominos" WHERE "condominos"."condominio_id" = ? AND "condominos"."is_condo_admin" = ? AND "condominos"."user_id" = ? LIMIT ?[0m  [["condominio_id", 1], ["is_condo_admin", 1], ["user_id", 1], ["LIMIT", 1]]
+  ↳ app/models/ability.rb:32:in `block in authenticated_abilities'
+Completed 500 Internal Server Error in 51ms (ActiveRecord: 3.0ms | Allocations: 4151)
+
+
+  
+CanCan::AccessDenied (You are not authorized to access this page.):
+  
+app/controllers/condominios_controller.rb:15:in `show'
+Started GET "/condominios" for 127.0.0.1 at 2022-07-01 12:01:31 +0200
+Processing by CondominiosController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering layout layouts/application.html.erb
+  Rendering condominios/index.html.erb within layouts/application
+  [1m[36mCondominio Load (0.8ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = true) )[0m
+  ↳ app/views/condominios/index.html.erb:21
+  [1m[36mCondominio Load (0.6ms)[0m  [1m[34mSELECT "condominios".* FROM "condominios" WHERE (EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (1) AND condominos.is_condo_admin = false) )[0m
+  ↳ app/views/condominios/index.html.erb:49
+  Rendered condominios/index.html.erb within layouts/application (Duration: 13.7ms | Allocations: 1937)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 152.1ms | Allocations: 11714)
+Completed 200 OK in 164ms (Views: 153.4ms | ActiveRecord: 1.9ms | Allocations: 13481)
+
+
