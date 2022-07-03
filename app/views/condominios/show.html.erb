@@ -1,12 +1,11 @@
 <div class="container">
   <p id="notice"><%= notice %></p>
-
-    <% if @condominio.avatar.present? %>
-      <%= image_tag(@condominio.avatar.variant(resize_to_fill: [1000, 150])) %>
-    <% else %>
-      <%= image_tag("banner.png", width: 1000, height: 150) %>
-    <% end %>
-
+  <% if @condominio.avatar.present? %>
+    <%= image_tag(@condominio.avatar.variant(resize_to_fill: [1000, 150])) %>
+  <% else %>
+    <%= image_tag("banner.png", width: 1000, height: 150) %>
+  <% end %>
+  <h1>Informazioni condominio</h1>
   <p>
     <strong>Nome:</strong>
     <%= @condominio.nome %>
@@ -20,56 +19,67 @@
     <strong>Indirizzo:</strong>
     <%= @condominio.indirizzo %>
   </p>
-
   <p>
-    <strong>Latitudine:</strong>
-    <%= @condominio.latitude %>
+    <strong>Partecipanti:</strong>
+    <%= link_to 'Lista membri', condominios_path,:class => "btn btn-primary" %> 
   </p>
-
-  <p>
-    <strong>Longitudine:</strong>
-    <%= @condominio.longitude %>
-  </p>
-
-  <p>
-    <strong>Codice:</strong>
-    <%= @condominio.flat_code %>
-  </p>
-
-  <h2>Bacheca dei post:</h2>
-  <% @condominio.posts.each do |post| %>
-    <p>
-      <strong>Titolo:</strong>
-      <%= post.title %>
-    </p>
-    <strong>userid:</strong>
-      <%= post.user_id %>
-    <p>  
-    </p>
-    <p>
-      <strong>Post:</strong>
-      <%= post.body %>
-    </p>
-
-  <% end %>
-
-  <h2>Aggiungi un Post:</h2>
-  <%= form_with model: [@condominio, @condominio.posts.build ] do |form|
-  %>
-    <p>
-      <%= form.label :title  %><br>
-      <%= form.text_field :title %>
-    </p>
-    <p>
-      <%= form.label :body %><br>
-      <%= form.text_area :body %>
-    </p>
-    <p>
-      <%= form.submit "Crea Post",:class => "btn btn-primary" %>
-    </p>
-  <% end %>
-
   <% if can? :update, @condominio%>
-    <%= link_to 'Edit', edit_condominio_path(@condominio) %> | <% end %>
-  <%= link_to 'Back', condominios_path %>
+    <p>
+      <strong>Codice:</strong>
+      <%= @condominio.flat_code %>
+    </p>
+  <% end %>
+  <br>
+  <% if can? :update, @condominio%>
+    <%= link_to 'Edit', edit_condominio_path(@condominio),:class => "btn btn-primary" %> | <% end %>
+  <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>  
+  <br>
+  <div class="row gx-5 all-row">
+    <div class="col">
+      <h2>Bacheca dei post:</h2>
+        <% if @condominio.posts.exists? %>
+          <% @condominio.posts.each do |post| %>
+          <div class='card post-card'>
+            <div class="post">
+              <div class="card-header">
+                <div class="post">
+                  <% if current_user.avatar.present? %>
+                    <%= image_tag(current_user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
+                  <% else %>
+                    <%= image_tag("user.png", width: 150, height: 150, :class => "rounded-circle") %>
+                  <% end %>
+                  <p class="user"><%= User.find_by(id:post.user_id).uname %></p>
+                </div>
+              </div>
+              <div class="card-body message-body">
+                <h3 class="card-title"><%= post.title %></h3>
+                <p class="card-text"><%= post.body %></p>
+                <button type="button" class="btn btn-link btn-lg">Commenti</button>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <% else %>
+          <br>
+          <p><strong>Nessun post creato, clicca su crea post!</strong></p>
+        <% end %>  
+      </div>
+      <div class="col">
+      <h2>Aggiungi un Post:</h2>
+      <%= form_with model: [@condominio, @condominio.posts.build ] do |form|
+      %>
+        <p>
+          <%= form.label :title  %><br>
+          <%= form.text_field :title %>
+        </p>  
+        <p>
+          <%= form.label :body %><br>
+          <%= form.text_area :body %>
+        </p>
+        <p>
+          <%= form.submit "Crea Post",:class => "btn btn-primary" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
 </div>

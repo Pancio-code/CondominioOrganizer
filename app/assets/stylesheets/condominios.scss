@@ -1,3 +1,48 @@
 // Place all the styles related to the condominios controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.card img,
+.card-header img {
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  float: left;
+  margin: 10px;
+}
+
+.card-text {
+    letter-spacing: 0.01785714em !important;
+    font-size: 1.2rem !important;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.post-card {
+    width: 80%;
+    max-width: 540px !important;
+    margin-bottom: 15px;
+    border-radius: 0 0 15px 15px !important;
+}
+
+.mb-3 {
+    width: 80%;
+    max-width: 540px !important;
+    margin-bottom: 10px;
+    border-bottom: 2px solid chocolate !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.mb-3 p,
+.user {
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  letter-spacing: 0.01785714em !important;
+  font-size: 1.2rem !important;
+  line-height: 52px !important;
+}
+
+.delete-icon {
+  float: right;
+}

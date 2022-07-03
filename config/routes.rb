@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
   resources :enter
   resources :request
+  resources :post
   resources :condomino
   resources :condominios do
     resources :posts
