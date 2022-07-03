@@ -27,6 +27,7 @@ class Ability
       can :read, :sign_up
       can :read, Request do |r|
         r.requests.exists?(user_id: user.id)
+      end
     end
 
     def authenticated_abilities(user)

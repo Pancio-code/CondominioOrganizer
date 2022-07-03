@@ -11,14 +11,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    @condominio = Condominio.find(params[:condominio_id])
+    @post = @condominio.posts.find(params[:id])
     @post.destroy
-
-    respond_to do |format|
-      Post.where(id: @post.id).destroy_all
-      format.html { redirect_to condominios_url, notice: "Post cancellato." }
-      format.json { head :no_content }
-    end
+    redirect_to condominio_path(@condominio)
   end
+
   private
     def post_params
       params.require(:post).permit(:title, :body)

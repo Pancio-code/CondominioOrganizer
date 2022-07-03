@@ -58,6 +58,12 @@
               </div>
             </div>
           </div>
+          
+          <p>
+          <%= link_to 'Rimuovi post', [post.condominio, post],
+              method: :delete,
+              data: { confirm: "Sicuro di volet eliminare il comm?" } %>
+          </p>
           <% end %>
           <% else %>
           <br>
