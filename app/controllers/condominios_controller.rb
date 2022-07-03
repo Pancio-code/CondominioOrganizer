@@ -28,7 +28,6 @@ class CondominiosController < ApplicationController
   def create
     @condominio = Condominio.new(condominio_params)
 #    @condominio.condominos_attributes = [{ condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true }]
-    
 
     respond_to do |format|
       if @condominio.save!

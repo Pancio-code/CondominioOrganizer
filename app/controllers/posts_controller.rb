@@ -9,6 +9,16 @@ class PostsController < ApplicationController
       flash.now[:danger] = "error"
     end
   end
+
+  def destroy
+    @post.destroy
+
+    respond_to do |format|
+      Post.where(id: @post.id).destroy_all
+      format.html { redirect_to condominios_url, notice: "Post cancellato." }
+      format.json { head :no_content }
+    end
+  end
   private
     def post_params
       params.require(:post).permit(:title, :body)

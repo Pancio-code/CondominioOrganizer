@@ -40,3 +40,8 @@ th {
 td {
     font-size: medium;
 }
+
+.all-row {
+    width: 100% !important;
+    left: 0 !important;
+}
