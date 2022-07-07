@@ -3,11 +3,16 @@ class AdminController < ApplicationController
   before_action :is_admin
   def index
     if params[:nome] == nil || params[:nome] == ''
-      @utenti = User.all
+      @utenti = User.all.order(:uname)
     else 
-      @utenti = User.where("uname like ?", "%#{params[:nome]}%")
+      @utenti = User.where("uname like ?", "%#{params[:nome]}%").order(:uname)
     end
+    @numero_admin = User.where(is_admin: true).count
+    @numero_amministratori = Condomino.where(is_condo_admin: true).group_by(&:user_id).count
     @condomini = Condominio.all
+    @numero_richieste = Request.all.count
+    @numero_posts = Post.all.count
+    @numero_comments = Comment.all.count
   end
 
   def is_admin
@@ -19,11 +24,11 @@ class AdminController < ApplicationController
   def eleva_ad_admin
     respond_to do |format|
       if User.find_by(id: params[:user_id]).update(is_admin: true)
-        format.html { redirect_to condominio_condominos_path(Condominio.find_by(id: params[:condominio_id])), notice: User.find_by(id: params[:user_id]).uname + ' è diventato un amministratore del condominio.' }
-        format.json { render :show, status: :ok, location: @condominio }
+        format.html { redirect_to admin_index_path, notice: User.find_by(id: params[:user_id]).uname + ' è diventato un Admin del sito.' }
+        format.json { render :show, status: :ok, location: @condomini }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @condomino.errors, status: :unprocessable_entity }
+        format.json { render json: @condomini.errors, status: :unprocessable_entity }
       end
     end
   end
