@@ -10,12 +10,14 @@ class CondominosController < ApplicationController
   end
 
   def eleva_condomino
-    if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:user_id]).update(is_condo_admin: true)
-      format.html { redirect_to condominio_condominos_path(Condominio.find_by(id: params[:condominio_id])), notice: User.find_by(id: params[:user_id]).uname + ' è diventato un amministratore del condominio.' }
-      format.json { render :show, status: :ok, location: @condominio }
-    else
-      format.html { render :edit, status: :unprocessable_entity }
-      format.json { render json: @condomino.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:user_id]).update(is_condo_admin: true)
+        format.html { redirect_to condominio_condominos_path(Condominio.find_by(id: params[:condominio_id])), notice: User.find_by(id: params[:user_id]).uname + ' è diventato un amministratore del condominio.' }
+        format.json { render :show, status: :ok, location: @condominio }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @condomino.errors, status: :unprocessable_entity }
+      end
     end
   end
 

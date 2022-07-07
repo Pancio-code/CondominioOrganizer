@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
 
   def is_admin
     if current_user != nil && current_user.is_admin?
-      redirect_to '/admin'
+      redirect_to admin_index_path
     end
   end
 

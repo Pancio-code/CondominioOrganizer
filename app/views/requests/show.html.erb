@@ -16,6 +16,6 @@
 
   <% if can? :edit, @request%>
   <%= link_to 'Accetta', edit_request_path %> | <% end %>
-  <%= link_to 'Destroy', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
-  <%= link_to 'Back', requests_path %>
+  <%= link_to 'Annulla', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
+  <%= link_to 'Indietro', requests_path %>
 </div>

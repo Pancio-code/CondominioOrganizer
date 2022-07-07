@@ -1,2 +1,11 @@
-<h1>Admin#index</h1>
-<p>Find me in app/views/admin/index.html.erb</p>
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <br>
+    <h1>Dashboard Amministratore</h1>
+    <br>
+    <p>Utenti iscritti: <%= @utenti.count %></p>
+    <p>Condomini attivi: <%= @condomini.count %></p>
+    <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %> | <%= link_to 'Lista condomini', edit_user_registration_path ,:class => "btn btn-primary" %> | <%= link_to 'Lista membri', edit_user_registration_path ,:class => "btn btn-primary" %>
+</div>
