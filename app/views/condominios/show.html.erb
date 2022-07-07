@@ -31,8 +31,8 @@
   <% end %>
   <br>
   <% if can? :update, @condominio%>
-    <%= link_to 'Edit', edit_condominio_path(@condominio),:class => "btn btn-primary" %> | <% end %>
-  <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>  
+    <%= link_to 'Modifica', edit_condominio_path(@condominio),:class => "btn btn-primary" %> | <% end %>
+    <%= link_to 'Esci dal Condominio', condomino_path(Condomino.find_by(user_id: current_user.id, condominio_id: @condominio.id)), method: :delete, data: { confirm: 'Are you sure?' },:class => "btn btn-primary" %> | <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>
   <br>
   <div class="row gx-5 all-row">
     <div class="col">
@@ -88,5 +88,4 @@
       <% end %>
     </div>
   </div>
-  <%= link_to 'Esci da Condominio', condomino_path(Condomino.find_by(user_id: current_user.id, condominio_id: @condominio.id)), method: :delete %>
 </div>

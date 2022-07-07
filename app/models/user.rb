@@ -22,7 +22,7 @@ class User < ApplicationRecord
        from_oauth? || super(password)  
    end
 
-   has_many :condominos
+   has_many :condominos,dependent: :delete_all
    has_many :condominios, through: :condominos
    has_many :posts
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'
   resources :comments
   resources :requests
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
