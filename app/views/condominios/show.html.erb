@@ -54,14 +54,16 @@
               <div class="card-body message-body">
                 <h3 class="card-title"><%= post.title %></h3>
                 <p class="card-text"><%= post.body %></p>
-                <button type="button" class="btn btn-link btn-lg">Commenti</button>
+                <button type="button" class="btn btn-primary">Commenti</button>
+                <br>
+                <% if can? :Destroy, post%>
+                <%= link_to 'Rimuovi post', [post.condominio, post],
+                    method: :delete ,data: { confirm: 'Sei sicuro?' } %>
+                <% end %>
+                </p>
               </div>
             </div>
           </div>
-          <p>
-          <%= link_to 'Rimuovi post', [post.condominio, post],
-              method: :delete %>
-          </p>
           <% end %>
           <% else %>
           <br>

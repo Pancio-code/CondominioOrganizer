@@ -34,6 +34,12 @@ class Ability
       can [:show,:update,:destroy], Condominio do |c|
         c.condominos.exists?(is_condo_admin: true, user_id: user.id)
       end
+      can [:show,:destroy], Post do |p|
+        p.exists?(is_condo_admin: true, user_id: user.id)
+      end
+      can :edit, Request do |r|
+        Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",r.condominio_id,user.id).exists?
+      end
       can :show, Condominio
     end
 

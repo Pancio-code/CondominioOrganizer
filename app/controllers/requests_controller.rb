@@ -4,7 +4,8 @@ class RequestsController < ApplicationController
 
   # GET /requests or /requests.json
   def index
-    @requests = Request.all
+    @my_requests = Request.where(user_id: current_user.id)
+    @recived_requests = Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = requests.condominio_id AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",current_user.id)
   end
 
   # GET /requests/1 or /requests/1.json
