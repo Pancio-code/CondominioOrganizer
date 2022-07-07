@@ -21,7 +21,7 @@
   </p>
   <p>
     <strong>Partecipanti:</strong>
-    <%= link_to 'Lista membri', condominios_path,:class => "btn btn-primary" %> 
+    <%= link_to 'Lista membri', condominio_condominos_path(@condominio),:class => "btn btn-primary" %> 
   </p>
   <% if can? :update, @condominio%>
     <p>
