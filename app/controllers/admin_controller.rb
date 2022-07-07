@@ -2,7 +2,11 @@ class AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin
   def index
-    @utenti = User.all
+    if params[:nome] == nil || params[:nome] == ''
+      @utenti = User.all
+    else 
+      @utenti = User.where("uname like ?", "%#{params[:nome]}%")
+    end
     @condomini = Condominio.all
   end
 
@@ -12,7 +16,15 @@ class AdminController < ApplicationController
     end
   end
 
-  def eleva_amministratore
-    
+  def eleva_ad_admin
+    respond_to do |format|
+      if User.find_by(id: params[:user_id]).update(is_admin: true)
+        format.html { redirect_to condominio_condominos_path(Condominio.find_by(id: params[:condominio_id])), notice: User.find_by(id: params[:user_id]).uname + ' è diventato un amministratore del condominio.' }
+        format.json { render :show, status: :ok, location: @condominio }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @condomino.errors, status: :unprocessable_entity }
+      end
+    end
   end
 end
