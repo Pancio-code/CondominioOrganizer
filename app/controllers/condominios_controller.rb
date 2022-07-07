@@ -18,6 +18,7 @@ class CondominiosController < ApplicationController
   # GET /condominios/new
   def new
     @condominio = Condominio.new
+    authorize! :new, Condominio
   end
 
   # GET /condominios/1/edit
