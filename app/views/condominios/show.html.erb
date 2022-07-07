@@ -43,8 +43,8 @@
             <div class="post">
               <div class="card-header">
                 <div class="post">
-                  <% if current_user.avatar.present? %>
-                    <%= image_tag(current_user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
+                  <% if User.find_by(id: post.user_id).avatar.present? %>
+                    <%= image_tag(User.find_by(id: post.user_id).avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
                   <% else %>
                     <%= image_tag("user.png", width: 150, height: 150, :class => "rounded-circle") %>
                   <% end %>

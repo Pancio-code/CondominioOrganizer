@@ -13,6 +13,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, Post
     @condominio = Condominio.find(params[:condominio_id])
     @post = @condominio.posts.find(params[:id])
     @post.destroy

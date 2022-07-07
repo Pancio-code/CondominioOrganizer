@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :condominos
   resources :condominios do
     resources :posts
+    resources :condominos
   end
   resources :contacts, only: [:new, :create]
   root 'welcome#index'

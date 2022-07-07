@@ -7,6 +7,7 @@ class CondominosController < ApplicationController
   end
 
   def create
+    authorize! :create, Condominio
     @condomino = Condomino.new(condomino_params)
     @condomino.save!
   end

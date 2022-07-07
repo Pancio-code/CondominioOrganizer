@@ -31,19 +31,20 @@ class Ability
     end
 
     def authenticated_abilities(user)
-      can [:new,:show,:update,:destroy], Condominio do |c|
+      can [:new,:create,:show,:update,:destroy], Condominio do |c|
         c.condominos.exists?(is_condo_admin: true, user_id: user.id)
       end
-      can :destroy, Post do |p|
-        p.exists?(user_id: user.id) or Post.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",p.condominio_id,user.id).exists?
+      can :Destroy, Post do |p|
+        p.user_id == user.id or Post.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",p.condominio_id,user.id).exists?
       end
       can :edit, Request do |r|
         Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",r.condominio_id,user.id).exists?
       end
-      can [:new,:show], Condominio
+      can [:new,:create,:show], Condominio
     end
 
     def admin_abilities
-      # define abilities admins only
+      can :Destroy, Post
     end
 end
+
