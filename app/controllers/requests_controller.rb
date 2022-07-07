@@ -1,11 +1,18 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!
+  before_action :is_admin
   before_action :set_request, only: %i[ show destroy edit ]
 
   # GET /requests or /requests.json
   def index
     @my_requests = Request.where(user_id: current_user.id)
     @recived_requests = Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = requests.condominio_id AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",current_user.id)
+  end
+
+  def is_admin
+    if current_user != nil && current_user.is_admin?
+      redirect_to '/admin'
+    end
   end
 
   # GET /requests/1 or /requests/1.json

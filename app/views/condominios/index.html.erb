@@ -25,14 +25,14 @@
           <td><%= condominio.comune %></td>
           <td><%= condominio.indirizzo %></td>
           <td><%= condominio.flat_code %></td>
-          <td><%= link_to 'Show', condominio %></td>
-          <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
-          <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Bacheca', condominio %></td>
+          <td><%= link_to 'Modifica', edit_condominio_path(condominio) %></td>
+          <td><%= link_to 'Elimina', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= link_to 'New Condominio', new_condominio_path ,:class => "btn btn-primary" %>
+  <%= link_to 'Nuovo Condominio', new_condominio_path ,:class => "btn btn-primary" %>
 
   <br>
   <h2>Condomino:</h2>
@@ -52,11 +52,7 @@
           <td><%= condominio.nome %></td>
           <td><%= condominio.comune %></td>
           <td><%= condominio.indirizzo %></td>
-          <td><%= link_to 'Show', condominio %></td>
-          <% if can? :Destroy, condominio%>
-            <td><%= link_to 'Edit', edit_condominio_path(condominio) %></td>
-            <td><%= link_to 'Destroy', condominio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
+          <td><%= link_to 'Bacheca', condominio %></td>
         </tr>
       <% end %>
     </tbody>

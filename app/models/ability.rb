@@ -45,6 +45,8 @@ class Ability
 
     def admin_abilities
       can :Destroy, Post
+      can [:new,:create,:show,:update,:destroy], Condominio
+      can :edit, Request
     end
 end
 

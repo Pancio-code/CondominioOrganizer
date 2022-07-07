@@ -14,7 +14,7 @@
               <%= image_tag("user.png", width: 50, height: 50, :class => "rounded-circle") %>
             <% end %></td>
           <td><%= User.find_by(id: condomino.user_id).uname %></td>
-          <td><%= link_to 'Show', condomino %></td>
+          <td><%= link_to 'Informazioni', condomino %></td>
         </tr>
       <% end %>
     </tbody>
@@ -35,9 +35,9 @@
               <%= image_tag("user.png", width: 50, height: 50, :class => "rounded-circle") %>
             <% end %></td>
           <td><%= @User_avatar.uname %></td>
-          <td><%= link_to 'Show', condomino %></td>
+          <td><%= link_to 'Informazioni', condomino %></td>
           <% if can? :destroy, Condominio.find_by(id: condomino.condominio_id) %>
-          <td><%= link_to 'Espelli', condomino, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Espelli', condomino, method: :delete, data: { confirm: 'Sei sicuro di voler espellere ' + @User_avatar.uname + '?' } %></td>
           <td>
            <%= link_to 'Eleva membro', condominos_eleva_condomino_path(:condominio_id => condomino.condominio_id,:user_id => condomino.user_id), method: :eleva_condomino, data: { confirm: 'Sei sicuro di voler elevare ad amministratore ' + @User_avatar.uname + '?' } %>
           </td>

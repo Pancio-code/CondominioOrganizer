@@ -1,5 +1,6 @@
 class EnterController < ApplicationController
     before_action :authenticate_user!
+    before_action :is_admin
     before_action :set_condominio, only: %i[show]
   
     # GET /condominios or /condominios.json
@@ -12,6 +13,12 @@ class EnterController < ApplicationController
      else
       @condominios = Condominio.near([latitude,longitude], params[:distanza].present? ? params[:distanza] : 100, units: :km,:order => :distance)
      end
+    end
+
+    def is_admin
+      if current_user != nil && current_user.is_admin?
+        redirect_to '/admin'
+      end
     end
   
     # GET /condominios/1 or /condominios/1.json

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'admin/index'
   post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'
   resources :comments
   resources :requests
