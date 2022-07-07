@@ -67,7 +67,6 @@ class CondominiosController < ApplicationController
     @condominio.destroy
 
     respond_to do |format|
-      Condomino.where(condominio_id: @condominio_id).destroy_all
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }
     end
