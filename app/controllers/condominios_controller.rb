@@ -5,7 +5,11 @@ class CondominiosController < ApplicationController
 
   # GET /condominios or /condominios.json
   def index
-    @condominios = Condominio.all
+    if params[:nome] == nil || params[:nome] == ''
+      @condominios = Condominio.all.order(:name)
+    else 
+      @condominios = Condominio.where("nome like ?", "%#{params[:nome]}%").order(:nome)
+    end
     @condomini_amministrati = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",current_user.id)
     @condomini_partecipante = Condominio.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = condominios.id AND condominos.user_id = (?) AND condominos.is_condo_admin = false) ",current_user.id)
     authorize! :index, Condominio
@@ -34,7 +38,7 @@ class CondominiosController < ApplicationController
       if @condominio.save!
       	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
       	@condomino.save
-        format.html { redirect_to condominio_url(@condominio), notice: "Condominio was successfully created." }
+        format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,7 +51,7 @@ class CondominiosController < ApplicationController
   def update
     respond_to do |format|
       if @condominio.update(condominio_params)
-        format.html { redirect_to condominio_url(@condominio), notice: "Condominio was successfully updated." }
+        format.html { redirect_to condominio_url(@condominio), notice: "Condominio è stato aggiornato." }
         format.json { render :show, status: :ok, location: @condominio }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,12 +62,13 @@ class CondominiosController < ApplicationController
 
   # DELETE /condominios/1 or /condominios/1.json
   def destroy
+    authorize! :destroy, Condominio
     @condominio_id = @condominio.id
     @condominio.destroy
 
     respond_to do |format|
       Condomino.where(condominio_id: @condominio_id).destroy_all
-      format.html { redirect_to condominios_url, notice: "Condominio was successfully destroyed." }
+      format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }
     end
   end

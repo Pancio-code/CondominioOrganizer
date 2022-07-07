@@ -32,4 +32,12 @@ class AdminController < ApplicationController
       end
     end
   end
+
+  def destroy
+    User.find(params[:id]).destroy
+    respond_to do |format|
+      format.html { redirect_to admin_index_path, notice: "L'utente è stato cancellato." }
+      format.json { head :no_content }
+    end
+  end
 end

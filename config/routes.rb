@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'admin/index'
   post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'
   post 'admin/eleva_ad_admin', to: 'admin#eleva_ad_admin'
+  delete "/admin/:id" => "admin#destroy", as: :user
   resources :comments
   resources :requests
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
