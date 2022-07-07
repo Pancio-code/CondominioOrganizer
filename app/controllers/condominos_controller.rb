@@ -1,6 +1,15 @@
 class CondominosController < ApplicationController
   before_action :authenticate_user!
-#  before_action :set_request, only: %i[create destroy]
+# before_action :set_request, only: %i[create destroy]
+
+  def index
+    @condomini = Condomino.where(condomino_id: params[:condomino_id])
+    @condomini_amm = Condomino.where(condomino_id: params[:condomino_id], is_condo_admin: true)
+    authorize! :index, Condomino
+  end
+
+  def show
+  end
 
   def new
     @condomino = Condomino.new
