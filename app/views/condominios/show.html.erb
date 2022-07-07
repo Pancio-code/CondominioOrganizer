@@ -88,4 +88,5 @@
       <% end %>
     </div>
   </div>
+  <%= link_to 'Esci da Condominio', condomino_path(Condomino.find_by(user_id: current_user.id, condominio_id: @condominio.id)), method: :delete %>
 </div>
