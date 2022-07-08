@@ -50,6 +50,13 @@ class CondominosController < ApplicationController
 
   def choose_new_leader
     authorize! :destroy, Condominio
+    if params.has_key?(:condominio_id) && params.has_key?(:old_amministratore_id)
+      @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
+      @condomini = Condomino.where(condominio_id: params[:condominio_id], is_condo_admin: false)
+      @condominio_amministratore = params[:old_amministratore_id]
+    else
+      redirect_to root_path, :alert => "Parametri errati"
+    end
   end
 
   # GET /condominos/1 or /condominos/1.json
