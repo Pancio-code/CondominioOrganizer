@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'admin/index'
+  get "condominios/:id/condominos/cedi_ruolo_leader", to: 'condominos#choose_new_leader'
   post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'
+  post 'condominos/cedi_ruolo_leader', to: 'condominos#cedi_ruolo_leader'
   post 'admin/eleva_ad_admin', to: 'admin#eleva_ad_admin'
   delete "/admin/:id" => "admin#destroy", as: :user
   resources :comments

@@ -40,6 +40,9 @@ class Ability
       can :edit, Request do |r|
         Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",r.condominio_id,user.id).exists?
       end
+      can :cedi_ruolo_leader, Condomino do |c|
+        c.user_id == user.id and c.is_condo_admin?
+      end
       can [:new,:create,:show], Condominio
     end
 
@@ -47,6 +50,7 @@ class Ability
       can :Destroy, Post
       can [:new,:create,:show,:update,:destroy], Condominio
       can :edit, Request
+      can :cedi_ruolo_leader, Condomino
     end
 end
 
