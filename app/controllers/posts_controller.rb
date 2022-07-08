@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_request, only: %i [create destroy]
+  before_action :set_request, only: %i[create destroy]
   def create
     @condominio = Condominio.find(params[:condominio_id])
     @post       = @condominio.posts.create(post_params)
