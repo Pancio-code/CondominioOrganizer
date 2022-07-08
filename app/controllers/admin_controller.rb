@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   before_action :authenticate_user!
   before_action :is_admin
+
   def index
     if params[:nome] == nil || params[:nome] == ''
       @utenti = User.all.order(:uname)
@@ -13,6 +14,7 @@ class AdminController < ApplicationController
     @numero_richieste = Request.all.count
     @numero_posts = Post.all.count
     @numero_comments = Comment.all.count
+    authorize! :index, User
   end
 
   def is_admin
@@ -22,6 +24,7 @@ class AdminController < ApplicationController
   end
 
   def eleva_ad_admin
+    authorize! :eleva_ad_admin, User
     respond_to do |format|
       if User.find_by(id: params[:user_id]).update(is_admin: true)
         format.html { redirect_to admin_index_path, notice: User.find_by(id: params[:user_id]).uname + ' è diventato un Admin del sito.' }
@@ -34,6 +37,7 @@ class AdminController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, User
     User.find(params[:id]).destroy
     respond_to do |format|
       format.html { redirect_to admin_index_path, notice: "L'utente è stato cancellato." }

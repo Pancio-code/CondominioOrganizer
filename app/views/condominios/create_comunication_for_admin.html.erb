@@ -1,0 +1,30 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+
+    <h2>Comunicazione per admin</h1>
+    <br>
+    <div class="row gx-5">
+        <div class="col-4">
+            <%= form_tag(controller: "condominios", action: "comunication_for_admin", method: "post") do %>
+                <div class="row py-2">
+                    <div class="col-6">
+                        <%= label :message, "Messaggio da inviare:" %>
+                        <%= text_area_tag :message %>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-2">
+                        <%= hidden_field_tag :nome, @condominio_comunicazione.nome %>
+                        <%= hidden_field_tag :comune, @condominio_comunicazione.comune %>
+                        <%= hidden_field_tag :via, @condominio_comunicazione.indirizzo %>
+                        <%= submit_tag "Invia", :class => "btn btn-primary"  %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <%= link_to 'Indietro', :back,:class => "btn btn-primary" %>
+</div>
+

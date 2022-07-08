@@ -32,8 +32,7 @@ class CondominiosController < ApplicationController
   # POST /condominios or /condominios.json
   def create
     @condominio = Condominio.new(condominio_params)
-#    @condominio.condominos_attributes = [{ condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true }]
-
+    #@condominio.condominos_attributes = [{ condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true }]
     respond_to do |format|
       if @condominio.save!
       	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
@@ -46,6 +45,42 @@ class CondominiosController < ApplicationController
       end
     end
   end
+
+  def comunication_for_admin
+    authorize! :comunication_for_admin, Condominio
+    if params.has_key?(:comune) && params.has_key?(:via) && params.has_key?(:nome) && params.has_key?(:message)
+      if current_user.from_oauth?
+        msg = "From: John Doe <jdoe@machine.example>
+        To: Mary Smith <m.adrian.horning@gmail.com>
+        Subject: Hey hey
+        Date: Fri, 21 Nov 1997 09:55:06 -0600
+        This is a message just to say hello."
+        msg = Base64.urlsafe_encode64(msg).gsub('+', '-').gsub('/', '_')
+        client = Google::APIClient.new
+        client.authorization.access_token = User.first.fresh_token
+        service = client.discovered_api('gmail')
+        result = client.execute(
+            api_method:service.users.messages.to_h['gmail.users.messages.send'],  parameters: { userId: 'me' },
+            body_object: {
+                raw: msg
+            },
+        )
+        puts result.body
+      else
+        CondominioMailer.with(name: current_user.uname, email: current_user.email, condominio: params[:nome],comune: params[:comune] ,via: params[:via], message: params[:message]).new_comunication_mailer.deliver_later
+        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Mail inviata correttamente."
+      end
+    else
+      redirect_to root_path, :alert => "Errore nella creazione della mail."
+    end
+  end
+
+  def create_comunication_for_admin
+    authorize! :create_comunication_for_admin, Condominio
+    @condominio_comunicazione = Condominio.find(params[:condominio_id])
+  end
+
+  
 
   # PATCH/PUT /condominios/1 or /condominios/1.json
   def update
@@ -80,6 +115,6 @@ class CondominiosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def condominio_params
-      params.require(:condominio).permit(:nome, :comune, :indirizzo, :latitudine, :longitudine, :flat_code,:avatar)
+      params.require(:condominio).permit(:nome, :comune, :indirizzo, :latitudine, :longitudine, :flat_code,:avatar,:message,:via)
     end
 end

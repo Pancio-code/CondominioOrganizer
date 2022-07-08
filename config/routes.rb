@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'admin/index'
   get "condominos/choose_new_leader", to: 'condominos#choose_new_leader'
+  get "condominios/create_comunication_for_admin", to: 'condominios#create_comunication_for_admin'
+  post "condominios/comunication_for_admin", to: 'condominios#comunication_for_admin'
   post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'
   post 'condominos/cedi_ruolo_leader', to: 'condominos#cedi_ruolo_leader'
   post 'admin/eleva_ad_admin', to: 'admin#eleva_ad_admin'
