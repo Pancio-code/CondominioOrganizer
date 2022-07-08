@@ -56,10 +56,15 @@ class CondominosController < ApplicationController
 
   # DELETE /condominos/1 or /condominos/1.json
   def destroy
-    authorize! :destroy, Condomino
+    authorize! :destroy, Condominio
     @condomino = Condomino.find(params[:id])
+    @condominio = Condominio.find_by(id: @condomino.condominio_id)
     @condomino.destroy
-    redirect_to root_path()
+
+    respond_to do |format|
+      format.html { redirect_to condominio_condominos_path(@condominio), notice: "Membro espulso correttamente." }
+      format.json { head :no_content }
+    end
   end
 
   private
