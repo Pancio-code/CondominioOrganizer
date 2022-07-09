@@ -275,7 +275,7 @@ Devise.setup do |config|
     access_type: "offline",
     prompt: "consent",
     select_account: true,
-    scope: 'userinfo.profile,userinfo.email, calendar,gmail.compose,drive'
+    scope: 'userinfo.profile,userinfo.email, calendar,gmail.send,drive'
   }
 
   # ==> Warden configuration

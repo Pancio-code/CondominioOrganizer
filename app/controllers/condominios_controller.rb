@@ -50,22 +50,19 @@ class CondominiosController < ApplicationController
     authorize! :comunication_for_admin, Condominio
     if params.has_key?(:comune) && params.has_key?(:via) && params.has_key?(:nome) && params.has_key?(:message)
       if current_user.from_oauth?
-        msg = "From: John Doe <jdoe@machine.example>
-        To: Mary Smith <m.adrian.horning@gmail.com>
-        Subject: Hey hey
-        Date: Fri, 21 Nov 1997 09:55:06 -0600
-        This is a message just to say hello."
-        msg = Base64.urlsafe_encode64(msg).gsub('+', '-').gsub('/', '_')
-        client = Google::APIClient.new
-        client.authorization.access_token = User.first.fresh_token
-        service = client.discovered_api('gmail')
-        result = client.execute(
-            api_method:service.users.messages.to_h['gmail.users.messages.send'],  parameters: { userId: 'me' },
-            body_object: {
-                raw: msg
-            },
-        )
-        puts result.body
+        require 'json' 
+        token, refresh_token = *JSON.parse(File.read('credentials.data'))
+        client = Signet::OAuth2::Client.new(access_token: token,scope: 'gmail.send')
+        service = Google::Apis::GmailV1::GmailService.new
+        service.authorization = client
+        m = Mail.new(
+          to: Figaro.env.email_di_servizio, 
+          from: current_user.email, 
+          subject: "Comunicazione da un amministratore:",
+          body: params[:message])
+        message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
+        service.send_user_message('me', message_object)
+        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Mail inviata correttamente dal tuo account Gmail."
       else
         CondominioMailer.with(name: current_user.uname, email: current_user.email, condominio: params[:nome],comune: params[:comune] ,via: params[:via], message: params[:message]).new_comunication_mailer.deliver_later
         redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Mail inviata correttamente."
