@@ -3,11 +3,11 @@
 one:
   title: MyString
   body: MyText
-  condominio: one
   user: one
+  condominio: one
 
 two:
   title: MyString
   body: MyText
-  condominio: two
   user: two
+  condominio: two

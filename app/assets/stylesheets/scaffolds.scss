@@ -1,19 +1,17 @@
-html {
-  height: 100%;
-  width: 100%;
-}
-
 body {
   background-color: #fff;
   color: #333;
-  height: 100%;
-  width: 100%;
-}
+  margin: 33px; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;}
+  font-size: 13px;
+  line-height: 18px; }
 
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px; }
 
 a {
   color: #000; }
@@ -63,6 +61,5 @@ div.actions {
   font-size: 12px;
   list-style: square; }
 
-  label {
-    font-weight: bold; 
-  }
+label {
+  display: block; }
