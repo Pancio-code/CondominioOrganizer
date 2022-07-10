@@ -4,6 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+      
     anyone_abilities 
 
     if user
@@ -54,4 +55,7 @@ class Ability
       can [:index,:destroy,:eleva_ad_admin], User
     end
 end
+
+
+#ciaooooooo
 
