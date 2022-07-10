@@ -1,0 +1,92 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.welcome-navbar {
+    background-color:rgba(0, 0, 0, 0.8) !important;
+    border-bottom: 1px solid white;
+}
+
+.welcome-container {
+    padding: 0px !important;
+    height: 100% !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), image-url('Copertina.jpg');
+    overflow-y: auto;
+}
+
+.welcome-banner {
+    width: 100%;
+    padding-top: calc(128px + 1vmax);
+    text-align:center;
+    padding-bottom: calc(32px + 1vmax);;
+}
+
+.welcome-h1 {
+    font-size: calc(32px + 1vmax);
+    font-weight: bold;
+    color: white;
+}
+
+.welcome-p {
+    font-size: calc(16px + 1vmax);
+    color:white; 
+}
+
+.welcome-messages {
+    font-size: calc(16px + 1vmax);
+    color:red;   
+}
+
+.welcome-footer {
+    position: absolute;
+    font-size: calc(16px + 1vmax);
+    bottom: 0px;
+    width: 100%;
+    background-color:rgba(0, 0, 0, 0.8) !important;
+    border-top: 1px solid white;
+    text-align: center;
+}
+
+.welcome-navbar-toggler {
+    margin-right: 10px !important;
+}
+
+.welcome-nav-item {
+    border: solid 1px #fff;
+    border-radius: 5px 5px 5px 5px;
+    margin-right: 5px;
+}
+
+.welcome-footer a {
+    color: #fff;
+    text-decoration:none;
+}
+
+.welcome-footer a:visited {
+    color: #fff; 
+}
+
+.welcome-footer a:hover ,.welcome-nav-item a:hover{
+    color: #fff;
+    border-radius: 5px 5px 5px 5px;
+    background-color:rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 992px) {
+    .welcome-nav-item {
+        border: none;
+        margin-right: 0px;
+    }
+    .welcome-navbar-brand {
+        display: none;
+    }
+}
+
+@media (max-width: 304px) {
+    .welcome-nav-item {
+        border: none;
+        margin-right: 0px;
+    }
+    .navbar-brand {
+        display: none;
+    }
+}

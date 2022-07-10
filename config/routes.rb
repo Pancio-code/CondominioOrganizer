@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tasks
   get 'admin/index'
   get "condominos/choose_new_leader", to: 'condominos#choose_new_leader'
   get "condominios/create_comunication_for_admin", to: 'condominios#create_comunication_for_admin'
