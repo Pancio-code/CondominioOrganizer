@@ -7,14 +7,15 @@ Rails.application.routes.draw do
   post 'condominos/cedi_ruolo_leader', to: 'condominos#cedi_ruolo_leader'
   post 'admin/eleva_ad_admin', to: 'admin#eleva_ad_admin'
   delete "/admin/:id" => "admin#destroy", as: :user
-  resources :comments
   resources :requests
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   authenticate(:users) do
   	resources :users
   end
   resources :enter
-  resources :post
+  resources :posts do
+    resources :comments
+  end
   resources :condominos
   resources :condominios do
     resources :posts

@@ -1,0 +1,44 @@
+<h1><%= @post.title %></h1>
+
+<p><%= @post.body %></p>
+
+<h2>Commenti</h2>
+<% @post.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.user_id %>
+  </p>
+
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+
+<h2>Add a comment:</h2>
+<%= form_with model: [ @article, @article.comments.build ] do |form| %>
+  <p>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+
+<h2>Add a comment:</h2>
+<%= form_with model: [ @post, @post.comments.build ] do |form| %>
+ <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
