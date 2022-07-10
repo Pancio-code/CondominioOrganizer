@@ -10,7 +10,7 @@
                 <div class="row py-2">
                     <div class="col-6">
                         <%= label :message, "Messaggio da inviare:" %>
-                        <%= text_area_tag :message %>
+                        <%= text_area_tag :message,nil, required: true %>
                     </div>
                 </div>
                 <div class="row py-2">
@@ -25,6 +25,6 @@
         </div>
     </div>
     <br>
-    <%= link_to 'Indietro', :back,:class => "btn btn-primary" %>
+    <%= link_to 'Indietro', @condominio_comunicazione,:class => "btn btn-primary" %>
 </div>
 

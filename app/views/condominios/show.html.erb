@@ -79,11 +79,11 @@
       %>
         <p>
           <%= form.label :title  %><br>
-          <%= form.text_field :title %>
+          <%= form.text_field :title,required: true %>
         </p>  
         <p>
           <%= form.label :body %><br>
-          <%= form.text_area :body %>
+          <%= form.text_area :body,required: true %>
         </p>
         <p>
           <%= form.submit "Crea Post",:class => "btn btn-primary" %>

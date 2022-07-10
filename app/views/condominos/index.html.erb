@@ -56,7 +56,7 @@
   </table>
 
   <% if can? :destroy, @condominio_attuale %>
-  <%= link_to 'Invita Condomino', new_condomino_path,:class => "btn btn-primary" %> | <% end %>
-  <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>
+  <%= link_to 'Invita Condomino', new_condomino_path(@condominio_attuale.id),:class => "btn btn-primary" %> | <% end %>
+  <%= link_to 'Home', @condominio_attuale,:class => "btn btn-primary" %>
 </div>
 

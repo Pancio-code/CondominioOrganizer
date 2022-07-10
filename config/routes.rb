@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
   resources :enter
   resources :post
-  resources :condominos
+  resources :condominos,path: "condominos/new/:id" 
   resources :condominios do
     resources :posts
     resources :condominos
