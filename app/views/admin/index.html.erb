@@ -12,7 +12,7 @@
     <h5>Richieste in attesa di approvazione: <%= @numero_richieste %></h5>
     <h5>Post creati: <%= @numero_posts %></h5>
     <h5>Commenti creati: <%= @numero_comments %></h5>
-    <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %> | <%= link_to 'Lista condomini', '/condominios' ,:class => "btn btn-primary" %>
+    <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %> | <%= link_to 'Lista condomini', '/condominios' ,:class => "btn btn-primary" %> <% if @numero_amministratori > 0 %> | <%= link_to 'Comunica con Amministratori', admin_create_comunication_for_leader_path ,:class => "btn btn-primary" %> <% end %>
     <br>
     <h2 class="py-3">Membri del condominio</h2>
     <div class="row gx-5">

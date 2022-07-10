@@ -53,14 +53,12 @@ class CondominiosController < ApplicationController
         require 'json' 
         token, refresh_token = *JSON.parse(File.read('credentials.data'))
         client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
-
         if client.expired?
           new_token = client.refresh!
-
           @new_tokens =
             {
-              :access_token  => new_token.token,
-              :refresh_token => new_token.refresh_token
+              :access_token  => new_token["access_token"],
+              :refresh_token => new_token["refresh_token"]
             }
         
           client.access_token  = @new_tokens[ :access_token ]

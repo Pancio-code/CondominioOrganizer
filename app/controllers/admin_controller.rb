@@ -36,6 +36,49 @@ class AdminController < ApplicationController
     end
   end
 
+  def create_comunication_for_leader
+    authorize! :create_comunication_for_leader, User
+    @condomini = Condomino.where(is_condo_admin: true).distinct(:user_id).order(:uname)
+  end
+
+  def comunication_for_leader
+    authorize! :comunication_for_leader, User
+    if params.has_key?(:email) && params.has_key?(:message)
+      if current_user.from_oauth?
+        require 'json' 
+        token, refresh_token = *JSON.parse(File.read('credentials.data'))
+        client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
+        if client.expired?
+          new_token = client.refresh!
+          @new_tokens =
+            {
+              :access_token  => new_token["access_token"],
+              :refresh_token => new_token["refresh_token"]
+            }
+        
+          client.access_token  = @new_tokens[ :access_token ]
+          client.refresh_token = @new_tokens[ :refresh_token ]
+          File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+        end
+        service = Google::Apis::GmailV1::GmailService.new
+        service.authorization = client
+        m = Mail.new(
+          to: params[:email], 
+          from: current_user.email, 
+          subject: "Comunicazione dall' Admin di CondominioOrganizer:",
+          body: params[:message])
+        message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
+        service.send_user_message('me', message_object)
+        redirect_to admin_index_path, :notice => "Mail inviata correttamente al Leader condominio."
+      else
+        CondominioMailer.with(name: current_user.uname, email: params[:email], condominio: params[:nome], message: params[:message]).new_comunication_for_leader_mailer.deliver_later
+        redirect_to admin_index_path, :notice => "Mail inviata correttamente al Leader condominio."
+      end
+    else
+      redirect_to admin_create_comunication_for_leader_path, :notice => "Parametri errati o errore nell'invio al server."
+    end
+  end
+
   def destroy
     authorize! :destroy, User
     User.find(params[:id]).destroy

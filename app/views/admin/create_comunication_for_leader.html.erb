@@ -1,0 +1,51 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+
+    <h2>Comunicazione per il Leader</h1>
+    <br>
+    <div class="row gx-5">
+        <div class="col-4">
+            <%= form_tag(controller: "admin", action: "comunication_for_leader", method: "post") do %>
+                <div class="row py-2">
+                    <div class="col-6">
+                        <%= label :message, "Messaggio da inviare:" %>
+                        <%= text_area_tag :message,nil, required: true %>
+                    </div>
+                </div>
+                <br>
+                <h3 class="py-2">Seleziona il Leader:</h3>
+                <% contatore = 1 %>
+                <% @condomini.each do |condomino| %>
+                    <% if condomino.user_id != current_user.id %>
+                        <div class="row py-2">
+                            <div class="col-5">
+                                <% if User.find_by(id: condomino.user_id).avatar.present? %>
+                                    <%= image_tag(User.find_by(id: condomino.user_id).avatar.variant(resize_to_fill: [20, 20]), class: "rounded-circle") %>
+                                <% else %>
+                                    <%= image_tag("user.png", width: 20, height:20, :class => "rounded-circle") %>
+                                <% end %>
+                                <%= User.find_by(id: condomino.user_id).uname %>
+                            </div>
+                            <div class="col-2">
+                                <%if contatore == 1 %>
+                                    <%= radio_button_tag(:email, User.find_by(id: condomino.user_id).email, :checked => 'true') %>
+                                <% else %>
+                                    <%= radio_button_tag(:email, User.find_by(id: condomino.user_id).email) %>
+                                <% end %>
+                                <% contatore += 1 %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+                <div class="row py-2">
+                    <div class="col-2">
+                        <%= submit_tag "Invia messaggio al Leader", :class => "btn btn-primary"  %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <%= link_to 'Indietro', admin_index_path,:class => "btn btn-primary" %>
+</div>

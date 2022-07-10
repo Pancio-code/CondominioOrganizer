@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get "condominos/choose_new_leader", to: 'condominos#choose_new_leader'
   get "condominos/get_comunicazione_del_leader", to: 'condominos#get_comunicazione_del_leader'
   get "condominios/create_comunication_for_admin", to: 'condominios#create_comunication_for_admin'
+  get "admin/create_comunication_for_leader", to: 'admin#create_comunication_for_leader'
+  post "admin/comunication_for_leader", to: 'admin#comunication_for_leader'
   post "condominios/comunication_for_admin", to: 'condominios#comunication_for_admin'
   post "condominos/post_comunicazione_del_leader", to: 'condominos#post_comunicazione_del_leader'
   post 'condominos/eleva_condomino', to: 'condominos#eleva_condomino'

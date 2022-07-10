@@ -57,7 +57,7 @@
               <div class="card-body message-body">
                 <h3 class="card-title"><%= post.title %></h3>
                 <p class="card-text"><%= post.body %></p>
-                <%= link_to 'Commenti', post_comments_path(post),:class => "btn btn-primary" %>
+                <%= link_to 'Commenti', post_path(post),:class => "btn btn-primary" %>
                 <br>
                 <% if can? :Destroy, post%>
                 <%= link_to 'Rimuovi post', [post.condominio, post],

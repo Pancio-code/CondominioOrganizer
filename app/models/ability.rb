@@ -51,7 +51,7 @@ class Ability
       can [:new,:create,:show,:update,:destroy], Condominio
       can :edit, Request
       can :cedi_ruolo_leader, Condomino
-      can [:index,:destroy,:eleva_ad_admin], User
+      can [:index,:destroy,:eleva_ad_admin,:create_comunication_for_leader,:comunication_for_leader], User
     end
 end
 

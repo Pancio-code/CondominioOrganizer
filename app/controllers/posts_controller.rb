@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /posts or /posts.json
   def index
@@ -49,10 +50,12 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    @condominio = Condominio.find(params[:condominio_id])
+    @post = @condominio.posts.find(params[:id])
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to condominio_path(@condominio), notice: "Post eliminato correttamente." }
       format.json { head :no_content }
     end
   end

@@ -80,11 +80,10 @@ class CondominosController < ApplicationController
   
           if client.expired?
             new_token = client.refresh!
-
             @new_tokens =
               {
-                :access_token  => new_token.token,
-                :refresh_token => new_token.refresh_token
+                :access_token  => new_token["access_token"],
+                :refresh_token => new_token["refresh_token"]
               }
           
             client.access_token  = @new_tokens[ :access_token ]
@@ -121,11 +120,10 @@ class CondominosController < ApplicationController
   
           if client.expired?
             new_token = client.refresh!
-
             @new_tokens =
               {
-                :access_token  => new_token.token,
-                :refresh_token => new_token.refresh_token
+                :access_token  => new_token["access_token"],
+                :refresh_token => new_token["refresh_token"]
               }
           
             client.access_token  = @new_tokens[ :access_token ]
@@ -181,11 +179,10 @@ class CondominosController < ApplicationController
 
         if client.expired?
           new_token = client.refresh!
-
           @new_tokens =
             {
-              :access_token  => new_token.token,
-              :refresh_token => new_token.refresh_token
+              :access_token  => new_token["access_token"],
+              :refresh_token => new_token["refresh_token"]
             }
         
           client.access_token  = @new_tokens[ :access_token ]
