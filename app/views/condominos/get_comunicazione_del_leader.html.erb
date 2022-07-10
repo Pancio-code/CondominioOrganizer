@@ -6,7 +6,8 @@
     <br>
     <div class="row gx-5">
         <div class="col-4">
-            <%= form_tag(controller: "condominios", action: "comunication_for_admin", method: "post") do %>
+            <%= form_tag(controller: "condominos", action: "post_comunicazione_del_leader", method: "post") do %>
+                <%= hidden_field_tag :condominio_id, @condominio.id %>
                 <div class="row py-2">
                     <div class="col-6">
                         <%= label :message, "Messaggio da inviare:" %>
@@ -16,29 +17,37 @@
                 <%= submit_tag "Invia a tutti", :class => "btn btn-primary"  %>
                 <br>
                 <h3 class="py-4">...Oppure seleziona i riceventi:</h3>
+                <% contatore = 1 %>
                 <% @condomini.each do |condomino| %>
-                <div class="row py-2">
-                    <div class="col-5">
-                        <% if User.find_by(id: condomino.user_id).avatar.present? %>
-                            <%= image_tag(User.find_by(id: condomino.user_id).avatar.variant(resize_to_fill: [20, 20]), class: "rounded-circle") %>
-                         <% else %>
-                            <%= image_tag("user.png", width: 20, height:20, :class => "rounded-circle") %>
-                        <% end %>
-                        <%= User.find_by(id: condomino.user_id).uname %>
-                    </div>
-                    <div class="col-2">
-                        <%= radio_button_tag(:new_amministratore_id, condomino.user_id, :checked => 'true') %>
-                    </div>
-                </div>
+                    <% if condomino.user_id != current_user.id %>
+                        <div class="row py-2">
+                            <div class="col-5">
+                                <% if User.find_by(id: condomino.user_id).avatar.present? %>
+                                    <%= image_tag(User.find_by(id: condomino.user_id).avatar.variant(resize_to_fill: [20, 20]), class: "rounded-circle") %>
+                                <% else %>
+                                    <%= image_tag("user.png", width: 20, height:20, :class => "rounded-circle") %>
+                                <% end %>
+                                <%= User.find_by(id: condomino.user_id).uname %>
+                            </div>
+                            <div class="col-2">
+                                <%if contatore == 1 %>
+                                    <%= check_box_tag('user_select_email[]', User.find_by(id: condomino.user_id).email, :checked => 'true') %>
+                                <% else %>
+                                    <%= check_box_tag('user_select_email[]', User.find_by(id: condomino.user_id).email) %>
+                                <% end %>
+                                <% contatore += 1 %>
+                            </div>
+                        </div>
+                    <% end %>
                 <% end %>
                 <div class="row py-2">
                     <div class="col-2">
-                        <%= submit_tag "Invia ai condomini selezioni", :class => "btn btn-primary"  %>
+                        <%= submit_tag "Invia ai condomini selezionati", :class => "btn btn-primary"  %>
                     </div>
                 </div>
             <% end %>
         </div>
     </div>
     <br>
-    <%= link_to 'Indietro', @condominio_comunicazione,:class => "btn btn-primary" %>
+    <%= link_to 'Indietro', condominio_condominos_path(@condominio),:class => "btn btn-primary" %>
 </div>

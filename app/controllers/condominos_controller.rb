@@ -63,11 +63,100 @@ class CondominosController < ApplicationController
   #def show
   #end
   def get_comunicazione_del_leader
-
+    authorize! :destroy, Condominio
+    @condominio = Condominio.find(params[:condominio_id])
+    @condomini = Condomino.where(condominio_id: params[:condominio_id])
   end
 
   def post_comunicazione_del_leader
+    authorize! :destroy, Condominio
+    if params.has_key?(:commit) && params.has_key?(:message) && params.has_key?(:user_select_email)
+      if params[:commit] == 'Invia a tutti'
+        @condomini_all = Condomino.where('condominio_id == ? and user_id != ?',params[:condominio_id], current_user.id)
+        if current_user.from_oauth?
+          require 'json' 
+          token, refresh_token = *JSON.parse(File.read('credentials.data'))
+          client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
+  
+          if client.expired?
+            new_token = client.refresh!
 
+            @new_tokens =
+              {
+                :access_token  => new_token.token,
+                :refresh_token => new_token.refresh_token
+              }
+          
+            client.access_token  = @new_tokens[ :access_token ]
+            client.refresh_token = @new_tokens[ :refresh_token ]
+            File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+          end
+          service = Google::Apis::GmailV1::GmailService.new
+          service.authorization = client
+
+          @condomini_all.each do |condomino| 
+            @condomino_corrente = User.find(condomino.user_id)
+            m = Mail.new(
+              to: @condomino_corrente.email, 
+              from: current_user.email, 
+              subject: "Comunicazione dall'amministratore del condominio:",
+              body: params[:message])
+            message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
+            service.send_user_message('me', message_object)
+          end
+          redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente a tutti i condomini."
+        else
+          @condomini_all.each do |condomino| 
+            @condomino_corrente = User.find(condomino.user_id)
+            @condominio_mailer = Condominio.find(params[:condominio_id])
+            CondominioMailer.with(name: current_user.uname, email: @condomino_corrente.email, condominio: @condominio_mailer.nome, message: params[:message]).new_comunication_for_condomini_mailer.deliver_later
+          end
+          redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente a tutti i condomini."
+        end
+      else
+        if current_user.from_oauth?
+          require 'json' 
+          token, refresh_token = *JSON.parse(File.read('credentials.data'))
+          client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
+  
+          if client.expired?
+            new_token = client.refresh!
+
+            @new_tokens =
+              {
+                :access_token  => new_token.token,
+                :refresh_token => new_token.refresh_token
+              }
+          
+            client.access_token  = @new_tokens[ :access_token ]
+            client.refresh_token = @new_tokens[ :refresh_token ]
+            File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+          end
+          service = Google::Apis::GmailV1::GmailService.new
+          service.authorization = client
+
+          params[:user_select_email].each do |email| 
+            m = Mail.new(
+              to: email, 
+              from: current_user.email, 
+              subject: "Comunicazione dall'amministratore del condominio:",
+              body: params[:message])
+            message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
+            service.send_user_message('me', message_object)
+          end
+          redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente ai condomini selezionati."
+        else
+          @condominio_mailer = Condominio.find(params[:condominio_id])
+          params[:user_select_email].each do |email| 
+            CondominioMailer.with(name: current_user.uname, email: email, condominio: @condominio_mailer.nome, message: params[:message]).new_comunication_for_condomini_mailer.deliver_later
+          end
+          
+          redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente ai condomini selezionati."
+        end
+      end
+    else
+      redirect_back(fallback_location: root_path, :notice => "Parametri mancanti o errati")
+    end
   end
 
   # GET /condominos/new
@@ -91,7 +180,16 @@ class CondominosController < ApplicationController
         client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
 
         if client.expired?
-          client.refresh!
+          new_token = client.refresh!
+
+          @new_tokens =
+            {
+              :access_token  => new_token.token,
+              :refresh_token => new_token.refresh_token
+            }
+        
+          client.access_token  = @new_tokens[ :access_token ]
+          client.refresh_token = @new_tokens[ :refresh_token ]
           File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
         end
         service = Google::Apis::GmailV1::GmailService.new

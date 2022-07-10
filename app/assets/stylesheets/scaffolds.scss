@@ -1,17 +1,17 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: #fff;
   color: #333;
-  margin: 33px; }
+  height: 100%;
+  width: 100%; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
-  line-height: 18px; }
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px; }
+  font-size: 13px; }
 
 a {
   color: #000; }
@@ -61,5 +61,6 @@ div.actions {
   font-size: 12px;
   list-style: square; }
 
-label {
-  display: block; }
+  label {
+    font-weight: bold; 
+  }

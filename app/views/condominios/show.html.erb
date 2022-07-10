@@ -41,7 +41,7 @@
     <div class="col">
       <h2>Bacheca dei post:</h2>
         <% if @condominio.posts.exists? %>
-          <% @condominio.posts.each do |post| %>
+          <% @condominio.posts.order(id: :desc).each do |post| %>
           <div class='card post-card'>
             <div class="post">
               <div class="card-header">
@@ -57,7 +57,7 @@
               <div class="card-body message-body">
                 <h3 class="card-title"><%= post.title %></h3>
                 <p class="card-text"><%= post.body %></p>
-                <button type="button" class="btn btn-primary">Commenti</button>
+                <%= link_to 'Commenti', post_comments_path(post),:class => "btn btn-primary" %>
                 <br>
                 <% if can? :Destroy, post%>
                 <%= link_to 'Rimuovi post', [post.condominio, post],

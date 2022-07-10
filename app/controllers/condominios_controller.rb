@@ -55,7 +55,16 @@ class CondominiosController < ApplicationController
         client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
 
         if client.expired?
-          client.refresh!
+          new_token = client.refresh!
+
+          @new_tokens =
+            {
+              :access_token  => new_token.token,
+              :refresh_token => new_token.refresh_token
+            }
+        
+          client.access_token  = @new_tokens[ :access_token ]
+          client.refresh_token = @new_tokens[ :refresh_token ]
           File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
         end
         service = Google::Apis::GmailV1::GmailService.new
