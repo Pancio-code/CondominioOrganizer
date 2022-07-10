@@ -62,6 +62,13 @@ class CondominosController < ApplicationController
   # GET /condominos/1 or /condominos/1.json
   #def show
   #end
+  def get_comunicazione_del_leader
+
+  end
+
+  def post_comunicazione_del_leader
+
+  end
 
   # GET /condominos/new
   def new
