@@ -1,0 +1,79 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+
+    <h1>Entra tramite codice...</h1>
+        <%= form_with url: '/enter', method: :post do |form| %>
+            <%= form.label :codice, "Codice d'invito:" %>
+            <%= form.text_field :codice %>
+            <%= form.submit "Entra", :class => "btn btn-primary"  %>
+        <% end %>
+    <br>
+
+    <h1>...cerca il tuo condominio</h1>
+
+    <br/>
+    <div class="row gx-5">
+        <div class="col-2">
+            <%= form_tag('/enter', :method => "get") do %>
+                <div class="row py-2">
+                    <%= label :città, "Città:" %>
+                    <%= text_field_tag :città,params[:città] %>
+                </div>
+                <div class="row py-2">
+                    <%= label :distanza, "Distanza (in kilometri):" %>
+                    <%= select_tag :distanza, options_for_select([100,50,10], params[:distanza])%>
+                </div>
+                <div class="row py-2">
+                    <%= submit_tag "Cerca", :class => "btn btn-primary"  %>
+                </div>
+            <% end %>
+        </div>
+        <div class="col-6">
+            <table>
+                <thead>
+                    <tr>
+                    <th>Banner</th>
+                    <th>Nome</th>
+                    <th>Comune</th>
+                    <th>Indirizzo</th>
+                    <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @condominios.each do |condominio| %>
+                    <tr>
+                        <td>  
+                            <% if condominio.avatar.present? %>
+                                <%= image_tag(condominio.avatar.variant(resize_to_fill: [150, 50])) %>
+                            <% else %>
+                                <%= image_tag("banner.png", width: 150, height: 50) %>
+                            <% end %>
+                        </td>
+                        <td><%= condominio.nome %></td>
+                        <td><%= condominio.comune %></td>
+                        <td><%= condominio.indirizzo %></td>
+                        <td> 
+                            <%= form_for Request.new, url: url_for(controller: 'requests', action: 'create') do |f| %>
+                                <%= f.hidden_field :condominio_id, value: condominio.id %>
+                                <% if (Condomino.where(condominio_id: condominio.id,user_id: current_user.id).exists? || Request.where(condominio_id: condominio.id,user_id:current_user.id).exists?) %>
+                                <%= f.submit "Richiedi accesso", :class => "btn btn-primary",:disabled => true %>
+                                <% else %>
+                                    <%= f.submit "Richiedi accesso", :class => "btn btn-primary"%>
+                                <% end %>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <h1>...crea il tuo condominio</h1>
+    <br>
+    <%= link_to 'Nuovo condominio', '/condominios/new', :class => "btn btn-primary" %>
+    <br>
+    <%= link_to 'Home', condominios_path %>
+</div>

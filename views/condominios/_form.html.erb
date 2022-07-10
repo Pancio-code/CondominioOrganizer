@@ -11,42 +11,39 @@
     </div>
   <% end %>
 
+  <% if condominio.avatar.present? %>
+    <%= image_tag(condominio.avatar.variant(resize_to_fill: [1000, 150])) %>
+  <% else %>
+    <%= image_tag("banner.png", width: 1000, height: 150) %>
+  <% end %>
+
+  <!--Avatar Upload Field-->
   <div class="field">
-    <%= form.label :condo_id %>
-    <%= form.text_field :condo_id %>
+    <label class="col-sm-4 col-form-label">Banner:
+      <% if condominio.avatar.present? %><br />Current: <%= condominio.avatar.filename.to_s %><% end %>
+    </label>
+    <div class="col-sm-8">
+      <%= form.file_field :avatar, class: "form-control" %>
+    </div>
+  </div>
+  <!--Avatar Upload Field-->
+
+  <div class="field">
+    <%= form.label :nome %>
+    <%= form.text_field :nome %>
   </div>
 
   <div class="field">
-    <%= form.label :nome_cond %>
-    <%= form.text_field :nome_cond %>
+    <%= form.label :comune %>
+    <%= form.text_field :comune %>
   </div>
 
   <div class="field">
-    <%= form.label :comune_condo %>
-    <%= form.text_field :comune_condo %>
-  </div>
-
-  <div class="field">
-    <%= form.label :coord_condo %>
-    <%= form.text_field :coord_condo %>
-  </div>
-
-  <div class="field">
-    <%= form.label :via_condo %>
-    <%= form.text_field :via_condo %>
-  </div>
-
-  <div class="field">
-    <%= form.label :fk_utenti_condo_id_id %>
-    <%= form.text_field :fk_utenti_condo_id_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :fk_superutenti_condo_id_id %>
-    <%= form.text_field :fk_superutenti_condo_id_id %>
+    <%= form.label :indirizzo %>
+    <%= form.text_field :indirizzo %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Modifica Condominio" ,:class => "btn btn-primary" %>
   </div>
 <% end %>

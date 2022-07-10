@@ -1,0 +1,38 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+
+    <h2>Scegli nuovo amministratore:</h1>
+    <br>
+    <div class="row gx-5">
+        <div class="col-4">
+            <%= form_tag(controller: "condominos", action: "cedi_ruolo_leader", method: "post") do %>
+                <% @condomini.each do |condomino| %>
+                <div class="row py-2">
+                    <div class="col-5">
+                        <% if User.find_by(id: condomino.user_id).avatar.present? %>
+                            <%= image_tag(User.find_by(id: condomino.user_id).avatar.variant(resize_to_fill: [20, 20]), class: "rounded-circle") %>
+                         <% else %>
+                            <%= image_tag("user.png", width: 20, height:20, :class => "rounded-circle") %>
+                        <% end %>
+                        <%= User.find_by(id: condomino.user_id).uname %>
+                    </div>
+                    <div class="col-2">
+                        <%= radio_button_tag(:new_amministratore_id, condomino.user_id, :checked => 'true') %>
+                    </div>
+                </div>
+                <% end %>
+                <div class="row py-2">
+                    <div class="col-2">
+                        <%= hidden_field_tag :old_amministratore_id, @condominio_amministratore %>
+                        <%= hidden_field_tag :condominio_id, @condominio_attuale.id %>
+                        <%= submit_tag "Cedi ruolo", :class => "btn btn-primary"  %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <%= link_to "Annulla", :back,:class => "btn btn-primary" %>
+</div>
+

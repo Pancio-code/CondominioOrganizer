@@ -1,0 +1,53 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <br>
+    <h1>Dashboard Amministratore</h1>
+    <br>
+    <h5>Utenti iscritti: <%= @utenti.count %></h5>
+    <h5>Admin: <%= @numero_admin %></h5>
+    <h5>Amministratori: <%= @numero_amministratori %></h5>
+    <h5>Condomini attivi: <%= @condomini.count %></h5>
+    <h5>Richieste in attesa di approvazione: <%= @numero_richieste %></h5>
+    <h5>Post creati: <%= @numero_posts %></h5>
+    <h5>Commenti creati: <%= @numero_comments %></h5>
+    <%= link_to 'Account', edit_user_registration_path ,:class => "btn btn-primary" %> | <%= link_to 'Lista condomini', '/condominios' ,:class => "btn btn-primary" %>
+    <br>
+    <h2 class="py-3">Membri del condominio</h2>
+    <div class="row gx-5">
+        <div class="col-2">
+            <%= form_tag('/admin/index', :method => "get") do %>
+                <div class="row py-2">
+                    <%= label :nome, "Nome utente:" %>
+                    <%= text_field_tag :nome,params[:nome] %>
+                </div>
+                <div class="row py-2">
+                    <%= submit_tag "Cerca", :class => "btn btn-primary"  %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <table>
+        <tbody>
+            <% @utenti.each do |utente| %>
+                <tr>
+                    <td>
+                        <% if utente.avatar.present? %>
+                        <%= image_tag(utente.avatar.variant(resize_to_fill: [50, 50]), class: "rounded-circle") %>
+                        <% else %>
+                        <%= image_tag("user.png", width: 50, height: 50, :class => "rounded-circle") %>
+                        <% end %></td>
+                    <td><%= utente.uname %></td>
+                    <% if utente.id != current_user.id && !utente.is_admin? %>
+                        <td><%= link_to 'Elimina', utente, method: :delete, data: { confirm: 'Sei sicuro di voler eliminare ' + utente.uname + '?' } %></td>
+                        <td>
+                        <%= link_to 'Eleva utente', admin_eleva_ad_admin_path(:user_id => utente.id), method: :eleva_ad_admin, data: { confirm: 'Sei sicuro di voler elevare ad Admin ' + utente.uname + '?' } %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>   
+        </tbody>
+    </table>
+</div>

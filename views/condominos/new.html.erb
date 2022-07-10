@@ -1,0 +1,30 @@
+<div class="container">
+    <br>
+    <p id="notice"><%= notice %></p>
+
+    <h2>Condividi codice condominio</h1>
+    <br>
+    <div class="row gx-6">
+        <div class="col-4">
+            <%= form_tag(controller: "condominos", action: "create", method: "post") do %>
+                <div class="row py-2">
+                    <div class="col-8">
+                        <%= label :email, "Email a cui inviare il codice:" %>
+                        <%= email_field_tag :email, nil, required: true%>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col-2">
+                        <%= hidden_field_tag :codice, @condominio_attuale.flat_code %>
+                        <%= hidden_field_tag :condominio_id, @condominio_attuale.id %>
+                        <%= submit_tag "Condividi", :class => "btn btn-primary"  %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+    <br>
+    <%= link_to 'Indietro', condominio_condominos_path(@condominio_attuale),:class => "btn btn-primary" %>
+</div>
+
+

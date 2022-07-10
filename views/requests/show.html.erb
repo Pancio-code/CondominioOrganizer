@@ -1,0 +1,21 @@
+<div class="container">
+  <br>
+  <p id="notice"><%= notice %></p>
+
+  <h3>Richiesta d'accesso:</h3>
+  <br>
+  <p>
+    <strong>Condominio:</strong>
+    <%= Condominio.find_by(id:@request.condominio_id).nome %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= User.find_by(id:@request.user_id).uname %>
+  </p>
+
+  <% if can? :edit, @request%>
+  <%= link_to 'Accetta', edit_request_path %> | <% end %>
+  <%= link_to 'Annulla', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
+  <%= link_to 'Indietro', requests_path %>
+</div>
