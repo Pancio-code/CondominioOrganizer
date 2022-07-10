@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :uname, presence: true, uniqueness: { scope: :email, case_sensitive: false }
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable, :validatable, :timeoutable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   def self.da_omniauth(acc_token)
