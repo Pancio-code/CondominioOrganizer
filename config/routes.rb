@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   post 'admin/eleva_ad_admin', to: 'admin#eleva_ad_admin'
   delete "/admin/:id" => "admin#destroy", as: :user
   resources :requests
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { 
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations' }
   authenticate(:users) do
   	resources :users
   end

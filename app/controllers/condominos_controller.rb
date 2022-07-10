@@ -229,6 +229,7 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     @condomino = Condomino.find(params[:id])
     @condominio = Condominio.find_by(id: @condomino.condominio_id)
+    @condomino.destruction_prep
     @condomino.destroy
 
     respond_to do |format|
@@ -245,5 +246,12 @@ class CondominosController < ApplicationController
 
     def condomino_params
       params.require(:condomino).permit(:condomino_id, :user_id)
+    end
+
+    def destruction_prep
+      @condomino = Condomino.find(params[:id])
+      if @condomino.is_condo_admin == True
+        @condomino.cedi_ruolo_leader(@condomino.condominio_id, @condominio.user_id, Condominio.condomino.find_by(id: @condomino.condominio_id))
+      end
     end
 end
