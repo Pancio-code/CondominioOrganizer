@@ -81,7 +81,12 @@ class CondominosController < ApplicationController
         @condominio_condiviso = Condominio.find(params[:condominio_id])
         require 'json' 
         token, refresh_token = *JSON.parse(File.read('credentials.data'))
-        client = Signet::OAuth2::Client.new(access_token: token,scope: 'gmail.send')
+        client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
+
+        if client.expired?
+          client.refresh!
+          File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+        end
         service = Google::Apis::GmailV1::GmailService.new
         service.authorization = client
         m = Mail.new(
@@ -91,7 +96,7 @@ class CondominosController < ApplicationController
           body: "il codice d'accesso del " + @condominio_condiviso.nome + " è " + params[:codice])
         message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
         service.send_user_message('me', message_object)
-        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Codice condiviso correttamente dal tuo account Gmail."
+        redirect_to condominio_condominos_path(@condominio_condiviso), :notice => "Codice condiviso correttamente dal tuo account Gmail."
       else
         CondominioMailer.with(name: current_user.uname, email: current_user.email, condominio: params[:nome],comune: params[:comune] ,via: params[:via], message: params[:message]).new_comunication_mailer.deliver_later
         redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Codice condiviso correttamente."
