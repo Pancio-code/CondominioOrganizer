@@ -1,6 +1,6 @@
 class CondominosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_condomino, only: %i[ show edit update destroy ]
+  before_action :set_condomino, only: %i[ show edit update destroy cedi_ruolo_leader]
 
   # GET /condominos or /condominos.json
   def index
@@ -25,6 +25,7 @@ class CondominosController < ApplicationController
 
   def cedi_ruolo_leader
     authorize! :destroy, Condominio
+    puts 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'
     respond_to do |format|
       if params.has_key?(:condominio_id) && params.has_key?(:old_amministratore_id) && params.has_key?(:new_amministratore_id)
         @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
@@ -229,12 +230,21 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     @condomino = Condomino.find(params[:id])
     @condominio = Condominio.find_by(id: @condomino.condominio_id)
+    puts 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
     @condomino.destruction_prep
     @condomino.destroy
 
     respond_to do |format|
       format.html { redirect_to condominio_condominos_path(@condominio), notice: "Membro espulso correttamente." }
       format.json { head :no_content }
+    end
+  end
+
+  def destruction_prep
+    puts 'BBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+    @condomino = Condomino.find(params[:id])
+    if @condomino.is_condo_admin == True
+      @condomino.cedi_ruolo_leader(@condomino.condominio_id, @condomino.user_id, Condominio.condomino.find_by(id: @condomino.condominio_id))
     end
   end
 
@@ -248,10 +258,4 @@ class CondominosController < ApplicationController
       params.require(:condomino).permit(:condomino_id, :user_id)
     end
 
-    def destruction_prep
-      @condomino = Condomino.find(params[:id])
-      if @condomino.is_condo_admin == True
-        @condomino.cedi_ruolo_leader(@condomino.condominio_id, @condominio.user_id, Condominio.condomino.find_by(id: @condomino.condominio_id))
-      end
-    end
 end
