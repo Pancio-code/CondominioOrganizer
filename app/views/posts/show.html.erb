@@ -59,7 +59,7 @@
         <% end %>  
       </div>
       <div class="col">
-      <h2>Aggiungi un Post:</h2>
+      <h2>Aggiungi un commento:</h2>
       <%= form_with model: [ @post, @post.comments.build ] do |form| %>
         <p>
           <%= form.label :body, "Commento" %><br>
