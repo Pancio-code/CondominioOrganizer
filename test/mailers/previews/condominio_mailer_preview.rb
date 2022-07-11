@@ -8,6 +8,11 @@ class CondominioMailerPreview < ActionMailer::Preview
         CondominioMailer.with(name: "Andrea Panceri", email: "andrea.pancio00@gmail.com", message: "Abbiamo ricevuto delle lamentele per la gestione del condominio, al prossimo problema verrà revocato del potere di leader condominio").new_comunication_for_leader_mailer
     end
 
+    def send_event_invitation
+        require 'icalendar'
+        CondominioMailer.with(email: "andrea.pancio00@gmail.com",categoria: "pagamento",message: 'Nuova bolletta da pagare').send_event_invitation(DateTime.parse("2022-08-05 10:30:14"),1,2)
+    end
+
     def new_comunication_for_condomini_mailer
         CondominioMailer.with(name: "Andrea Panceri", condominio: "Condominio Roma", message: "Ascensore in manutenzione fino a luglio").new_comunication_for_condomini_mailer
     end

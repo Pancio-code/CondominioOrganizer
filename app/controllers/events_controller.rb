@@ -28,8 +28,79 @@ class EventsController < ApplicationController
     authorize! :create, Event
     @event = Event.new(event_params)
     @event.condominio_id = params[:condominio_id]
+    @condomini = Condomino.where(condominio_id: params[:condominio_id])
+    @event.categoria = params[:categoria]
     respond_to do |format|
       if @event.save
+        if current_user.from_oauth?
+          require 'json' 
+          token, refresh_token = *JSON.parse(File.read('credentials.data'))
+          client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'calendargmail.send')
+          if client.expired?
+            new_token = client.refresh!
+            @new_tokens =
+              {
+                :access_token  => new_token["access_token"],
+                :refresh_token => new_token["refresh_token"]
+              }
+          
+            client.access_token  = @new_tokens[ :access_token ]
+            client.refresh_token = @new_tokens[ :refresh_token ]
+            File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+          end
+          service = Google::Apis::CalendarV3::CalendarService.new
+          service.authorization = client
+          if params[:categoria] == "pagamento"
+            event = Google::Apis::CalendarV3::Event.new(
+              start: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              end: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              summary: "Avviso " + params[:categoria],
+              location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
+              description: @event.titolo,
+              recurrence: [
+                'RRULE:FREQ=WEEKLY'
+              ],
+              attendees: [
+                Google::Apis::CalendarV3::EventAttendee.new(
+                  email: 'lpage@example.com'
+                ),
+                Google::Apis::CalendarV3::EventAttendee.new(
+                  email: 'sbrin@example.com'
+                )
+              ],
+              reminders: Google::Apis::CalendarV3::Event::Reminders.new(
+                use_default: false,
+                overrides: [
+                  Google::Apis::CalendarV3::EventReminder.new(
+                    reminder_method: 'email'
+                  )
+                ]
+              )
+            )
+          else
+            event = Google::Apis::CalendarV3::Event.new(
+              start: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              end: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              summary: "Avviso " + params[:categoria],
+              location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
+              description: @event.titolo,
+              attendees: [
+                Google::Apis::CalendarV3::EventAttendee.new(
+                  email: 'lpage@example.com'
+                ),
+                Google::Apis::CalendarV3::EventAttendee.new(
+                  email: 'sbrin@example.com'
+                )
+              ]
+            )
+          end
+          
+          service.insert_event('primary', event)
+        else
+          @condomini.each do |condomino|
+            CondominioMailer.with(email: User.find(condomino.user_id).email ,message: @event.titolo,categoria: params[:categoria]).send_event_invitation(@event.start_time,current_user.id,@condominio.id).deliver_later
+          end
+        end
         format.html { redirect_to event_url(id: @event.id,condominio_id: @condominio.id), notice: "Evento creato correttamente." }
         format.json { render :show, status: :created, location: @event }
       else
@@ -42,8 +113,13 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1 or /events/1.json
   def update
     authorize! :update, Event
+    @condomini = Condomino.where(condominio_id: params[:condominio_id])
+    @event.categoria = params[:categoria]
     respond_to do |format|
       if @event.update(event_params)
+        @condomini.each do |condomino|
+          CondominioMailer.with(email: User.find(condomino.user_id).email ,message: @event.titolo,categoria: params[:categoria]).send_event_invitation(@event.start_time,current_user.id,@condominio.id).deliver_later
+        end
         format.html { redirect_to event_url(id: @event.id,condominio_id: @condominio.id), notice: "Evento modificato correttamente." }
         format.json { render :show, status: :ok, location: @event }
       else
@@ -76,6 +152,6 @@ class EventsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.require(:event).permit(:titolo, :start_time,:condominio_id)
+      params.require(:event).permit(:categoria,:titolo, :start_time,:condominio_id)
     end
 end
