@@ -48,10 +48,15 @@ class Ability
       can :cedi_ruolo_leader, Condomino do |c|
         c.user_id == user.id and c.is_condo_admin?
       end
+      can [:index,:show,:new,:create,:update,:destroy], Event do |e|
+        Event.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",e.condominio_id,user.id).exists?
+      end
+      can [:index,:show], Event
       can [:new,:create,:show], Condominio
     end
 
     def admin_abilities
+      can [:index,:show,:new,:create,:update,:destroy], Event
       can [:create,:Destroy], Comment
       can [:create,:Destroy], Post
       can [:new,:create,:show,:update,:destroy], Condominio

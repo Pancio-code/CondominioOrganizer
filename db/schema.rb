@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_11_093637) do
+ActiveRecord::Schema.define(version: 2022_07_11_110214) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 2022_07_11_093637) do
     t.datetime "start_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "condominio_id"
+    t.index ["condominio_id"], name: "index_events_on_condominio_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -119,6 +121,7 @@ ActiveRecord::Schema.define(version: 2022_07_11_093637) do
   add_foreign_key "comments", "condominios"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "events", "condominios"
   add_foreign_key "posts", "condominios"
   add_foreign_key "posts", "users"
   add_foreign_key "requests", "condominios"

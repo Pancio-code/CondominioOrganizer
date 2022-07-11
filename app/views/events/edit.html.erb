@@ -1,6 +1,8 @@
-<h1>Editing Event</h1>
+<div class="container">
+    <h1>Modifica evento</h1>
 
-<%= render 'form', event: @event %>
+    <%= render 'form', event: @event %>
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+    <%= link_to 'Informazioni', event_url(id: @event.id,condominio_id: @condominio.id),:class => "btn btn-primary" %> |
+    <%= link_to 'Indietro', events_url(condominio_id: @condominio.id),:class => "btn btn-primary" %>
+</div>

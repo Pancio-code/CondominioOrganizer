@@ -13,15 +13,16 @@
 
   <div class="field">
     <%= form.label :titolo %>
-    <%= form.text_field :titolo %>
+    <%= form.text_field :titolo,required: true %>
   </div>
 
   <div class="field">
-    <%= form.label :start_time %>
-    <%= form.datetime_select :start_time %>
+    <%= form.label "Data evento" %>
+    <%= form.datetime_select :start_time,default: 1.days.from_now, required: true %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= hidden_field_tag :condominio_id, @condominio.id %>
+    <%= form.submit "Crea evento",:class => "btn btn-primary"  %>
   </div>
 <% end %>

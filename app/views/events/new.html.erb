@@ -1,5 +1,8 @@
-<h1>New Event</h1>
+<div class="container">
+    <h1>Nuovo evento</h1>
 
-<%= render 'form', event: @event %>
+    <%= render 'form', event: @event %>
 
-<%= link_to 'Back', events_path %>
+    <%= link_to 'Bacheca',  condominio_url(@condominio) ,:class => "btn btn-primary"%>
+</div>
+

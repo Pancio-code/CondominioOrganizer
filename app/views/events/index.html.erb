@@ -1,29 +1,37 @@
-<p id="notice"><%= notice %></p>
+<dic class="container">
+  <p id="notice"><%= notice %></p>
 
-<h1>Events</h1>
+  <h1>Eventi del condominio</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Titolo</th>
-      <th>Start time</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @events.each do |event| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= event.titolo %></td>
-        <td><%= event.start_time %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Titolo</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% if @events.exists? %>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= event.titolo %></td>
+            <td><%= link_to 'Informazioni', event_url(id: event.id,condominio_id: @condominio.id) %></td>
+            <% if can? :update, event%>
+            <td><%= link_to 'Modifica', edit_event_path(event,condominio_id: @condominio.id) %></td> <% end %>
+            <% if can? :destroy, event%>
+            <td><%= link_to 'Elimina', event_url(id:event,condominio_id: @condominio.id), method: :delete, data: { confirm: 'Sei sicuro?' } %></td><% end %>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+            <td>Ancora nessun evento è stato creato, clicca su nuovo evento!</td>
+        <tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Event', new_event_path %>
+  <br>
+  <% if can? :update, @condominio%>
+  <%= link_to 'Nuovo evento', new_event_path(condominio_id: @condominio.id),:class => "btn btn-primary"%> |<% end %> <%= link_to 'Bacheca',  condominio_url(@condominio) ,:class => "btn btn-primary"%>
+</div>

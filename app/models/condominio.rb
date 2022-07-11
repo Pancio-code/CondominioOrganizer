@@ -7,11 +7,13 @@ class Condominio < ApplicationRecord
 	end
 	
     has_many :condominos,dependent: :delete_all
+    has_many :events,dependent: :delete_all
     has_many :users, through: :condominos
 
     accepts_nested_attributes_for :condominos
     
     has_many :posts,dependent: :delete_all
+    has_many :comments
 #	def create_condomino
 #		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
 #	end

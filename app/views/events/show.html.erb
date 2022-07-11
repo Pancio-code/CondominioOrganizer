@@ -1,14 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Titolo:</strong>
-  <%= @event.titolo %>
-</p>
+  <p>
+    <strong>Titolo:</strong>
+    <%= @event.titolo %>
+  </p>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @event.start_time %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+  <p>
+    <strong>Data evento:</strong>
+    <%= @event.start_time %>
+  </p>
+  <% if can? :update, @event%>
+  <%= link_to 'Modifica', edit_event_path(@event,condominio_id: @condominio.id), :class => "btn btn-primary" %> | <% end %>
+  <%= link_to 'Indietro', events_url(condominio_id: @condominio.id),:class => "btn btn-primary" %>
+</div>
