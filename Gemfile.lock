@@ -399,7 +399,6 @@ GEM
     uber (0.1.0)
     warden (1.2.9)
       rack (>= 2.0.9)
-    wdm (0.1.1)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -442,6 +441,7 @@ DEPENDENCIES
   google-api-client
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
+  jwt
   listen (~> 3.3)
   mail_form
   mailcatcher
@@ -461,7 +461,6 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
-  wdm (>= 0.1.0)
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
