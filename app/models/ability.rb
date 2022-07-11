@@ -37,6 +37,11 @@ class Ability
       can :Destroy, Post do |p|
         p.user_id == user.id or Post.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",p.condominio_id,user.id).exists?
       end
+      can :create, Post
+      can :Destroy, Comment do |c|
+        c.user_id == user.id or Comment.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",c.condominio_id,user.id).exists?
+      end
+      can :create, Comment
       can :edit, Request do |r|
         Request.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",r.condominio_id,user.id).exists?
       end
@@ -47,7 +52,8 @@ class Ability
     end
 
     def admin_abilities
-      can :Destroy, Post
+      can [:create,:Destroy], Comment
+      can [:create,:Destroy], Post
       can [:new,:create,:show,:update,:destroy], Condominio
       can :edit, Request
       can :cedi_ruolo_leader, Condomino

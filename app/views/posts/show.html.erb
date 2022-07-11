@@ -1,49 +1,74 @@
-<p id="notice"><%= notice %></p>
+<div class="container"> 
+  <p id="notice"><%= notice %></p>
+  <br>
+  <h2>Post di <%= @post.user.uname %></h2>
+  <br>
+  <div class='card post-card'>
+    <div class="post">
+      <div class="card-header">
+        <div class="post">
+          <% if @post.user.avatar.present? %>
+            <%= image_tag(@post.user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
+          <% else %>
+            <%= image_tag("user.png", width: 150, height: 150, :class => "rounded-circle") %>
+          <% end %>
+          <p class="user"><%= @post.user.uname %></p>
+        </div>
+      </div>
+      <div class="card-body message-body">
+        <h3 class="card-title"><%= @post.title %></h3>
+        <p class="card-text"><%= @post.body %></p>
+      </div>
+    </div>
+  </div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= @post.body %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @post.user_id %>
-</p>
-
-<p>
-  <strong>Condominio:</strong>
-  <%= @post.condominio_id %>
-</p>
-
-<h2>Comments</h2>
-<% @post.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.user.uname %>
-  </p>
-
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
-
-<h2>Add a comment:</h2>
-<%= form_with model: [ @post, @post.comments.build ] do |form| %>
- <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
-
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+  <%= link_to 'Bacheca', Condominio.find(@post.condominio_id),:class => "btn btn-primary" %>
+  <br>
+  <div class="row gx-5 all-row">
+    <div class="col">
+      <h2>Commenti:</h2>
+      <% if @post.comments.exists? %>
+        <% @post.comments.order(id: :desc).each do |comment| %>
+          <div class='card post-card'>
+            <div class="post">
+              <div class="card-header">
+                <div class="post">
+                  <% if comment.user.avatar.present? %>
+                    <%= image_tag(comment.user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
+                  <% else %>
+                    <%= image_tag("user.png", width: 150, height: 150, :class => "rounded-circle") %>
+                  <% end %>
+                  <p class="user"><%= comment.user.uname %></p>
+                </div>
+              </div>
+              <div class="card-body message-body">
+                <p class="card-text"><%= comment.body %></p>
+                <br>
+                <% if can? :Destroy, comment%>
+                  <%= link_to 'Rimuovi commento', [comment.post, comment],
+                    method: :delete ,data: { confirm: 'Sei sicuro?' } %>
+                <% end %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <% end %>
+          <% else %>
+          <br>
+          <p><strong>Nessun commento creato, clicca su crea commento!</strong></p>
+        <% end %>  
+      </div>
+      <div class="col">
+      <h2>Aggiungi un Post:</h2>
+      <%= form_with model: [ @post, @post.comments.build ] do |form| %>
+        <p>
+          <%= form.label :body, "Commento" %><br>
+          <%= form.text_area :body,required: true %>
+        </p>
+        <p>
+          <%= form.submit "Crea commento",:class => "btn btn-primary" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

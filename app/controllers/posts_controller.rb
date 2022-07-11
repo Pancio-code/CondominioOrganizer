@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    authorize! :create, Post
     @condominio = Condominio.find(params[:condominio_id])
     @post       = @condominio.posts.create(post_params)
     @post.user_id = current_user.id 
@@ -50,6 +51,7 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    authorize! :Destroy, Post
     @condominio = Condominio.find(params[:condominio_id])
     @post = @condominio.posts.find(params[:id])
     @post.destroy

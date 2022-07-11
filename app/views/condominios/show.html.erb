@@ -46,12 +46,12 @@
             <div class="post">
               <div class="card-header">
                 <div class="post">
-                  <% if User.find_by(id: post.user_id).avatar.present? %>
-                    <%= image_tag(User.find_by(id: post.user_id).avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
+                  <% if post.user.avatar.present? %>
+                    <%= image_tag(post.user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-circle") %>
                   <% else %>
                     <%= image_tag("user.png", width: 150, height: 150, :class => "rounded-circle") %>
                   <% end %>
-                  <p class="user"><%= User.find_by(id:post.user_id).uname %></p>
+                  <p class="user"><%= post.user.uname %></p>
                 </div>
               </div>
               <div class="card-body message-body">
