@@ -17,6 +17,8 @@ class CondominiosController < ApplicationController
 
   # GET /condominios/1 or /condominios/1.json
   def show
+    start_date = params.fetch(:start_date, Date.today).to_date
+    @eventi = Event.where(start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
   end
 
   # GET /condominios/new

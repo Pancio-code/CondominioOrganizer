@@ -1,6 +1,8 @@
 <div class="container">
   <% flash.each do |key, message| %>
+    <% if message != true %>
       <p class="alert alert-<%= key %>"><%= message %></p>
+    <% end %>
   <% end %>
   <br>
   <h2>Log in</h2>

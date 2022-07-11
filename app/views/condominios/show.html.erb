@@ -74,21 +74,36 @@
         <% end %>  
       </div>
       <div class="col">
-      <h2>Aggiungi un Post:</h2>
-      <%= form_with model: [@condominio, @condominio.posts.build ] do |form|
-      %>
-        <p>
-          <%= form.label :title  %><br>
-          <%= form.text_field :title,required: true %>
-        </p>  
-        <p>
-          <%= form.label :body %><br>
-          <%= form.text_area :body,required: true %>
-        </p>
-        <p>
-          <%= form.submit "Crea Post",:class => "btn btn-primary" %>
-        </p>
-      <% end %>
+        <h2>Aggiungi un Post:</h2>
+        <%= form_with model: [@condominio, @condominio.posts.build ] do |form|
+        %>
+          <p>
+            <%= form.label :title  %><br>
+            <%= form.text_field :title,required: true %>
+          </p>  
+          <p>
+            <%= form.label :body %><br>
+            <%= form.text_area :body,required: true %>
+          </p>
+          <p>
+            <%= form.submit "Crea Post",:class => "btn btn-primary" %>
+          </p>
+        <% end %>
+        <br>
+        <%= month_calendar(events: @eventi) do |date, eventi| %>
+          <%= date.day %>
+            <% eventi.each do |evento| %>
+              <div>
+                <%= evnto.name %>
+              </div>
+            <% end %>
+        <% end %>
+        <br>
+        <% if can? :update, @condominio%>
+        <%= link_to 'Crea evento', root_path,:class => "btn btn-primary my-2" %> <br> <% end %>
+        <%if current_user.from_oauth? %>
+          <%= link_to 'Accedi al Google Drive', root_path,:class => "btn btn-primary my-2" %> | <%= link_to 'Accedi al Google Calendar', root_path,:class => "btn btn-primary my-2" %>
+        <% end %>
     </div>
   </div>
 </div>

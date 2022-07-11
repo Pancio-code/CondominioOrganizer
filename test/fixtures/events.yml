@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titolo: MyString
+  start_time: 2022-07-11 11:36:37
+
+two:
+  titolo: MyString
+  start_time: 2022-07-11 11:36:37

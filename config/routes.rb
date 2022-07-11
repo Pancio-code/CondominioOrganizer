@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :events
   get 'admin/index'
   get "condominos/choose_new_leader", to: 'condominos#choose_new_leader'
   get "condominos/get_comunicazione_del_leader", to: 'condominos#get_comunicazione_del_leader'

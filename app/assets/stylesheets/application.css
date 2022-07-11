@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require simple_calendar
  */
 .hidden {
     display: none;
@@ -45,3 +46,4 @@ td {
     width: 100% !important;
     left: 0 !important;
 }
+

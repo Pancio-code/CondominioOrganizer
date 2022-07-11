@@ -1,0 +1,27 @@
+it:
+  simple_calendar:
+    previous: "<--"
+    next: "-->"
+    week: Settimana
+    month: Mese
+  devise:
+    omniauth_callbacks:
+      success: Login con account google effettuato
+      failure: Login con account google fallito
+    failure:
+      user:
+        unauthenticated: Devi essere autenticato per accedere a questa pagina
+        timeout: Timeout scaduto,per favore rieffettuare l'accesso
+        already_authenticated: Hai già effettuato l'autenticazione
+    sessions:
+      user:
+        signed_in: Bentornato, continua la navigazione nel sito
+        signed_out: Hai effettutato correttamente il logout
+    registrations:
+      user:
+        signed_up: Hai completato la registrazione,benvenuto in CondominioOrganizer
+        updated: Hai aggiornato le tue informazioni
+        destroyed: Hai cancellato correttamente il tuo account
+  errors:
+    messages:
+      not_saved: Parametri mancanti o errati
