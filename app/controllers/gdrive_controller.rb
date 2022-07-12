@@ -26,8 +26,7 @@ class GdriveController < ApplicationController
   end
 
   def initialize_drive
-    token, refresh_token = *JSON.parse(File.read('credentials.data'))
-    client = 
+    token, refresh_token = *JSON.parse(File.read('credentials.data')) 
   end
 
 end
