@@ -46,6 +46,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'rspec'
+  gem 'cucumber-rails-training-wheels'
 end
 
 group :development do
