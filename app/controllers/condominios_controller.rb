@@ -145,7 +145,9 @@ class CondominiosController < ApplicationController
     drive = Google::Apis::DriveV3                 
     service = drive::DriveService.new
     
-    driveobj = Google::Apis::DriveV3::Drive.new()
+#    driveobj = Google::Apis::DriveV3::Drive.new()
+    fileobj = Google::Apis::DriveV3::File.new(name: 'test.txt')
+    fileobj = service.create_file(fileobj, upload_source: './tmp/test.txt',content_type: 'text/plain')
   end
 
   private
