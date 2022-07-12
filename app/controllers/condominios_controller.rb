@@ -39,6 +39,7 @@ class CondominiosController < ApplicationController
       if @condominio.save!
       	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
       	@condomino.save
+        initialize_drive(@condominio.nome,current_user.email)
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
       else
@@ -46,7 +47,6 @@ class CondominiosController < ApplicationController
         format.json { render json: @condominio.errors, status: :unprocessable_entity }
       end
     end
-    initialize_drive
   end
 
   def comunication_for_admin
@@ -119,7 +119,7 @@ class CondominiosController < ApplicationController
     end
   end
 
- def initialize_drive                                                 
+ def initialize_drive(nome,email)                                                 
     file = File.read('config/google_credentials.json')
                    
     @service = Google::Apis::DriveV3::DriveService.new
@@ -130,8 +130,10 @@ class CondominiosController < ApplicationController
     authorizer.fetch_access_token!
     @service.authorization = authorizer
 
-    fileobj = Google::Apis::DriveV3::File.new(name: 'test.txt')
-    fileobj = @service.create_file(fileobj, upload_source: 'tmp/test.txt',content_type: 'text/plain')
+    cartella_condominio = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
+    cartella_condominio_drive = @service.create_file(cartella_condominio)
+    @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
+    @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
   end
 
   private
