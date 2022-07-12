@@ -88,7 +88,11 @@ class EventsController < ApplicationController
             )
           end
           calendar = service.get_calendar(:primary)
-          service.insert_event(calendar.id, event,send_notifications: true)
+          result = service.insert_event(calendar.id, event,send_notifications: true)
+          if !@event.update(calendar_id: result.id)
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @event.errors, status: :unprocessable_entity }
+          end
         else
           @condomini.each do |condomino|
             CondominioMailer.with(email: User.find(condomino.user_id).email ,message: @event.titolo,categoria: params[:categoria]).send_event_invitation(@event.start_time,current_user.id,@condominio.id).deliver_later
@@ -125,6 +129,40 @@ class EventsController < ApplicationController
   # DELETE /events/1 or /events/1.json
   def destroy
     authorize! :destroy, Event
+    if @event.calendar_id != nil
+      if current_user.from_oauth?
+        session_time = Time.now - session[:time_login].to_datetime
+        require 'json' 
+        token, refresh_token = *JSON.parse(File.read('credentials.data'))
+        client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'calendar')
+        if client.expired? || (session_time/60).to_i > 28            
+          new_token = client.refresh!
+          @new_tokens =
+            {
+              :access_token  => new_token["access_token"],
+              :refresh_token => new_token["refresh_token"]
+            }
+        
+          client.access_token  = @new_tokens[ :access_token ]
+          client.refresh_token = @new_tokens[ :refresh_token ]
+          File.write 'credentials.data', [client.access_token, client.refresh_token].to_json
+        end
+        service = Google::Apis::CalendarV3::CalendarService.new
+        service.authorization = client
+        
+        calendar = service.get_calendar(:primary)
+        begin service.get_event(calendar.id, @event.calendar_id)
+          service.get_event(calendar.id, @event.calendar_id)
+          service.delete_event(calendar.id, @event.calendar_id,send_notifications: true)
+        rescue => e
+          if !e.status_code == 404
+            redirect_to root_path, :alert => e.message
+            return false
+          end
+        end
+      end
+    end
+
     @event.destroy
 
     respond_to do |format|

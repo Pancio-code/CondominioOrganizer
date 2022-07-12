@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_11_161010) do
+ActiveRecord::Schema.define(version: 2022_07_12_104903) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2022_07_11_161010) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "condominio_id"
     t.string "categoria", null: false
+    t.string "calendar_id"
     t.index ["condominio_id"], name: "index_events_on_condominio_id"
   end
 
