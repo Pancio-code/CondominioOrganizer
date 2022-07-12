@@ -35,7 +35,7 @@ class EventsController < ApplicationController
         if current_user.from_oauth?
           require 'json' 
           token, refresh_token = *JSON.parse(File.read('credentials.data'))
-          client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'calendargmail.send')
+          client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'calendar')
           if client.expired?
             new_token = client.refresh!
             @new_tokens =
@@ -52,50 +52,37 @@ class EventsController < ApplicationController
           service.authorization = client
           if params[:categoria] == "pagamento"
             event = Google::Apis::CalendarV3::Event.new(
-              start: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
-              end: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              start: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339,time_zone: "Europe/Rome"),
+              end: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339,time_zone: "Europe/Rome"),
               summary: "Avviso " + params[:categoria],
               location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
               description: @event.titolo,
+              attendees: [Google::Apis::CalendarV3::EventAttendee.new(email: "andrea.pancio00@gmail.com")],
               recurrence: [
                 'RRULE:FREQ=WEEKLY'
-              ],
-              attendees: [
-                Google::Apis::CalendarV3::EventAttendee.new(
-                  email: 'lpage@example.com'
-                ),
-                Google::Apis::CalendarV3::EventAttendee.new(
-                  email: 'sbrin@example.com'
-                )
               ],
               reminders: Google::Apis::CalendarV3::Event::Reminders.new(
                 use_default: false,
                 overrides: [
                   Google::Apis::CalendarV3::EventReminder.new(
-                    reminder_method: 'email'
+                    reminder_method: 'email',
+                    minutes: 10080
                   )
                 ]
               )
             )
           else
             event = Google::Apis::CalendarV3::Event.new(
-              start: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
-              end: Google::Apis::CalendarV3::EventDateTime.new(date: @event.start_time),
+              start: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339),
+              end: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339),
               summary: "Avviso " + params[:categoria],
               location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
               description: @event.titolo,
-              attendees: [
-                Google::Apis::CalendarV3::EventAttendee.new(
-                  email: 'lpage@example.com'
-                ),
-                Google::Apis::CalendarV3::EventAttendee.new(
-                  email: 'sbrin@example.com'
-                )
-              ]
+              attendees: [Google::Apis::CalendarV3::EventAttendee.new(email: "andrea.pancio00@gmail.com")],
             )
           end
-          
-          service.insert_event('primary', event)
+          calendar = service.get_calendar(:primary)
+          service.insert_event(calendar.id, event,send_notifications: true)
         else
           @condomini.each do |condomino|
             CondominioMailer.with(email: User.find(condomino.user_id).email ,message: @event.titolo,categoria: params[:categoria]).send_event_invitation(@event.start_time,current_user.id,@condominio.id).deliver_later
