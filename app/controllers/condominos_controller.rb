@@ -74,11 +74,12 @@ class CondominosController < ApplicationController
       if params[:commit] == 'Invia a tutti'
         @condomini_all = Condomino.where('condominio_id == ? and user_id != ?',params[:condominio_id], current_user.id)
         if current_user.from_oauth?
+          session_time = Time.now - session[:time_login].to_datetime
           require 'json' 
           token, refresh_token = *JSON.parse(File.read('credentials.data'))
           client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
   
-          if client.expired?
+          if client.expired? || (session_time/60).to_i > 28
             new_token = client.refresh!
             @new_tokens =
               {
@@ -114,11 +115,12 @@ class CondominosController < ApplicationController
         end
       else
         if current_user.from_oauth?
+          session_time = Time.now - session[:time_login].to_datetime
           require 'json' 
           token, refresh_token = *JSON.parse(File.read('credentials.data'))
           client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
   
-          if client.expired?
+          if client.expired? || (session_time/60).to_i > 28
             new_token = client.refresh!
             @new_tokens =
               {
@@ -172,12 +174,13 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     if params.has_key?(:email) && params.has_key?(:codice) && params.has_key?(:condominio_id)
       if current_user.from_oauth?
+        session_time = Time.now - session[:time_login].to_datetime
         @condominio_condiviso = Condominio.find(params[:condominio_id])
         require 'json' 
         token, refresh_token = *JSON.parse(File.read('credentials.data'))
         client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
 
-        if client.expired?
+        if client.expired? || (session_time/60).to_i > 28
           new_token = client.refresh!
           @new_tokens =
             {

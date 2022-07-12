@@ -33,10 +33,16 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         if current_user.from_oauth?
+          session_time = Time.now - session[:time_login].to_datetime
+          list_email = []
+          @condomini.each do |condomino|
+            utente_corrente_email = User.find(condomino.user_id).email
+            list_email << Google::Apis::CalendarV3::EventAttendee.new(email: utente_corrente_email)
+          end
           require 'json' 
           token, refresh_token = *JSON.parse(File.read('credentials.data'))
           client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'calendar')
-          if client.expired?
+          if client.expired? || (session_time/60).to_i > 28            
             new_token = client.refresh!
             @new_tokens =
               {
@@ -57,7 +63,7 @@ class EventsController < ApplicationController
               summary: "Avviso " + params[:categoria],
               location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
               description: @event.titolo,
-              attendees: [Google::Apis::CalendarV3::EventAttendee.new(email: "andrea.pancio00@gmail.com")],
+              attendees: list_email,
               recurrence: [
                 'RRULE:FREQ=WEEKLY'
               ],
@@ -73,12 +79,12 @@ class EventsController < ApplicationController
             )
           else
             event = Google::Apis::CalendarV3::Event.new(
-              start: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339),
-              end: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339),
+              start: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339,time_zone: "Europe/Rome"),
+              end: Google::Apis::CalendarV3::EventDateTime.new(date_time: @event.start_time.to_datetime.rfc3339,time_zone: "Europe/Rome"),
               summary: "Avviso " + params[:categoria],
               location: @condominio.nome + ', ' + @condominio.comune + ', ' + @condominio.indirizzo,
               description: @event.titolo,
-              attendees: [Google::Apis::CalendarV3::EventAttendee.new(email: "andrea.pancio00@gmail.com")],
+              attendees: list_email,
             )
           end
           calendar = service.get_calendar(:primary)
