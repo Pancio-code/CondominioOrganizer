@@ -46,6 +46,7 @@ class CondominiosController < ApplicationController
         format.json { render json: @condominio.errors, status: :unprocessable_entity }
       end
     end
+    gdrive.process(:initialize_drive)
   end
 
   def comunication_for_admin
