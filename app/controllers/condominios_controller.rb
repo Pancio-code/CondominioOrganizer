@@ -46,7 +46,7 @@ class CondominiosController < ApplicationController
         format.json { render json: @condominio.errors, status: :unprocessable_entity }
       end
     end
-    gdrive.process(:initialize_drive)
+    initialize_drive
   end
 
   def comunication_for_admin
@@ -117,6 +117,35 @@ class CondominiosController < ApplicationController
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }
     end
+  end
+
+ def initialize_drive
+    require 'jwt'
+                                                 
+    payload = [
+    {
+      alg: 'RS256',
+      typ: 'JWT',
+      kid: Figaro.env.private_key_id
+    },{
+      iss: Figaro.env.client_email,
+      sub: Figaro.env.client_email,
+      aud: 'https://drive.googleapis.com/',
+      iat: Time.now.to_i,
+      exp: Time.now.to_i+3600.seconds
+     }
+    ]
+                                                 
+    rsa_private = OpenSSL::PKey::RSA.generate 2048
+    rsa_public  = rsa_private.public_key
+                                                 
+    token = JWT.encode payload, rsa_private, 'RS256'
+    client = Signet::OAuth2::Client.new(client_id: Figaro.env.client_id, client_secret: Figaro.env.google_api_secret, access_token: token, refresh_token: token, token_credential_uri: Figaro.env.token_uri, scope:'drive')
+
+    drive = Google::Apis::DriveV3                 
+    service = drive::DriveService.new
+    
+    driveobj = Google::Apis::DriveV3::Drive.new()
   end
 
   private
