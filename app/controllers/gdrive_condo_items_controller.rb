@@ -1,42 +1,23 @@
 class GdriveCondoItemsController < ApplicationController
-  before_action :set_gdrive_condo_item, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /gdrive_condo_items or /gdrive_condo_items.json
   def index
     @gdrive_condo_items = GdriveCondoItem.all
   end
 
-  # GET /gdrive_condo_items/1 or /gdrive_condo_items/1.json
-  def show
-  end
-
-  # GET /gdrive_condo_items/new
-  def new
-    @gdrive_condo_item = GdriveCondoItem.new
-  end
-
-  # GET /gdrive_condo_items/1/edit
-  def edit
-  end
-
   # POST /gdrive_condo_items or /gdrive_condo_items.json
-  def create
-    @service = @gdrive_condo_item.initialize_drive_service
+  def create(nome,email,condominio_id)
+    @service = initialize_drive_service
 
-    cartella_condominio = Google::Apis::DriveV3::File.new(name: 'ematest',mime_type: "application/vnd.google-apps.folder")
+    cartella_condominio = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
     cartella_condominio_drive = @service.create_file(cartella_condominio)
-#    @service.update_file(cartella_condominio_drive.id, add_parents: Figaro.env.drive_id)
-#    @service.create_permission(cartella_condominio_drive.id, Google::Apis::DriveV3::Permission.new(email_address: Figaro.env.email_di_servizio,role: "writer",type: "user"))
-
-    @gdrive_condo_item = GdriveCondoItem.new(condominio_id: params[:condominio_id])
-    @gdrive_condo_item.folder_id = cartella_condominio_drive.id.to_s
-
-    respond_to do |format|
-      if @gdrive_condo_item.save!
-        puts 'CONDO FOLDER CREATA CON SUCCESSO'
-      else
-        puts 'IMPOSSIBILE CREARE CONDO FOLDER'
-      end
+    @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
+    permesso_cartella = Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user")
+    @service.create_permission(cartella_condominio_drive.id,permesso_cartella)
+    @Gdrive = GdriveCondoItem.new(folder_id: cartella_condominio_drive.id,condominio_id:condominio_id)
+    if @Gdrive.save!
+      return permesso_cartella.id
     end
   end
 
@@ -54,9 +35,8 @@ class GdriveCondoItemsController < ApplicationController
   end
 
   def initialize_drive_service
-
     file = File.read('config/google_credentials.json')
-                   
+    
     @service = Google::Apis::DriveV3::DriveService.new
     scope = 'https://www.googleapis.com/auth/drive'
     authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
@@ -64,16 +44,15 @@ class GdriveCondoItemsController < ApplicationController
   
     authorizer.fetch_access_token!
     @service.authorization = authorizer
-    return @service
 
+    return @service
   end
 
   # DELETE /gdrive_condo_items/1 or /gdrive_condo_items/1.json
   def destroy
 
-    @service = @gdrive_condo_item.initialize_drive_service
+    @service = initialize_drive_service
 
-#    cartella_condominio = Google::Apis::DriveV3::File.destroy(file_id: @gdrive_condo_item.folder_id)
     cartella_condominio = @service.delete_file(file_id: @gdrive_condo_item.folder_id)
 
     @gdrive_condo_item.destroy
@@ -83,15 +62,4 @@ class GdriveCondoItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_gdrive_condo_item
-      @gdrive_condo_item = GdriveCondoItem.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def gdrive_condo_item_params
-      params.require(:gdrive_condo_item).permit( :condominio_id)
-    end
 end

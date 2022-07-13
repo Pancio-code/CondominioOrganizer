@@ -225,12 +225,22 @@ class CondominosController < ApplicationController
   def destroy
     authorize! :destroy, Condominio
     @condomino = Condomino.find(params[:id])
+    @utente_id = @condomino.user_id
+    id_cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condomino.condominio_id).id
     @condominio = Condominio.find_by(id: @condomino.condominio_id)
+    @Gdrive_controller = GdriveUserItemsController.new
+    @Gdrive_controller.destroy(@condomino.id,id_cartella_condominio)
     @condomino.destroy
 
+
     respond_to do |format|
-      format.html { redirect_to condominio_condominos_path(@condominio), notice: "Membro espulso correttamente." }
-      format.json { head :no_content }
+      if @utente_id == current_user.id
+        format.html { redirect_to root_path, notice: "Uscito correttamente dal condominio." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to condominio_condominos_path(@condominio), notice: "Membro espulso correttamente." }
+        format.json { head :no_content }
+      end
     end
   end
 

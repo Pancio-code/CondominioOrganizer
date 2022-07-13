@@ -35,7 +35,7 @@
     <%= link_to 'Comunica con Admin', condominios_create_comunication_for_admin_path(:condominio_id => @condominio.id),:class => "btn btn-primary" %> | <% end %>
     <%= link_to 'Modifica', edit_condominio_path(@condominio),:class => "btn btn-primary" %> | <% end %>
     <% if !current_user.is_admin? && !(can? :update, @condominio) %>
-    <%= link_to 'Esci dal Condominio', condomino_path(Condomino.find_by(user_id: current_user.id, condominio_id: @condominio.id)), method: :delete, data: { confirm: 'Are you sure?' },:class => "btn btn-primary" %> | <% end %> <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>
+    <%= link_to 'Esci dal Condominio', condomino_path(Condomino.find_by(user_id: current_user.id, condominio_id: @condominio.id)), method: :delete, data: { confirm: 'Sei sicuro?' },:class => "btn btn-primary" %> | <% end %> <%= link_to 'Home', condominios_path,:class => "btn btn-primary" %>
   <br>
   <div class="row gx-5 all-row">
     <div class="col">

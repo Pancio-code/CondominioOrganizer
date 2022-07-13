@@ -37,12 +37,10 @@ class CondominiosController < ApplicationController
     #@condominio.condominos_attributes = [{ condominio_id: params[:id], user_id: current_user.id, is_condo_admin: true }]
     respond_to do |format|
       if @condominio.save!
-      	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
-      	@condomino.save
         @condo_gdrive = GdriveCondoItemsController.new
-        @condo_d = @condo_gdrive.new
-        @condo_d.condominio_id = @condominio.id
-        @condo_d.save!
+        @condo_gdrive_permesso = @condo_gdrive.create(@condominio.nome,current_user.email,@condominio.id)
+        @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true,permission_id: @condo_gdrive_permesso)
+      	@condomino.save
 #        initialize_drive(@condominio.nome,current_user.email)
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
@@ -120,25 +118,6 @@ class CondominiosController < ApplicationController
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }
     end
-  end
-
- def initialize_drive(nome,email,condominio_id)                                                 
-    file = File.read('config/google_credentials.json')
- 
-    @service = Google::Apis::DriveV3::DriveService.new
-    scope = 'https://www.googleapis.com/auth/drive'
-    authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: StringIO.new(file), scope: scope)
-  
-    authorizer.fetch_access_token!
-    @service.authorization = authorizer
-
-    cartella_condominio = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
-    cartella_condominio_drive = @service.create_file(cartella_condominio)
-    @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
-    @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
-    @Gdrive = GdriveCondoItem.new(folder_id: cartella_condominio_drive.id,condominio_id:condominio_id)
-    @Gdrive.save!
   end
 
   private

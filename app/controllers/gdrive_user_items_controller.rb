@@ -1,5 +1,5 @@
 class GdriveUserItemsController < ApplicationController
-  before_action :set_gdrive_user_item, only: %i[ create update destroy ]
+  before_action :authenticate_user!
 
   def initialize_drive                                              
     file = File.read('config/google_credentials.json')
@@ -39,36 +39,31 @@ class GdriveUserItemsController < ApplicationController
   end
 
   # PATCH/PUT /gdrive_user_items/1 or /gdrive_user_items/1.json
-  def update
+  def update(condominio,condomino,email,evento)
     @service = initialize_drive
     
-    respond_to do |format|
-      if @gdrive_user_item.update(gdrive_user_item_params)
-        format.html { redirect_to gdrive_user_item_url(@gdrive_user_item), notice: "Gdrive user item was successfully updated." }
-        format.json { render :show, status: :ok, location: @gdrive_user_item }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @gdrive_user_item.errors, status: :unprocessable_entity }
-      end
+    if evento = "eleva"
+
+    elsif evento = "cedi"
+
+    else 
+
     end
   end
 
   # DELETE /gdrive_user_items/1 or /gdrive_user_items/1.json
-  def destroy
+  def destroy(condomino_id,gdrive_condo_items_id)
+    @gdrive_user_item = GdriveUserItem.find_by(condomino_id: condomino_id,gdrive_condo_items_id: gdrive_condo_items_id)
     @service = initialize_drive
-    @service.delete_file(@gdrive_user_item.folder_id)
+
+    begin 
+      @service.delete_file(@gdrive_user_item.folder_id)
+    rescue => e
+      if !e.status_code == 404
+        redirect_to root_path, :alert => e.message
+        return false
+      end
+    end
     @gdrive_user_item.destroy
-    return true
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_gdrive_user_item
-      @gdrive_user_item = GdriveUserItem.find_by(params[:folder_id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def gdrive_user_item_params
-      params.require(:gdrive_user_item).permit(:folder_id, :condomino_id, :gdrive_condo_items_id, :nome, :email)
-    end
 end
