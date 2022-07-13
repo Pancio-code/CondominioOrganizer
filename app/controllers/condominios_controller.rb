@@ -112,7 +112,8 @@ class CondominiosController < ApplicationController
   # DELETE /condominios/1 or /condominios/1.json
   def destroy
     authorize! :destroy, Condominio
-    @condominio_id = @condominio.id
+    @condo_gdrive = GdriveCondoItemsController.new
+    @condo_gdrive_permesso = @condo_gdrive.destroy(@condominio.id)
     @condominio.destroy
     respond_to do |format|
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }

@@ -14,6 +14,9 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     respond_to do |format|
       if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:user_id]).update(is_condo_admin: true)
+        utente = User.find(params[:user_id])
+        @Gdrive_controller = GdriveUserItemsController.new
+        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
         format.html { redirect_to condominio_condominos_path(Condominio.find_by(id: params[:condominio_id])), notice: User.find_by(id: params[:user_id]).uname + ' è diventato un amministratore del condominio.' }
         format.json { render :show, status: :ok, location: @condominio }
       else
@@ -29,6 +32,8 @@ class CondominosController < ApplicationController
       if params.has_key?(:condominio_id) && params.has_key?(:old_amministratore_id) && params.has_key?(:new_amministratore_id)
         @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
         if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:old_amministratore_id]).update(is_condo_admin: false) && Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:new_amministratore_id]).update(is_condo_admin: true)
+          @Gdrive_controller = GdriveUserItemsController.new
+          @Gdrive_controller.update(params[:condominio_id],params[:old_amministratore_id],"scegli",params[:new_amministratore_id])
           format.html { redirect_to condominio_condominos_path(@condominio_attuale), notice: User.find_by(id: params[:new_amministratore_id]).uname + ' è il nuovo amministratore del condominio.' }
           format.json { render :show, status: :ok, location: @condominio_attuale }
         else
@@ -38,6 +43,8 @@ class CondominosController < ApplicationController
       else 
         @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
         if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:old_amministratore_id]).update(is_condo_admin: false)
+          @Gdrive_controller = GdriveUserItemsController.new
+          @Gdrive_controller.update(params[:condominio_id],params[:old_amministratore_id],"cedi",nil)
           format.html { redirect_to condominio_condominos_path(@condominio_attuale), notice: User.find_by(id: params[:old_amministratore_id]).uname + ' non è più un amministratore del condominio.' }
           format.json { render :show, status: :ok, location: @condominio_attuale }
         else

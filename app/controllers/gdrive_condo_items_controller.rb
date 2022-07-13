@@ -13,11 +13,10 @@ class GdriveCondoItemsController < ApplicationController
     cartella_condominio = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
     cartella_condominio_drive = @service.create_file(cartella_condominio)
     @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
-    permesso_cartella = Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user")
-    @service.create_permission(cartella_condominio_drive.id,permesso_cartella)
+    @permesso_cartella = @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
     @Gdrive = GdriveCondoItem.new(folder_id: cartella_condominio_drive.id,condominio_id:condominio_id)
     if @Gdrive.save!
-      return permesso_cartella.id
+      return @permesso_cartella.id
     end
   end
 
@@ -48,18 +47,16 @@ class GdriveCondoItemsController < ApplicationController
     return @service
   end
 
-  # DELETE /gdrive_condo_items/1 or /gdrive_condo_items/1.json
-  def destroy
-
+  def destroy(condominio_id)
     @service = initialize_drive_service
+    @gdrive_condo_item = GdriveCondoItem.find_by(condominio_id: condominio_id)
 
-    cartella_condominio = @service.delete_file(file_id: @gdrive_condo_item.folder_id)
+    begin 
+      @service.delete_file(@gdrive_condo_item.folder_id)
+    rescue => e
+      return false
+    end
 
     @gdrive_condo_item.destroy
-
-    respond_to do |format|
-      format.html { redirect_to gdrive_condo_items_url, notice: "Gdrive condo item was successfully destroyed." }
-      format.json { head :no_content }
-    end
   end
 end

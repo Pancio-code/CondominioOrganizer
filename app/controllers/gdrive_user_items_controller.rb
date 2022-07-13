@@ -23,7 +23,7 @@ class GdriveUserItemsController < ApplicationController
     cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
     cartella_utente_drive = @service.create_file(cartella_utente)
     @service.update_file(cartella_utente_drive.id,add_parents: cartella_condominio.folder_id)
-    @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
+    @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
 
     @gdrive_user_item = GdriveUserItem.new()
 
@@ -39,15 +39,38 @@ class GdriveUserItemsController < ApplicationController
   end
 
   # PATCH/PUT /gdrive_user_items/1 or /gdrive_user_items/1.json
-  def update(condominio,condomino,email,evento)
+  def update(condominio_id,user_id,evento,nuovo_user_id)
     @service = initialize_drive
-    
-    if evento = "eleva"
-
-    elsif evento = "cedi"
-
+    utente = User.find_by(id: user_id)
+    cartella_condominio = GdriveCondoItem.find_by(condominio_id: condominio_id)
+    if evento == "eleva"
+      permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: utente.email,role: "writer",type: "user"),send_notification_email: false)
+      Condomino.where(condominio_id: condominio_id,user_id: user_id).update(permission_id: permesso_condominio.id)
+    elsif evento == "cedi"
+      condomino = Condomino.find_by(condominio_id: condominio_id, user_id: user_id)
+      begin 
+        @service.delete_permission(cartella_condominio.folder_id, condomino.permission_id)
+        condomino.update(permission_id: nil)
+      rescue => e
+        return false
+      end
+      if !GdriveUserItem.where(condomino_id: condomino.id,gdrive_condo_items_id: cartella_condominio.id).exists?
+        create(utente.uname,utente.email,condomino)
+      end
     else 
-
+      nuovo_utente = User.find_by(id: nuovo_user_id)
+      condomino = Condomino.find_by(condominio_id: condominio_id, user_id: user_id)
+      begin 
+        permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: nuovo_utente.email,role: "writer",type: "user"),send_notification_email: false)
+        Condomino.where(condominio_id: condominio_id,user_id: nuovo_utente).update(permission_id: permesso_condominio.id)
+        @service.delete_permission(cartella_condominio.folder_id, condomino.permission_id)
+        condomino.update(permission_id: nil)
+      rescue => e
+        return false
+      end
+      if !GdriveUserItem.where(condomino_id: condomino.id,gdrive_condo_items_id: cartella_condominio.id).exists?
+        create(utente.uname,utente.email,condomino)
+      end
     end
   end
 
@@ -59,10 +82,7 @@ class GdriveUserItemsController < ApplicationController
     begin 
       @service.delete_file(@gdrive_user_item.folder_id)
     rescue => e
-      if !e.status_code == 404
-        redirect_to root_path, :alert => e.message
-        return false
-      end
+      return false
     end
     @gdrive_user_item.destroy
   end

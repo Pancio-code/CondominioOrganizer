@@ -6,14 +6,14 @@ class Condominio < ApplicationRecord
 		self.flat_code = [*('a'..'z'),*('0'..'9')].shuffle[0,5].join
 	end
 	
-    has_many :condominos,dependent: :delete_all
+    has_many :condominos,dependent: :destroy
     has_many :users, through: :condominos
 
     accepts_nested_attributes_for :condominos
     
     has_one :gdrive_condo_item, dependent: :delete 
 
-    has_many :posts,dependent: :delete_all
+    has_many :posts,dependent: :destroy
 #	def create_condomino
 #		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
 #	end
