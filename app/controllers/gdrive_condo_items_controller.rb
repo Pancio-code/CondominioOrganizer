@@ -23,13 +23,13 @@ class GdriveCondoItemsController < ApplicationController
   def create
     @service = @gdrive_condo_item.initialize_drive_service
 
-    cartella_condominio_drive = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
-    cartella_condominio_drive = @service.create_file(cartella_condominio_drive)
-    @service.update_file(cartella_condominio_drive.id, add_parents: Figaro.env.drive_id)
-    @service.create_permission(cartella_condominio_drive.id, Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
+    cartella_condominio = Google::Apis::DriveV3::File.new(name: 'ematest',mime_type: "application/vnd.google-apps.folder")
+    cartella_condominio_drive = @service.create_file(cartella_condominio)
+#    @service.update_file(cartella_condominio_drive.id, add_parents: Figaro.env.drive_id)
+#    @service.create_permission(cartella_condominio_drive.id, Google::Apis::DriveV3::Permission.new(email_address: Figaro.env.email_di_servizio,role: "writer",type: "user"))
 
     @gdrive_condo_item = GdriveCondoItem.new(condominio_id: params[:condominio_id])
-    @gdrive_condo_item.folder_id = cartella_condominio_drive.id
+    @gdrive_condo_item.folder_id = cartella_condominio_drive.id.to_s
 
     respond_to do |format|
       if @gdrive_condo_item.save!
