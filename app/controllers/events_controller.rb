@@ -141,7 +141,7 @@ class EventsController < ApplicationController
           service.authorization = client
           
           calendar = service.get_calendar(:primary)
-          begin service.get_event(calendar.id, @event.calendar_id)
+          begin
             service.get_event(calendar.id, @event.calendar_id)
 
             if params[:categoria] == "pagamento"
@@ -223,7 +223,7 @@ class EventsController < ApplicationController
         service.authorization = client
         
         calendar = service.get_calendar(:primary)
-        begin service.get_event(calendar.id, @event.calendar_id)
+        begin
           service.get_event(calendar.id, @event.calendar_id)
           service.delete_event(calendar.id, @event.calendar_id,send_notifications: true)
         rescue => e

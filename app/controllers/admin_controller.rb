@@ -14,6 +14,7 @@ class AdminController < ApplicationController
     @numero_richieste = Request.all.count
     @numero_posts = Post.all.count
     @numero_comments = Comment.all.count
+    @numero_eventi = Event.all.count
     authorize! :index, User
   end
 

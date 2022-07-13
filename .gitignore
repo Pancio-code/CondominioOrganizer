@@ -14,6 +14,8 @@
 
 credentials.data
 
+/config/google_credentials.json
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

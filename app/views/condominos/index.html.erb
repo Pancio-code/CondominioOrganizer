@@ -19,7 +19,7 @@
             <td>
               <% if @condomini_amm.count > 1 %>
                 <%= link_to 'Cedi ruolo', condominos_cedi_ruolo_leader_path(:condominio_id => condomino.condominio_id,:old_amministratore_id => condomino.user_id), method: :cedi_ruolo_leader, data: { confirm: 'Sei sicuro di voler cedere ruolo di amministratore del condominio?' } %>
-              <%else%>
+              <% elsif @condomini.count > 0 %>
                 <%= link_to 'Cedi ruolo', :controller => "condominos", :action => "choose_new_leader", :condominio_id => condomino.condominio_id, :old_amministratore_id => condomino.user_id %>
               <%end%>
             </td>       
