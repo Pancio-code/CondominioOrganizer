@@ -1,7 +1,6 @@
 class EnterController < ApplicationController
     before_action :authenticate_user!
     before_action :is_admin
-    before_action :set_condominio, only: %i[show]
   
     # GET /condominios or /condominios.json
     def index
@@ -19,10 +18,6 @@ class EnterController < ApplicationController
       if current_user != nil && current_user.is_admin?
         redirect_to admin_index_path
       end
-    end
-  
-    # GET /condominios/1 or /condominios/1.json
-    def show
     end
 
     def new
@@ -55,9 +50,4 @@ class EnterController < ApplicationController
       end
     end
   
-    private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_condominio
-        @condominio = Condominio.find(params[:id])
-      end
 end

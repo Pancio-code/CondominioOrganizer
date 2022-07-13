@@ -1,8 +1,7 @@
 <%= form_with(model: condominio) do |form| %>
   <% if condominio.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(condominio.errors.count, "error") %> prohibited this condominio from being saved:</h2>
-
+      <h2><%= pluralize(condominio.errors.count, "errore",plural:"errori") %> hanno impedito di creare il condominio:</h2>
       <ul>
         <% condominio.errors.each do |error| %>
           <li><%= error.full_message %></li>

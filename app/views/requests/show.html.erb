@@ -15,7 +15,7 @@
   </p>
 
   <% if can? :edit, @request%>
-  <%= link_to 'Accetta', edit_request_path %> | <% end %>
-  <%= link_to 'Annulla', @request, method: :delete, data: { confirm: 'Sei sicuro?' } %> |
-  <%= link_to 'Indietro', requests_path %>
+  <%= link_to 'Accetta', edit_request_path,:class => "btn btn-primary" %> | <% end %>
+  <%= link_to 'Annulla', @request, method: :delete, data: { confirm: 'Sei sicuro?' },:class => "btn btn-primary" %> |
+  <%= link_to 'Indietro', requests_path,:class => "btn btn-primary" %>
 </div>

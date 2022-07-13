@@ -27,7 +27,9 @@
 <div class="container-fluid welcome-container">
     <div class="welcome-banner">
         <% flash.each do |key, message| %>
-            <p class="welcome-messages alert alert-<%= key %>"><%= message %></p>
+            <% if message != true %>
+                <p class="welcome-messages alert alert-<%= key %>"><%= message %></p>
+            <% end %>
         <% end %>
         <br>
         <h1 class="welcome-h1">Condominio Organizer</h1>

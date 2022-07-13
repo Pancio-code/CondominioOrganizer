@@ -1,6 +1,8 @@
 class Condominio < ApplicationRecord
-
 	before_validation :create_code
+    validates :comune, length: {minimum: 1, maximum: 25}, allow_blank: false
+    validates :nome, length: {minimum: 1, maximum: 25}, allow_blank: false
+    validates :indirizzo, allow_blank: false, format: { with: %r{(via|corso|viale|piazza|Via|Corso|Viale|Piazza)[ ][a-zA-Z]([ ](?![ ])|[a-zA-Z]){1,}[ ][0-9]{1,}\z}i ,message: 'invalido, formato: Via Tiburtina 214'} 
 
 	def create_code
 		self.flat_code = [*('a'..'z'),*('0'..'9')].shuffle[0,5].join
@@ -23,7 +25,7 @@ class Condominio < ApplicationRecord
     def address
         [indirizzo, comune].compact.join(', ')
     end
-      
+
     geocoded_by :address
     after_validation :geocode
 

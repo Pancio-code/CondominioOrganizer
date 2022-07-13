@@ -19,15 +19,15 @@
             <div class="field">
                 <%= f.label :message %></br>
                 <%= f.text_area :message, rows: 8, cols: 40, required: true, class: "contact-form-text-area", 
-                        placeholder: "Send me a message"%></br>
+                        placeholder: "Manda un messaggio"%></br>
             </div>
 
             <div class= "d-none">
                 <%= f.label :nickname %>
-                <%= f.text_field :nickname, :hint => 'Leave this field blank!' %>
+                <%= f.text_field :nickname, :hint => 'Lascia questo campo vuoto!' %>
             </div>
 
-            <%= f.submit 'Send Message', class: 'btn btn-primary' %>
+            <%= f.submit 'Invia messaggio', class: 'btn btn-primary' %>
         </div>
     <% end %>
 </div>

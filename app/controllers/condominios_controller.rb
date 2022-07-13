@@ -46,7 +46,7 @@ class CondominiosController < ApplicationController
   def create
     @condominio = Condominio.new(condominio_params)
     respond_to do |format|
-      if @condominio.save!
+      if @condominio.save
         @condo_gdrive = GdriveCondoItemsController.new
         @condo_gdrive_permesso = @condo_gdrive.create(@condominio.nome,current_user.email,@condominio.id)
         @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true,permission_id: @condo_gdrive_permesso)
