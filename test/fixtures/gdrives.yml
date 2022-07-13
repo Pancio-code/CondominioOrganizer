@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  condo_cartella_id: MyString
+  cartella_id: MyString
+  condomino: one
+
+two:
+  condo_cartella_id: MyString
+  cartella_id: MyString
+  condomino: two
