@@ -122,9 +122,9 @@ class CondominiosController < ApplicationController
     end
   end
 
- def initialize_drive(nome,email)                                                 
+ def initialize_drive(nome,email,condominio_id)                                                 
     file = File.read('config/google_credentials.json')
-                   
+ 
     @service = Google::Apis::DriveV3::DriveService.new
     scope = 'https://www.googleapis.com/auth/drive'
     authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
@@ -137,6 +137,8 @@ class CondominiosController < ApplicationController
     cartella_condominio_drive = @service.create_file(cartella_condominio)
     @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
     @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
+    @Gdrive = GdriveCondoItem.new(folder_id: cartella_condominio_drive.id,condominio_id:condominio_id)
+    @Gdrive.save!
   end
 
   private
