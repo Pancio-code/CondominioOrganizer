@@ -43,7 +43,13 @@ class EnterController < ApplicationController
           @condominio = Condominio.find_by(flat_code: @codice).id
           @enter = Condomino.new(condominio_id: @condominio, user_id: current_user.id, is_condo_admin: false)
           @enter.save
-          format.html { redirect_to condominio_url(@condominio), notice: "Benvenuto nel condominio." }
+          @Gdrive_controller = GdriveUserItemsController.new
+          @Gdrive_controller.create(current_user.uname,current_user.email,@enter)
+          if @Gdrive_controller
+            format.html { redirect_to condominio_url(@condominio), notice: "Benvenuto nel condominio." }
+          else 
+            format.html { redirect_to condominio_url(@condominio), notice: "Benvenuto nel condominio, c'è stato un errore nella creazione della tua cartella Drive, contatta uno dei Leader condominio." }
+          end
           format.json { render :show, status: :created, location: @condominio }         
         end
       end
