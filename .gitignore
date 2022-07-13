@@ -37,6 +37,7 @@ credentials.data
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /config/local_env.yml
+/config/google_credentials.json
 
 /public/packs
 /public/packs-test

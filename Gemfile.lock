@@ -462,6 +462,7 @@ DEPENDENCIES
   icalendar
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
+  jwt
   listen (~> 3.3)
   mail_form
   mailcatcher

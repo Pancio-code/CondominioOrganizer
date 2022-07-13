@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_12_104903) do
+ActiveRecord::Schema.define(version: 2022_07_13_142949) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2022_07_12_104903) do
     t.boolean "is_condo_admin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "permission_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -81,6 +82,24 @@ ActiveRecord::Schema.define(version: 2022_07_12_104903) do
     t.string "categoria", null: false
     t.string "calendar_id"
     t.index ["condominio_id"], name: "index_events_on_condominio_id"
+  end
+
+  create_table "gdrive_condo_items", force: :cascade do |t|
+    t.string "folder_id"
+    t.integer "condominio_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["condominio_id"], name: "index_gdrive_condo_items_on_condominio_id"
+  end
+
+  create_table "gdrive_user_items", force: :cascade do |t|
+    t.string "folder_id"
+    t.integer "condomino_id", null: false
+    t.integer "gdrive_condo_items_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["condomino_id"], name: "index_gdrive_user_items_on_condomino_id"
+    t.index ["gdrive_condo_items_id"], name: "index_gdrive_user_items_on_gdrive_condo_items_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -124,6 +143,9 @@ ActiveRecord::Schema.define(version: 2022_07_12_104903) do
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "events", "condominios"
+  add_foreign_key "gdrive_condo_items", "condominios"
+  add_foreign_key "gdrive_user_items", "condominos"
+  add_foreign_key "gdrive_user_items", "gdrive_condo_items", column: "gdrive_condo_items_id"
   add_foreign_key "posts", "condominios"
   add_foreign_key "posts", "users"
   add_foreign_key "requests", "condominios"

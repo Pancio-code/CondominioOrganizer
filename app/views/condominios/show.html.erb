@@ -101,9 +101,7 @@
         <br>
         <% if can? :update, @condominio%>
         <%= link_to 'Crea evento', new_event_path(condominio_id: @condominio.id),:class => "btn btn-primary my-2" %> | <% end %> <%= link_to 'Eventi creati', events_path(condominio_id: @condominio.id),:class => "btn btn-primary my-2" %> <br>
-        <%if current_user.from_oauth? %>
-          <%= link_to 'Accedi al Google Drive', root_path,:class => "btn btn-primary my-2" %>
-        <% end %>
+        <%= link_to 'Accedi al Google Drive', "https://drive.google.com/drive/folders" + @codice_cartella,:class => "btn btn-primary my-2" %>
     </div>
   </div>
 </div>

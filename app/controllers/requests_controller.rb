@@ -30,8 +30,15 @@ class RequestsController < ApplicationController
     @condomino.condominio_id = @request.condominio_id
     @condomino.user_id = @request.user_id 
     @condomino.is_condo_admin = false
-    if @condomino.save 
-      redirect_to condominio_url(@request.condominio_id), notice: "Richiesta accettata"
+    @utente = User.find(@condomino.user_id)
+    if @condomino.save  
+      @Gdrive_controller = GdriveUserItemsController.new
+      @Gdrive_controller.create(@utente.uname,@utente.email,@condomino)
+      if @Gdrive_controller
+        redirect_to condominio_url(@request.condominio_id), notice: "Richiesta accettata"
+      else 
+        redirect_to condominio_url(@request.condominio_id), notice: "Richiesta accettata, c'è stato un errore nella creazione della cartella Drive dell'utente."
+      end
       @request.destroy
     end
   end

@@ -17,6 +17,17 @@ class CondominiosController < ApplicationController
 
   # GET /condominios/1 or /condominios/1.json
   def show
+    cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condominio.id)
+    if cartella_condominio != nil
+      if can? :update, @condominio
+        @codice_cartella = "/" + cartella_condominio.folder_id
+      else
+        condomino_id = Condomino.find_by(user_id: current_user.id,condominio_id:@condominio.id).id
+        @codice_cartella = "/" + GdriveUserItem.find_by(condomino_id: condomino_id,gdrive_condo_items_id: cartella_condominio.id).folder_id
+      end
+    else
+      @codice_cartella = ""
+    end
     start_date = params.fetch(:start_date, Date.today).to_date
     @eventi = Event.where(start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
   end
@@ -36,8 +47,11 @@ class CondominiosController < ApplicationController
     @condominio = Condominio.new(condominio_params)
     respond_to do |format|
       if @condominio.save!
-      	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
+        @condo_gdrive = GdriveCondoItemsController.new
+        @condo_gdrive_permesso = @condo_gdrive.create(@condominio.nome,current_user.email,@condominio.id)
+        @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true,permission_id: @condo_gdrive_permesso)
       	@condomino.save
+#        initialize_drive(@condominio.nome,current_user.email)
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
       else
@@ -110,9 +124,9 @@ class CondominiosController < ApplicationController
   # DELETE /condominios/1 or /condominios/1.json
   def destroy
     authorize! :destroy, Condominio
-    @condominio_id = @condominio.id
+    @condo_gdrive = GdriveCondoItemsController.new
+    @condo_gdrive_permesso = @condo_gdrive.destroy(@condominio.id)
     @condominio.destroy
-
     respond_to do |format|
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }
