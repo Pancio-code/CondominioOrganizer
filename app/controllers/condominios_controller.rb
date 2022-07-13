@@ -17,6 +17,17 @@ class CondominiosController < ApplicationController
 
   # GET /condominios/1 or /condominios/1.json
   def show
+    cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condominio.id)
+    if cartella_condominio != nil
+      if can? :update, @condominio
+        @codice_cartella = "/" + cartella_condominio.folder_id
+      else
+        condomino_id = Condomino.find_by(user_id: current_user.id,condominio_id:@condominio.id).id
+        @codice_cartella = "/" + GdriveUserItem.find_by(condomino_id: condomino_id,gdrive_condo_items_id: cartella_condominio.id).folder_id
+      end
+    else
+      @codice_cartella = ""
+    end
     start_date = params.fetch(:start_date, Date.today).to_date
     @eventi = Event.where(start_time: start_date.beginning_of_month.beginning_of_week..start_date.end_of_month.end_of_week)
   end
