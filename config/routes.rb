@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :gdrive_user_items
+  resources :gdrive_condo_items
   resources :events
   get 'admin/index'
   get "condominos/choose_new_leader", to: 'condominos#choose_new_leader'

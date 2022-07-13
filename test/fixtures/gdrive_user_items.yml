@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  folder_id: MyString
+  condomino: one
+  gdrive_condo_items: one
+
+two:
+  folder_id: MyString
+  condomino: two
+  gdrive_condo_items: two

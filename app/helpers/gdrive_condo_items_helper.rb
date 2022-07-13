@@ -1,0 +1,2 @@
+module GdriveCondoItemsHelper
+end
