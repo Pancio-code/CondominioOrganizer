@@ -39,7 +39,11 @@ class CondominiosController < ApplicationController
       if @condominio.save!
       	@condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true)
       	@condomino.save
-        initialize_drive(@condominio.nome,current_user.email)
+        @condo_gdrive = GdriveCondoItemsController.new
+        @condo_d = @condo_gdrive.new
+        @condo_d.condominio_id = @condominio.id
+        @condo_d.save!
+#        initialize_drive(@condominio.nome,current_user.email)
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
       else
@@ -112,7 +116,6 @@ class CondominiosController < ApplicationController
     authorize! :destroy, Condominio
     @condominio_id = @condominio.id
     @condominio.destroy
-
     respond_to do |format|
       format.html { redirect_to condominios_url, notice: "Condominio è stato eliminato correttamente." }
       format.json { head :no_content }

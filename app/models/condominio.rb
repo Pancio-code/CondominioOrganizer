@@ -11,6 +11,8 @@ class Condominio < ApplicationRecord
 
     accepts_nested_attributes_for :condominos
     
+    has_one :gdrive_condo_item, dependent: :delete 
+
     has_many :posts,dependent: :delete_all
 #	def create_condomino
 #		linkCondo = Condomino.create(condominio_id: self.id, user_id: current_user.id)
