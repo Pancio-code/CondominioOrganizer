@@ -31,6 +31,16 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+Given /^I am not logged in$/ do
+  visit root_path
+  page.should have_content("Un sito che punta a fornire un’applicazione unica dove aggregare tutte le informazioni di interesse di un condominio, con un sistema di “gruppi condominio” gestiti da un Leader Condominio forniti di bacheca dove inserire comunicazioni condominiali. Clicca su Iscriviti o Login,per usufruire di tutte le funzioni.")
+end
+
+Given /user "(.*)" exists/ do |name|
+  @user = create(:customer, :first_name => first, :last_name => last,
+    :email => nil, :created_by_admin => true)
+end
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
@@ -78,7 +88,7 @@ end
 #
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
-    When %{I fill in "#{name}" with "#{value}"}
+    steps %Q{When I fill in "#{name}" with "#{value}"}
   end
 end
 
@@ -251,4 +261,10 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Then /^account creation should fail with "(.*)"$/ do |msg|
+  steps %Q{
+    Then I should see "#{msg}"
+  }
 end
