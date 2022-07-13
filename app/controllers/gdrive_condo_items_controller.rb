@@ -28,8 +28,7 @@ class GdriveCondoItemsController < ApplicationController
     @service.update_file(cartella_condominio_drive.id, add_parents: Figaro.env.drive_id)
     @service.create_permission(cartella_condominio_drive.id, Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"))
 
-    @gdrive_condo_item = GdriveCondoItem.new(gdrive_condo_item_params)
-    puts cartella_condominio_drive.id
+    @gdrive_condo_item = GdriveCondoItem.new(condominio_id: params[:condominio_id])
     @gdrive_condo_item.folder_id = cartella_condominio_drive.id
 
     respond_to do |format|
