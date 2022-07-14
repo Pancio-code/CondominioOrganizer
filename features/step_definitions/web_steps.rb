@@ -31,13 +31,20 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+Given /^I am logged in$/ do
+  visit new_user_session_path
+  fill_in 'user_email', :with => "test@example.com "
+  fill_in 'user_password', :with => "Test1234@"
+  click_button 'Log in'
+end
+
 Given /^I am not logged in$/ do
   visit root_path
   page.should have_content("Un sito che punta a fornire un’applicazione unica dove aggregare tutte le informazioni di interesse di un condominio, con un sistema di “gruppi condominio” gestiti da un Leader Condominio forniti di bacheca dove inserire comunicazioni condominiali. Clicca su Iscriviti o Login,per usufruire di tutte le funzioni.")
 end
 
 def create_user
-  @user = FactoryGirl.create(:user)
+  @user = FactoryBot.create(:user)
 end     
 
 Given /^the following user exist:$/ do |instances|

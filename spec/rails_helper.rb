@@ -1,1 +1,1 @@
-config.include FactoryGirl::Syntax::Methods
+config.include FactoryBot::Syntax::Methods

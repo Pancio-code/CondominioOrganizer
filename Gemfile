@@ -49,7 +49,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rspec'
   gem 'cucumber-rails-training-wheels'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
