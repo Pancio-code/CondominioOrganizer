@@ -36,10 +36,14 @@ Given /^I am not logged in$/ do
   page.should have_content("Un sito che punta a fornire un’applicazione unica dove aggregare tutte le informazioni di interesse di un condominio, con un sistema di “gruppi condominio” gestiti da un Leader Condominio forniti di bacheca dove inserire comunicazioni condominiali. Clicca su Iscriviti o Login,per usufruire di tutte le funzioni.")
 end
 
-Given /user "(.*)" exists/ do |name|
-  @user = create(:customer, :first_name => first, :last_name => last,
-    :email => nil, :created_by_admin => true)
+def create_user
+  @user = FactoryGirl.create(:user)
+end     
+
+Given /^the following user exist:$/ do |instances|
+  create_user
 end
+
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|

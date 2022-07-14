@@ -19,7 +19,7 @@ module NavigationHelpers
     when /^CondominioOrganizer log in page/
       '/users/sign_in'
     
-    when /^CondominioOrganizer log in page/
+    when /^the login page/
       '/users/sign_in'
 
     when /^the sign up page/

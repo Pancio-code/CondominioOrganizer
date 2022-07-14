@@ -49,17 +49,22 @@ Feature: Creating an account
 
     Scenario: Unregistered User cannot create account with duplicate email
 
-        Given user "AndreaTestDuplicate" exists
+        Given the following user exist:
+            | test | test@example.com | Test1234@ |
         When I fill in the following:
-            | user_uname                 | AndreaTest             |
-            | user_email                 | andreatest@example.com |
-            | user_password              | Test123#               |
-            | user_password_confirmation | Test123#               |
+            | user_uname                 | AndreaTest       |
+            | user_email                 | test@example.com |
+            | user_password              | Test123#         |
+            | user_password_confirmation | Test123#         |
         And I press "Sign up"
         Then account creation should fail with "Email è già presente"
-        When I follow "Sign in as tom@foolery.com"
+        When I follow "Log in"
         Then I should be on the login page
-        And the "email" field should be "tom@foolery.com"
+        When I fill in the following:
+            | user_email    | test@example.com |
+            | user_password | Test1234@        |
+        And I press "Log in"
+        And I should see "Bentornato, continua la navigazione nel sito"
 
     Scenario: Unregistered User cannot create account without providing password
 

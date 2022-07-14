@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(version: 2022_07_13_142949) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uname"
-    t.boolean "from_oauth", default: false
     t.boolean "is_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
