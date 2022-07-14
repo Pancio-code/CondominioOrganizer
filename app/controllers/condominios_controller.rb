@@ -17,6 +17,7 @@ class CondominiosController < ApplicationController
 
   # GET /condominios/1 or /condominios/1.json
   def show
+    authorize! :show, @condominio
     cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condominio.id)
     if cartella_condominio != nil
       if can? :update, @condominio

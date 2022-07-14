@@ -31,7 +31,10 @@ class Ability
     end
 
     def authenticated_abilities(user)
-      can [:new,:create,:show,:update,:destroy,:comunication_for_admin,:create_comunication_for_admin], Condominio do |c|
+      can :show, Condominio do |c|
+        c.condominos.exists?(user_id: user.id)
+      end
+      can [:new,:create,:update,:destroy,:comunication_for_admin,:create_comunication_for_admin], Condominio do |c|
         c.condominos.exists?(is_condo_admin: true, user_id: user.id)
       end
       can :Destroy, Post do |p|
@@ -52,7 +55,7 @@ class Ability
         Event.where("EXISTS(SELECT 1 from condominos where condominos.condominio_id = (?) AND condominos.user_id = (?) AND condominos.is_condo_admin = true) ",e.condominio_id,user.id).exists?
       end
       can [:index,:show], Event
-      can [:new,:create,:show], Condominio
+      can [:new,:create], Condominio
     end
 
     def admin_abilities

@@ -10,7 +10,7 @@ it:
       failure: Login con account google fallito
     failure:
       user:
-        not_found_in_database: Email inserita non esiste
+        not_found_in_database: Credenziali inserite errate
         invalid: Password inserita è errata
         unauthenticated: Devi essere autenticato per accedere a questa pagina
         timeout: Timeout scaduto,per favore rieffettuare l'accesso
