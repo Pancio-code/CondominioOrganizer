@@ -51,13 +51,14 @@ class GdriveUserItemsController < ApplicationController
     file_utente = Google::Apis::DriveV3::File.new
 #   cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
     @cartella_utente = condomino.folder_id
-    file_utente_drive = @service.create_file(file_utente, upload_source: path)
+#    abort path.inspect
+    file_utente_drive = @service.create_file(file_utente, upload_source: path.tempfile)
     @service.update_file(file_utente_drive.id, add_parents: @cartella_utente)
 
     if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
-      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
+      @service.create_permission(condomino.folder_id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
     else 
-      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
+      @service.create_permission(condomino.folder_id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
     end
 
     @gdrive_user_item = GdriveUserItem.new()
