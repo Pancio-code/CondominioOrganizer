@@ -92,7 +92,6 @@
           <% if (can? :update, @condominio) && @condomini.count > 1 %>
             <h4>Selezionare gli utenti a cui inviare il file:</h4>
             <p>Non selezionando nessuno, il file non verrà caricato, ma pubblicato solo il post</p>
-            <% contatore = 1 %>
               <% @condomini.each do |condomino| %>
                   <% if condomino.user_id != current_user.id %>
                       <div class="row py-2">
@@ -105,12 +104,7 @@
                               <%= User.find_by(id: condomino.user_id).uname %>
                           </div>
                           <div class="col-2">
-                              <%if contatore == 1 %>
-                                  <%= check_box_tag('condomino_select[]', condomino.id, :checked => 'true') %>
-                              <% else %>
-                                  <%= check_box_tag('condomino_select[]', condomino.id) %>
-                              <% end %>
-                              <% contatore += 1 %>
+                            <%= form.check_box(:condomino_select,{ multiple: true }, condomino.id, nil) %>
                           </div>
                       </div>
                   <% end %>
