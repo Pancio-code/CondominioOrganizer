@@ -25,8 +25,8 @@ class PostsController < ApplicationController
     temp_file = post_params["file"]
     if temp_file != nil
       @temp_file_path = temp_file.tempfile
-      @condomino = Condomino.where(condominio_id: params[:condominio_id],user_id: current_user.id,is_condo_admin: true)
-      if @condomino.exists?
+      @condomino = Condomino.find_by(condominio_id: params[:condominio_id],user_id: current_user.id)
+      if @condomino.is_condo_admin == true
         if params["post"]["condomino_select"] != nil
           @condomini_selezionati = params["post"]["condomino_select"]
           @Gdrive_controller = GdriveUserItemsController.new
