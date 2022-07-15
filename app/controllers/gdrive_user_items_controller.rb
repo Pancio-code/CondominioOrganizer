@@ -42,13 +42,15 @@ class GdriveUserItemsController < ApplicationController
     end
   end
 
-  def crea_file
+  def crea_file(path, email, condomino)
     @service = initialize_drive
     
-    cartella_utente = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
-    cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
-    cartella_utente_drive = @service.create_file(cartella_utente)
-    @service.update_file(cartella_utente_drive.id,add_parents: cartella_condominio.folder_id)
+    file_utente = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
+#   cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
+    @cartella_utente = condomino.folder_id
+    file_utente_drive = @service.create_file(file_utente)
+    @service.update_file(file_utente_drive.id, add_parents: @cartella_utente)
+
     if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
       @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
     else 
@@ -57,9 +59,9 @@ class GdriveUserItemsController < ApplicationController
 
     @gdrive_user_item = GdriveUserItem.new()
 
-    @gdrive_user_item.folder_id = cartella_utente_drive.id
+    @gdrive_user_item.folder_id = @cartella_utente
     @gdrive_user_item.condomino_id = condomino.id
-    @gdrive_user_item.gdrive_condo_items_id = cartella_condominio.id
+    @gdrive_user_item.gdrive_condo_items_id = file_utente_drive.id
 
     if @gdrive_user_item.save!
       return true
