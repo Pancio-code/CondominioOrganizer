@@ -96,6 +96,10 @@
             <%= form.text_area :body,required: true %>
           </p>
           <p>
+            <%= form.label :file %><br>
+            <%= form.file_field :file,required: false %>
+          </p>
+          <p>
             <%= form.submit "Crea Post",:class => "btn btn-primary" %>
           </p>
         <% end %>

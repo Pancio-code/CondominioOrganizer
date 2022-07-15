@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    @temp_file_path = post_params["file"].tempfile
     authorize! :create, Post
     @condominio = Condominio.find(params[:condominio_id])
     @post       = @condominio.posts.create(post_params)
@@ -70,6 +71,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body)
+      params.require(:post).permit(:title, :body,:file)
     end
 end

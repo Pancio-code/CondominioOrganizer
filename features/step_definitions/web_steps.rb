@@ -279,3 +279,16 @@ Then /^account creation should fail with "(.*)"$/ do |msg|
     Then I should see "#{msg}"
   }
 end
+
+Then /^Google Drive folder exist$/ do
+  steps %Q{
+    Then I should see "Accedi al Google Drive"
+  }
+  page.should have_no_link("Accedi al Google Drive", :href => "https://drive.google.com/drive/folders")
+end
+
+Then /^I am a Leader Condominio$/ do
+  steps %Q{
+    Then I should see "Crea evento"
+  }
+end

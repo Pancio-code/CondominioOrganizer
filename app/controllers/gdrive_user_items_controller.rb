@@ -42,6 +42,32 @@ class GdriveUserItemsController < ApplicationController
     end
   end
 
+  def crea_file
+    @service = initialize_drive
+    
+    cartella_utente = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
+    cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
+    cartella_utente_drive = @service.create_file(cartella_utente)
+    @service.update_file(cartella_utente_drive.id,add_parents: cartella_condominio.folder_id)
+    if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
+      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
+    else 
+      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
+    end
+
+    @gdrive_user_item = GdriveUserItem.new()
+
+    @gdrive_user_item.folder_id = cartella_utente_drive.id
+    @gdrive_user_item.condomino_id = condomino.id
+    @gdrive_user_item.gdrive_condo_items_id = cartella_condominio.id
+
+    if @gdrive_user_item.save!
+      return true
+    else
+      return false
+    end
+  end
+
   # PATCH/PUT /gdrive_user_items/1 or /gdrive_user_items/1.json
   def update(condominio_id,user_id,evento,nuovo_user_id)
     @service = initialize_drive
@@ -85,6 +111,7 @@ class GdriveUserItemsController < ApplicationController
       end
     end
   end
+  
 
   # DELETE /gdrive_user_items/1 or /gdrive_user_items/1.json
   def destroy(condomino_id,gdrive_condo_items_id)
