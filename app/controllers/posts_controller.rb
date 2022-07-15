@@ -28,12 +28,12 @@ class PostsController < ApplicationController
       if Condomino.where(condominio_id: params[:condominio_id],user_id: current_user.id,is_condo_admin: true).exists?
         if params["post"]["condomino_select"] != nil
           @condomini_selezionati = params["post"]["condomino_select"]
-          @Gdrive_controller = GdriveCondoItemsController.new
+          @Gdrive_controller = GdriveUserItemsController.new
           @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
         end
       else
-        @Gdrive_controller = GdriveCondoItemsController.new
-        @Gdrive_controller.crea_file(tempfile, current_user.email, @condomino)
+        @Gdrive_controller = GdriveUserItemsController.new
+        @Gdrive_controller.crea_file(temp_file, current_user.email, @condomino)
       end
     end
     @condominio = Condominio.find(params[:condominio_id])
