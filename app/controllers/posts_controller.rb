@@ -32,12 +32,10 @@ class PostsController < ApplicationController
           @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
         end
       else
-        abort 2.inspect
         @Gdrive_controller = GdriveCondoItemsController.new
-        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+        @Gdrive_controller.crea_file(tempfile, current_user.email, @condomino)
       end
     end
-    abort 3.inspect
     @condominio = Condominio.find(params[:condominio_id])
     @post       = @condominio.posts.create(post_params)
     @post.user_id = current_user.id 
