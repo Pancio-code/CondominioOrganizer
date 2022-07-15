@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_13_142949) do
+ActiveRecord::Schema.define(version: 2022_07_15_152324) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2022_07_13_142949) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "permission_id"
+    t.string "folder_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -131,6 +132,7 @@ ActiveRecord::Schema.define(version: 2022_07_13_142949) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uname"
+    t.boolean "from_oauth", default: false
     t.boolean "is_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
