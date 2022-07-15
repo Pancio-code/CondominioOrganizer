@@ -13,7 +13,11 @@ class GdriveCondoItemsController < ApplicationController
     cartella_condominio = Google::Apis::DriveV3::File.new(name: nome,mime_type: "application/vnd.google-apps.folder")
     cartella_condominio_drive = @service.create_file(cartella_condominio)
     @service.update_file(cartella_condominio_drive.id,add_parents: Figaro.env.drive_id)
-    @permesso_cartella = @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
+    if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
+      @permesso_cartella = @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
+    else 
+      @permesso_cartella = @service.create_permission(cartella_condominio_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
+    end
     @Gdrive = GdriveCondoItem.new(folder_id: cartella_condominio_drive.id,condominio_id:condominio_id)
     if @Gdrive.save!
       return @permesso_cartella.id

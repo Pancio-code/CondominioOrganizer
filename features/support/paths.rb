@@ -28,6 +28,15 @@ module NavigationHelpers
     when /^the same account page/
       '/users'
 
+    when /^the same account page/
+      '/users'
+
+    when /^the dashboard page/
+      '/condominios'
+
+    when /^the new condominio page/
+      '/condominios/new'
+
     when /^the sign up page/
       '/users/sign_up'
 
