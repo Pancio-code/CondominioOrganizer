@@ -48,11 +48,11 @@ class GdriveUserItemsController < ApplicationController
   def crea_file(path, email, condomino)
     @service = initialize_drive
     
-    file_utente = Google::Apis::DriveV3::File.new
+    file_utente = Google::Apis::DriveV3::File.new(name: path.original_filename)
 #   cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
     @cartella_utente = condomino.folder_id
 #    abort path.inspect
-    file_utente_drive = @service.create_file(file_utente, upload_source: path.tempfile)
+    file_utente_drive = @service.create_file(file_utente, upload_source: path.tempfile, content_type: path.content_type)
     @service.update_file(file_utente_drive.id, add_parents: @cartella_utente)
 
     if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
