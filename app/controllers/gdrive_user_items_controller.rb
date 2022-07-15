@@ -79,7 +79,7 @@ class GdriveUserItemsController < ApplicationController
     utente = User.find_by(id: user_id)
     cartella_condominio = GdriveCondoItem.find_by(condominio_id: condominio_id)
     if evento == "eleva"
-      if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
+      if utente.email.sub(/.+@([^.]+).+/, '\1') == "gmail"
         permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: utente.email,role: "writer",type: "user"),send_notification_email: false)
       else 
         permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: utente.email,role: "writer",type: "user"),send_notification_email: true)
@@ -100,7 +100,7 @@ class GdriveUserItemsController < ApplicationController
       nuovo_utente = User.find_by(id: nuovo_user_id)
       condomino = Condomino.find_by(condominio_id: condominio_id, user_id: user_id)
       begin 
-        if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
+        if utente.email.sub(/.+@([^.]+).+/, '\1') == "gmail"
           permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: nuovo_utente.email,role: "writer",type: "user"),send_notification_email: false)
         else 
           permesso_condominio = @service.create_permission(cartella_condominio.folder_id,Google::Apis::DriveV3::Permission.new(email_address: nuovo_utente.email,role: "writer",type: "user"),send_notification_email: true)
