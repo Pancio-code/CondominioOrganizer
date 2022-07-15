@@ -24,12 +24,13 @@ class PostsController < ApplicationController
     authorize! :create, Post
     temp_file = post_params["file"].tempfile
     if temp_file != nil
-      if Condomino.where(condominio_id: params[:condominio_id],user_id: current_user.id).is_condo_admin?
-        @Gdrive_controller = GdriveCondoItemsController.new
-        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+      @condomino = Condomino.where(condominio_id: params[:condominio_id],user_id: current_user.id)
+      if @condomino.is_condo_admin?
+#       @Gdrive_controller = GdriveCondoItemsController.new
+        puts 'a'
       else
         @Gdrive_controller = GdriveCondoItemsController.new
-        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+        @Gdrive_controller.crea_file(tempfile, current_user.email, @condomino)
       end
     end
     @condominio = Condominio.find(params[:condominio_id])
