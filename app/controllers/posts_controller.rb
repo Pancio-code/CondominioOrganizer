@@ -21,8 +21,17 @@ class PostsController < ApplicationController
   end
 
   def create
-    @temp_file_path = post_params["file"].tempfile
     authorize! :create, Post
+    temp_file = post_params["file"].tempfile
+    if temp_file != nil
+      if Condomino.where(condominio_id: params[:condominio_id],user_id: current_user.id).is_condo_admin?
+        @Gdrive_controller = GdriveCondoItemsController.new
+        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+      else
+        @Gdrive_controller = GdriveCondoItemsController.new
+        @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+      end
+    end
     @condominio = Condominio.find(params[:condominio_id])
     @post       = @condominio.posts.create(post_params)
     @post.user_id = current_user.id 
@@ -71,6 +80,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body,:file)
+      params.require(:post).permit(:title, :body,:file,:condomino_select)
     end
 end
