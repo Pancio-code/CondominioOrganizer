@@ -34,8 +34,6 @@ class RequestsController < ApplicationController
     if @condomino.save  
       @Gdrive_controller = GdriveUserItemsController.new
       @f_id = @Gdrive_controller.create(@utente.uname,@utente.email,@condomino)
-      puts 'FOLDER ID:'
-      puts @f_id
       if @Gdrive_controller
         redirect_to condominio_url(@request.condominio_id), notice: "Richiesta accettata"
       else 
