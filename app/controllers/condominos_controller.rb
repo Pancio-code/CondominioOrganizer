@@ -79,7 +79,7 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     if params.has_key?(:commit) && params.has_key?(:message) && params.has_key?(:user_select_email)
       if params[:commit] == 'Invia a tutti'
-        @condomini_all = Condomino.where(condomino_id: params[:condominio_id])
+        @condomini_all = Condomino.where(condominio_id: params[:condominio_id])
         if current_user.from_oauth?
           session_time = Time.now - session[:time_login].to_datetime
           require 'json' 
