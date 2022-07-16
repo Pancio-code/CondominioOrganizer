@@ -245,7 +245,7 @@ class CondominosController < ApplicationController
     @utente_id = @condomino.user_id
     id_cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condomino.condominio_id).id
     @condominio = Condominio.find_by(id: @condomino.condominio_id)
-    @Gdrive_controller = GdriveCondoItemsController.new
+    @Gdrive_controller = GdriveUserItemsController.new
 #   @Gdrive_controller.destroy(@condomino.id)
     @Gdrive_controller.destroy(@condomino.id,id_cartella_condominio)
     @condomino.destroy
