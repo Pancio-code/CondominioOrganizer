@@ -7,9 +7,10 @@ class EnterController < ApplicationController
       latitude = request.location.latitude.presence || 	41.8973103
       longitude = request.location.longitude.presence || 12.5131378
       if (params[:città].present?)
-        @condominios = Condominio.near(params[:città])
+        comune = params[:città]
+        @condominios = Condominio.where('lower(comune) = ?', comune.downcase)
      else
-        @condominios = Condominio.near([latitude,longitude], params[:distanza].present? ? params[:distanza] : 100, units: :km,:order => :distance)
+      @condominios = Condominio.near([latitude,longitude], params[:distanza].present? ? params[:distanza] : 100, units: :km,:order => :distance)
      end
     end
 
