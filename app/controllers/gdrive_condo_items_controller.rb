@@ -55,15 +55,16 @@ class GdriveCondoItemsController < ApplicationController
     @service = initialize_drive_service
     @gdrive_condo_item = GdriveCondoItem.find_by(condominio_id: condominio_id)
     @f_id = @gdrive_condo_item.folder_id
+    @user_items = GdriveUserItem.where(gdrive_condo_items_id: @gdrive_condo_item.id)
+    @user_items.each do |useritem|
+      useritem.destroy
+    end
     @gdrive_condo_item.destroy
     begin 
       @service.delete_file(@f_id)
     rescue => e
       return false
     end
-    @user_items = GdriveUserItem.where(folder_id: @f_id)
-    @user_items.each do |useritem|
-      useritem.destroy
-    end
+
   end
 end
