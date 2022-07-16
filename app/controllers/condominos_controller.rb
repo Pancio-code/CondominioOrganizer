@@ -113,7 +113,7 @@ class CondominosController < ApplicationController
                body: params[:message])
              message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
              service.send_user_message('me', message_object)
-            and
+            end
           end
           redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente a tutti i condomini."
         else
