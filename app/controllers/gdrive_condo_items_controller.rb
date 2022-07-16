@@ -61,5 +61,9 @@ class GdriveCondoItemsController < ApplicationController
     rescue => e
       return false
     end
+    @user_items = GdriveUserItem.where(folder_id: @f_id)
+    @user_items.each do |useritem|
+      useritem.destroy
+    end
   end
 end
