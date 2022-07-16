@@ -218,7 +218,7 @@ class CondominosController < ApplicationController
         redirect_to condominio_condominos_path(@condominio_condiviso), :notice => "Codice condiviso correttamente dal tuo account Gmail."
       else
         @condominio_codice = Condominio.find(params[:condominio_id])
-        CondominioMailer.with(name: current_user.uname, email: params[:email], condominio:  @condominio_codice.nome,comune:  @condominio_codice.comune ,via:  @condominio_codice.indirizzo, message: "il codice d'invito del condominio è : " + params[:codice]).new_comunication_mailer.deliver_later
+        CondominioMailer.with(name: current_user.uname, email: params[:email], condominio:  @condominio_codice.nome,comune:  @condominio_codice.comune ,via:  @condominio_codice.indirizzo, message: "il codice d'invito del condominio è : " + params[:codice]).new_codice_mailer.deliver_later
         redirect_to condominio_url(@condominio_codice), :notice => "Codice condiviso correttamente."
       end
     else

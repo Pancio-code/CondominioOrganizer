@@ -10,6 +10,17 @@ class CondominioMailer < ApplicationMailer
         mail(to: Figaro.env.email_di_servizio, subject: "Nuova comunicazione da un amministratore di un condominio!")
     end
 
+    def new_codice_mailer
+        @nome = params[:name]
+        @email = params[:email]
+        @condominio = params[:condominio]
+        @comune = params[:comune]
+        @via = params[:via]
+        @message = params[:message]
+
+        mail(to: @email, subject: "Nuova invito per un condominio")
+    end
+
     def send_event_invitation(start_datetime,user_id,condominio_id)
         require 'icalendar'
         @message = params[:message]
@@ -44,7 +55,7 @@ class CondominioMailer < ApplicationMailer
         @email = params[:email]
         @message = params[:message]
 
-        mail(to: @mail, subject: "Nuova comunicazione dall' Admin di CondominioOrganizer!")
+        mail(to: @email, subject: "Nuova comunicazione dall' Admin di CondominioOrganizer!")
     end
 
     def new_comunication_for_condomini_mailer
