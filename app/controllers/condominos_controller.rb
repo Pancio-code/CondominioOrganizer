@@ -184,6 +184,7 @@ class CondominosController < ApplicationController
   # POST /condominos or /condominos.json
   def create
     authorize! :destroy, Condominio
+    abort params.inspect
     if params.has_key?(:email) && params.has_key?(:codice) && params.has_key?(:condominio_id)
       if current_user.from_oauth?
         session_time = Time.now - session[:time_login].to_datetime
