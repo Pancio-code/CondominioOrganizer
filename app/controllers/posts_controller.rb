@@ -30,7 +30,7 @@ class PostsController < ApplicationController
         if params["post"]["condomino_select"] != nil
           @condomini_selezionati = params["post"]["condomino_select"]
           @Gdrive_controller = GdriveUserItemsController.new
-          @Gdrive_controller.update(params[:condominio_id],params[:user_id],"eleva",nil)
+          @Gdrive_controller.inserisci_file(temp_file,params["post"]["condomino_select"])
         end
       else
         @Gdrive_controller = GdriveUserItemsController.new
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
       end
     end
     @condominio = Condominio.find(params[:condominio_id])
-    @post       = @condominio.posts.create(post_params)
+    @post       = @condominio.posts.create(title: params["post"]["title"], body:params["post"]["body"])
     @post.user_id = current_user.id 
     respond_to do |format|
       if @post.save!

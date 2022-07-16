@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_15_152324) do
+ActiveRecord::Schema.define(version: 2022_07_16_091645) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -93,6 +93,14 @@ ActiveRecord::Schema.define(version: 2022_07_15_152324) do
     t.index ["condominio_id"], name: "index_gdrive_condo_items_on_condominio_id"
   end
 
+  create_table "gdrive_file_items", force: :cascade do |t|
+    t.string "file_id"
+    t.integer "gdrive_user_item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gdrive_user_item_id"], name: "index_gdrive_file_items_on_gdrive_user_item_id"
+  end
+
   create_table "gdrive_user_items", force: :cascade do |t|
     t.string "folder_id"
     t.integer "condomino_id", null: false
@@ -145,6 +153,7 @@ ActiveRecord::Schema.define(version: 2022_07_15_152324) do
   add_foreign_key "comments", "users"
   add_foreign_key "events", "condominios"
   add_foreign_key "gdrive_condo_items", "condominios"
+  add_foreign_key "gdrive_file_items", "gdrive_user_items"
   add_foreign_key "gdrive_user_items", "condominos"
   add_foreign_key "gdrive_user_items", "gdrive_condo_items", column: "gdrive_condo_items_id"
   add_foreign_key "posts", "condominios"
