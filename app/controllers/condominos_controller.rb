@@ -218,8 +218,9 @@ class CondominosController < ApplicationController
         service.send_user_message('me', message_object)
         redirect_to condominio_condominos_path(@condominio_condiviso), :notice => "Codice condiviso correttamente dal tuo account Gmail."
       else
-        CondominioMailer.with(name: current_user.uname, email: current_user.email, condominio: params[:nome],comune: params[:comune] ,via: params[:via], message: params[:message]).new_comunication_mailer.deliver_later
-        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Codice condiviso correttamente."
+        @condominio_codice = Condominio.find(params[:condominio_id])
+        CondominioMailer.with(name: current_user.uname, email: params[:email], condominio:  @condominio_codice.nome,comune:  @condominio_codice.comune ,via:  @condominio_codice.indirizzo, message: "il codice d'invito del condominio è : " + params[:codice]).new_comunication_mailer.deliver_later
+        redirect_to condominio_url(@condominio_codice), :notice => "Codice condiviso correttamente."
       end
     else
       redirect_to new_condomino_path(params[:condominio_id]), :notice => "Errore nella condivisione del codice."
