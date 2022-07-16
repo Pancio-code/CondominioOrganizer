@@ -39,7 +39,7 @@ class AdminController < ApplicationController
 
   def create_comunication_for_leader
     authorize! :create_comunication_for_leader, User
-    @condomini = Condomino.where(is_condo_admin: true).distinct(:user_id).order(:uname)
+    @condomini = Condomino.where(is_condo_admin: true).distinct(:user_id)
   end
 
   def comunication_for_leader

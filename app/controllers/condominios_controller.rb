@@ -6,7 +6,7 @@ class CondominiosController < ApplicationController
   # GET /condominios or /condominios.json
   def index
     if params[:nome] == nil || params[:nome] == ''
-      @condominios = Condominio.all.order(:name)
+      @condominios = Condominio.all.order(:nome)
     else 
       @condominios = Condominio.where("nome like ?", "%#{params[:nome]}%").order(:nome)
     end
