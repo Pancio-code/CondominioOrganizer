@@ -54,13 +54,12 @@ class GdriveCondoItemsController < ApplicationController
   def destroy(condominio_id)
     @service = initialize_drive_service
     @gdrive_condo_item = GdriveCondoItem.find_by(condominio_id: condominio_id)
-
+    @f_id = @gdrive_condo_item.folder_id
+    @gdrive_condo_item.destroy
     begin 
-      @service.delete_file(@gdrive_condo_item.folder_id)
+      @service.delete_file(@f_id)
     rescue => e
       return false
     end
-
-    @gdrive_condo_item.destroy
   end
 end
