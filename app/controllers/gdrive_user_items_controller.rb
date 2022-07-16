@@ -61,17 +61,45 @@ class GdriveUserItemsController < ApplicationController
       @service.create_permission(condomino.folder_id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
     end
 
-    @gdrive_user_item = GdriveUserItem.new()
+    @gdrive_user_item = GdriveFileItem.new()
 
-    @gdrive_user_item.folder_id = file_utente_drive.id
-    @gdrive_user_item.condomino_id = condomino.id
-    @gdrive_user_item.gdrive_condo_items_id = @cartella_utente
+    @gdrive_user_item.file_id = file_utente_drive.id
+    @gdrive_user_item.gdrive_user_item_id = GdriveUserItem.find_by(condomino_id: condomino.id,folder_id:condomino.folder_id).id
 
     if @gdrive_user_item.save!
       return true
     else
       return false
     end
+  end
+
+  def inserisci_file(path,condomini)
+    @service = initialize_drive
+    
+    condomini.each do |condomino|
+      condomino_attuale = Condomino.find(condomino)
+      utente = User.find(condomino_attuale.user_id)
+      file_utente = Google::Apis::DriveV3::File.new(name: path.original_filename)
+  #   cartella_condominio = GdriveCondoItem.find_by(condominio_id: condomino.condominio_id)
+      @cartella_utente = condomino_attuale.folder_id
+  #    abort path.inspect
+      file_utente_drive = @service.create_file(file_utente, upload_source: path.tempfile, content_type: path.content_type)
+      @service.update_file(file_utente_drive.id, add_parents: @cartella_utente)
+
+      if utente.email.sub(/.+@([^.]+).+/, '\1') == "gmail"
+        @service.create_permission(condomino_attuale.folder_id,Google::Apis::DriveV3::Permission.new(email_address: utente.email,role: "writer",type: "user"),send_notification_email: false)
+      else 
+        @service.create_permission(condomino_attuale.folder_id,Google::Apis::DriveV3::Permission.new(email_address: utente.email,role: "writer",type: "user"),send_notification_email: true)
+      end
+
+      @gdrive_user_item = GdriveFileItem.new()
+
+      @gdrive_user_item.file_id = file_utente_drive.id
+      @gdrive_user_item.gdrive_user_item_id = GdriveUserItem.find_by(condomino_id: condomino,folder_id: condomino_attuale.folder_id).id
+    
+    end
+
+    return true
   end
 
   # PATCH/PUT /gdrive_user_items/1 or /gdrive_user_items/1.json
