@@ -27,7 +27,7 @@ gem "omniauth-rails_csrf_protection"
 gem 'mail_form'
 gem 'figaro'
 gem 'geocoder', '~> 1.3'
-gem 'mailcatcher'
+#gem 'mailcatcher'
 gem 'google-api-client', require: ['google/apis/gmail_v1','google/apis/calendar_v3', 'google/apis/drive_v3']
 gem "simple_calendar", "~> 2.4"
 gem 'rails-i18n'
