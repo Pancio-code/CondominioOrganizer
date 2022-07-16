@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments
   end
-  resources :condominos,path: "condominos/new/:id" ,path: "condominos/create/"
+  resources :condominos,path: "condominos/new/:id" 
   resources :condominios do
     resources :posts
     resources :condominos
