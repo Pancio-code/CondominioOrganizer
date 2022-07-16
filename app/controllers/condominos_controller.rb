@@ -79,7 +79,7 @@ class CondominosController < ApplicationController
     authorize! :destroy, Condominio
     if params.has_key?(:commit) && params.has_key?(:message) && params.has_key?(:user_select_email)
       if params[:commit] == 'Invia a tutti'
-        @condomini_all = Condomino.where('condominio_id == ? and user_id != ?',params[:condominio_id], current_user.id)
+        @condomini_all = Condomino.where(condomino_id: params[:condominio_id])
         if current_user.from_oauth?
           session_time = Time.now - session[:time_login].to_datetime
           require 'json' 
@@ -103,15 +103,17 @@ class CondominosController < ApplicationController
           service = Google::Apis::GmailV1::GmailService.new
           service.authorization = client
 
-          @condomini_all.each do |condomino| 
-            @condomino_corrente = User.find(condomino.user_id)
-            m = Mail.new(
-              to: @condomino_corrente.email, 
-              from: current_user.email, 
-              subject: "Comunicazione dall'amministratore del condominio:",
-              body: params[:message])
-            message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
-            service.send_user_message('me', message_object)
+          @condomini_all.each do |condomino|
+            if condomino.user_id != current_user.id
+             @condomino_corrente = User.find(condomino.user_id)
+             m = Mail.new(
+               to: @condomino_corrente.email, 
+               from: current_user.email, 
+               subject: "Comunicazione dall'amministratore del condominio:",
+               body: params[:message])
+             message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
+             service.send_user_message('me', message_object)
+            and
           end
           redirect_to condominio_condominos_path(Condominio.find(params[:condominio_id])), :notice => "Comunicazione inviata correttamente a tutti i condomini."
         else
