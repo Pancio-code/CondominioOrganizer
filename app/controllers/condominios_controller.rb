@@ -88,8 +88,7 @@ class CondominiosController < ApplicationController
         service = Google::Apis::GmailV1::GmailService.new
         service.authorization = client
         m = Mail.new(
-          to: ENV['EMAIL_DI_SERVIZIO']
-          #to: Figaro.env.email_di_servizio, 
+          to: ENV['EMAIL_DI_SERVIZIO'],
           from: current_user.email, 
           subject: "Comunicazione da un amministratore:",
           body: params[:message])
