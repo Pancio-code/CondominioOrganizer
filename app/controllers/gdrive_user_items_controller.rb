@@ -63,9 +63,9 @@ class GdriveUserItemsController < ApplicationController
 
     @gdrive_user_item = GdriveUserItem.new()
 
-    @gdrive_user_item.folder_id = @cartella_utente
+    @gdrive_user_item.folder_id = file_utente_drive.id
     @gdrive_user_item.condomino_id = condomino.id
-    @gdrive_user_item.gdrive_condo_items_id = file_utente_drive.id
+    @gdrive_user_item.gdrive_condo_items_id = @cartella_utente
 
     if @gdrive_user_item.save!
       return true
