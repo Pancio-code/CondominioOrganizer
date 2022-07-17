@@ -49,16 +49,20 @@ class CondominiosController < ApplicationController
     @condominio = Condominio.new(condominio_params)
     respond_to do |format|
       if @condominio.save
+
         @condo_gdrive = GdriveCondoItemsController.new
         @condo_gdrive_permesso = @condo_gdrive.create(@condominio.nome,current_user.email,@condominio.id)
         @condomino = Condomino.new(condominio_id: @condominio.id, user_id: current_user.id, is_condo_admin: true,permission_id: @condo_gdrive_permesso)
       	@condomino.save
-#        initialize_drive(@condominio.nome,current_user.email)
+
         format.html { redirect_to condominio_url(@condominio), notice: "Condominio creato correttamente." }
         format.json { render :show, status: :created, location: @condominio }
+
       else
+
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @condominio.errors, status: :unprocessable_entity }
+
       end
     end
   end
@@ -70,7 +74,6 @@ class CondominiosController < ApplicationController
         session_time = Time.now - session[:time_login].to_datetime
         require 'json' 
         token, refresh_token = *JSON.parse(File.read('credentials.data'))
-        #client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
         client = Signet::OAuth2::Client.new(client_id: ENV['GOOGLE_API_ID'],client_secret: ENV['GOOGLE_API_SECRET'],access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
         if client.expired? || (session_time/60).to_i > 28
           session[:time_login] = Time.now 
@@ -108,8 +111,6 @@ class CondominiosController < ApplicationController
     authorize! :create_comunication_for_admin, Condominio
     @condominio_comunicazione = Condominio.find(params[:condominio_id])
   end
-
-  
 
   # PATCH/PUT /condominios/1 or /condominios/1.json
   def update
