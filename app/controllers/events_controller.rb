@@ -15,7 +15,7 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    authorize! :new, Event
+    authorize! :update, @condominio
     @event = Event.new
   end
 
@@ -25,7 +25,7 @@ class EventsController < ApplicationController
 
   # POST /events or /events.json
   def create
-    authorize! :create, Event
+    authorize! :update, @condominio
     @event = Event.new(event_params)
     @event.condominio_id = params[:condominio_id]
     @condomini = Condomino.where(condominio_id: params[:condominio_id])
@@ -111,7 +111,7 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1 or /events/1.json
   def update
-    authorize! :update, Event
+    authorize! :update, @condominio
     @condomini = Condomino.where(condominio_id: params[:condominio_id])
     @event.categoria = params[:categoria]
     respond_to do |format|
@@ -200,7 +200,7 @@ class EventsController < ApplicationController
 
   # DELETE /events/1 or /events/1.json
   def destroy
-    authorize! :destroy, Event
+    authorize! :update, @condominio
     if @event.calendar_id != nil
       if current_user.from_oauth?
         session_time = Time.now - session[:time_login].to_datetime
