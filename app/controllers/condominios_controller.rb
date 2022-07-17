@@ -109,8 +109,8 @@ class CondominiosController < ApplicationController
   end
 
   def create_comunication_for_admin
-    authorize! :create_comunication_for_admin, Condominio
     @condominio_comunicazione = Condominio.find(params[:condominio_id])
+    authorize! :create_comunication_for_admin, @condominio_comunicazione
   end
 
   # PATCH/PUT /condominios/1 or /condominios/1.json
@@ -128,7 +128,7 @@ class CondominiosController < ApplicationController
 
   # DELETE /condominios/1 or /condominios/1.json
   def destroy
-    authorize! :destroy, Condominio
+    authorize! :destroy, @condominio
     @condo_gdrive = GdriveCondoItemsController.new
     @condo_gdrive_permesso = @condo_gdrive.destroy(@condominio.id)
     @condominio.destroy
