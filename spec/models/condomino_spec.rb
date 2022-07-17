@@ -16,5 +16,16 @@ RSpec.describe Condomino, type: :model do
       @condomino.save
       expect(@condomino).to_not be_valid
     end
+    it 'can create the connected drive folder' do
+      expect(@condomino.gdrive_user_items).to exist
+    end
+  end
+
+  describe 'update' do
+    it 'can be updated (admin status)' do
+      @condomino.update(is_condo_admin: true)
+      @condomino.save
+      expect(@condomino.reload.is_condo_admin).to match(true)
+    end
   end
 end
