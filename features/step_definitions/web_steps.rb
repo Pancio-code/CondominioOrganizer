@@ -92,6 +92,23 @@ When /^I use a code for enter in a condominium$/ do
   }
 end
 
+Then /^clean all$/ do
+  steps %Q{
+    When I follow "Home"
+    And I follow "Account"
+    And I press "logout"
+    Then I should be on the home page
+    And I should see "Hai effettutato correttamente il logout"
+    When I follow "Login"
+    And I fill in the following:
+      | user_email    | test1@example.com |
+      | user_password | Test1234@        |
+    And I press "Log in"
+    And I follow "Elimina"
+    Then I should see "Condominio è stato eliminato correttamente."
+  }
+end
+
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
@@ -116,7 +133,7 @@ When /^(?:|I )press "([^"]*)"$/ do |button|
 end
 
 When /^(?:|I )follow "([^"]*)"$/ do |link|
-  click_link(link)
+  click_link(link,match: :first)
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
