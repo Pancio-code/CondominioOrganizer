@@ -3,7 +3,8 @@ require 'user.rb'
 
 RSpec.describe User do
   before do
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:email)
+    @user1 = FactoryBot.create(:email1)
   end
 
   describe "creation" do
@@ -22,8 +23,21 @@ RSpec.describe User do
     end
 
     it "will not be created if not valid password" do
-        @user.uname = 1234
+        @user.password = 1234
         expect(@user).to_not be_valid
+    end
+
+    it "will not be created if mail exist" do
+      @user.email = 'test1@example.com'
+      expect(@user).to_not be_valid
+    end
+  end
+
+  describe "update" do
+    it "will not be update if not valid password" do
+      @user.save!
+      @user.update(password:1234)
+      expect(@user).to be_valid
     end
   end
 end
