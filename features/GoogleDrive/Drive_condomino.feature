@@ -11,7 +11,7 @@ Feature: Creazione cartella Google Drive del condomino nel codnominio
         And I am logged in
         And I am on the enter page
 
-    Scenario: Un utente registrato può entrare in un condominio, diventando membro del condominio e viene creata una cartella Google Drive dell'utente all'interno del condominio.Inoltre può creare post e eliminarli,ed uscire dal condominio.
+    Scenario: Un utente registrato può entrare in un condominio, diventando membro del condominio e viene creata una cartella Google Drive dell'utente all'interno del condominio.Inoltre può creare post/commenti e eliminarli,ed uscire dal condominio.
         When I use a code for enter in a condominium
         Then I should be on the condominium page
         And I should see "Benvenuto nel condominio."
@@ -23,8 +23,21 @@ Feature: Creazione cartella Google Drive del condomino nel codnominio
         And I press "Crea Post"
         Then I should see "Post creato correttamente."
         And I should see "BodyPost"
-        When I follow "Rimuovi post"
+        When I follow "Commenti"
+        Then I should be on the post page
+        And I should see "BodyPost"
+        When I fill in the following:
+            | comment_body | CommentoBody |
+        And I press "Crea commento"
+        Then I should see "Commento creato con successo."
+        And I should see "CommentoBody"
+        When I follow "Rimuovi commento"
+        Then I should see "Commento cancellato correttamente"
+        When I follow "Bacheca"
+        And I follow "Rimuovi post"
         Then I should see "Post eliminato correttamente."
         When I follow "Esci dal Condominio"
         Then I should see "Uscito correttamente dal condominio."
-        And I should be on the dashboard page
+        And I should be on the enter page
+        #test aggiunto per pulire la cartella Drive creata
+        Then clean all
