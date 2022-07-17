@@ -2,7 +2,7 @@ class GdriveUserItemsController < ApplicationController
   before_action :authenticate_user!
 
   def initialize_drive                                              
-#   file = File.read('config/google_credentials.json')
+    file = File.read('config/google_credentials.json')
     
     @service = Google::Apis::DriveV3::DriveService.new
     scope = 'https://www.googleapis.com/auth/drive'
