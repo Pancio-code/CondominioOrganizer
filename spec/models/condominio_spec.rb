@@ -39,6 +39,31 @@ RSpec.describe Condomino do
       @condominio.update(nome:"Condominio di Paolo")
       expect(@condominio).to be_valid
     end
+    it "will not be updated nome comune longer than 25 characters" do
+      @condominio.save!
+      @condominio.update(comune: 'geagaghagasghagawgawgawsghfaeofhaofdhoavauiouhawofofohaw')
+      expect(@condominio).to_not be_valid
+    end
+    it "will not be updated nome comune shorter than 1 character" do
+      @condominio.save!
+      @condominio.update(comune: '')
+      expect(@condominio).to_not be_valid
+    end
+    it "will not be updated nome comune longer than 25 character" do
+      @condominio.save!
+      @condominio.update(nome: 'jgosjpgjawgjapgjoajgawjpgagaghaoighfoaibgoagasgw')
+      expect(@condominio).to_not be_valid
+    end
+    it "will not be updated nome shorter than 1 character" do
+      @condominio.save!
+      @condominio.update(nome: '')
+      expect(@condominio).to_not be_valid
+    end
+    it 'will not be updated if indirizzo is in the wrong format' do
+      @condominio.save!
+      @condominio.update(indirizzo: 'test')
+      expect(@condominio).to_not be_valid
+    end
   end
 
   describe "destruction" do
