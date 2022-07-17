@@ -43,6 +43,9 @@ module NavigationHelpers
     when /^the enter page/
       '/enter'
 
+    when /^the condominium page/
+      '/condominios/1'
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

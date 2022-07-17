@@ -51,7 +51,8 @@ Given /^the following user exist:$/ do |instances|
   create_user
 end
 
-c
+
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
@@ -290,5 +291,11 @@ end
 Then /^I am a Leader Condominio$/ do
   steps %Q{
     Then I should see "Crea evento"
+  }
+end
+
+Then /^I am a Condomino$/ do
+  steps %Q{
+    Then I should see "Esci dal Condominio"
   }
 end

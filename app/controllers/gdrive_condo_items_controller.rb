@@ -39,7 +39,7 @@ class GdriveCondoItemsController < ApplicationController
 
   def initialize_drive_service
     
-    credentials = File.read('config/google_credentials.json')
+    file = File.read('config/google_credentials.json')
 
     @service = Google::Apis::DriveV3::DriveService.new
     scope = 'https://www.googleapis.com/auth/drive'

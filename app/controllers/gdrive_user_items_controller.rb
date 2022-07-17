@@ -7,7 +7,7 @@ class GdriveUserItemsController < ApplicationController
     @service = Google::Apis::DriveV3::DriveService.new
     scope = 'https://www.googleapis.com/auth/drive'
     authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: StringIO.new(ENV[ 'GOOGLE_CREDENTIALS' ]), scope: scope)
+      json_key_io: StringIO.new(file), scope: scope)
   
     authorizer.fetch_access_token!
     @service.authorization = authorizer
