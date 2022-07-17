@@ -52,6 +52,46 @@ Given /^the following user exist:$/ do |instances|
 end
 
 
+When /^I use a code for enter in a condominium$/ do
+  @user1 = FactoryBot.create(:email1)
+  steps %Q{
+    When I follow "Home"
+    And I follow "Account"
+    And I press "logout"
+    Then I should be on the home page
+    And I should see "Hai effettutato correttamente il logout"
+    When I follow "Login"
+    And I fill in the following:
+            | user_email    | test1@example.com |
+            | user_password | Test1234@        |
+    And I press "Log in"
+    When I follow "Nuovo condominio"
+    Then I should be on the new condominio page
+    When I fill in the following:
+      | condominio_nome      | test_condominio   |
+      | condominio_comune    | Roma              |
+      | condominio_indirizzo | Via Tiburtina 214 |
+    And I press "Crea Condominio"
+    Then I should see "Condominio creato correttamente."
+  }
+  flat_code = Condominio.find(1).flat_code
+  steps %Q{
+    When I follow "Home"
+    And I follow "Account"
+    And I press "logout"
+    Then I should be on the home page
+    And I should see "Hai effettutato correttamente il logout"
+    When I follow "Login"
+    And I fill in the following:
+      | user_email    | test@example.com |
+      | user_password | Test1234@        |
+    And I press "Log in"
+    And I fill in the following:
+      | codice    | #{flat_code} |
+    And I press "Entra"
+  }
+end
+
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|

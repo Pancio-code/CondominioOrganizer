@@ -242,9 +242,11 @@ class CondominosController < ApplicationController
 
   # DELETE /condominos/1 or /condominos/1.json
   def destroy
-    authorize! :destroy, Condominio.find(@condomino.condominio_id)
     @condomino = Condomino.find(params[:id])
     @utente_id = @condomino.user_id
+    if @utente_id != current_user.id
+      authorize! :destroy, Condominio.find(@condomino.condominio_id)
+    end
     id_cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condomino.condominio_id).id
     @condominio = Condominio.find_by(id: @condomino.condominio_id)
     @Gdrive_controller = GdriveUserItemsController.new
