@@ -11,7 +11,7 @@ class CondominosController < ApplicationController
   end
 
   def eleva_condomino
-    authorize! :destroy, Condominio
+    authorize! :destroy, Condominio.find(params[:condominio_id])
     respond_to do |format|
       if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:user_id]).update(is_condo_admin: true)
         utente = User.find(params[:user_id])
@@ -27,10 +27,10 @@ class CondominosController < ApplicationController
   end
 
   def cedi_ruolo_leader
-    authorize! :destroy, Condominio
     respond_to do |format|
       if params.has_key?(:condominio_id) && params.has_key?(:old_amministratore_id) && params.has_key?(:new_amministratore_id)
         @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
+        authorize! :destroy, @condominio_attuale
         if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:old_amministratore_id]).update(is_condo_admin: false) && Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:new_amministratore_id]).update(is_condo_admin: true)
           @Gdrive_controller = GdriveUserItemsController.new
           @Gdrive_controller.update(params[:condominio_id],params[:old_amministratore_id],"scegli",params[:new_amministratore_id])
@@ -42,6 +42,7 @@ class CondominosController < ApplicationController
         end
       else 
         @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
+        authorize! :destroy, @condominio_attuale
         if Condomino.find_by(condominio_id: params[:condominio_id],user_id: params[:old_amministratore_id]).update(is_condo_admin: false)
           @Gdrive_controller = GdriveUserItemsController.new
           @Gdrive_controller.update(params[:condominio_id],params[:old_amministratore_id],"cedi",nil)
@@ -56,7 +57,7 @@ class CondominosController < ApplicationController
   end
 
   def choose_new_leader
-    authorize! :destroy, Condominio
+    authorize! :destroy, Condominio.find(params[:condominio_id])
     if params.has_key?(:condominio_id) && params.has_key?(:old_amministratore_id)
       @condominio_attuale = Condominio.find_by(id: params[:condominio_id])
       @condomini = Condomino.where(condominio_id: params[:condominio_id], is_condo_admin: false)
@@ -70,13 +71,13 @@ class CondominosController < ApplicationController
   #def show
   #end
   def get_comunicazione_del_leader
-    authorize! :destroy, Condominio
     @condominio = Condominio.find(params[:condominio_id])
+    authorize! :destroy,@condominio
     @condomini = Condomino.where(condominio_id: params[:condominio_id])
   end
 
   def post_comunicazione_del_leader
-    authorize! :destroy, Condominio
+    authorize! :destroy, Condominio.find(params[:condominio_id])
     if params.has_key?(:commit) && params.has_key?(:message) && params.has_key?(:user_select_email)
       if params[:commit] == 'Invia a tutti'
         @condomini_all = Condomino.where(condominio_id: params[:condominio_id])
@@ -173,8 +174,8 @@ class CondominosController < ApplicationController
 
   # GET /condominos/new
   def new
-    authorize! :destroy, Condominio
     @condominio_attuale = Condominio.find(params[:id])
+    authorize! :destroy, @condominio_attuale
   end
 
   # GET /condominos/1/edit
@@ -183,7 +184,7 @@ class CondominosController < ApplicationController
 
   # POST /condominos or /condominos.json
   def create
-    authorize! :destroy, Condominio
+    authorize! :destroy, Condominio.find(params[:condominio_id])
     if params.has_key?(:email) && params.has_key?(:codice) && params.has_key?(:condominio_id)
       if current_user.from_oauth?
         session_time = Time.now - session[:time_login].to_datetime
@@ -241,7 +242,7 @@ class CondominosController < ApplicationController
 
   # DELETE /condominos/1 or /condominos/1.json
   def destroy
-    authorize! :destroy, Condominio
+    authorize! :destroy, Condominio.find(@condomino.condominio_id)
     @condomino = Condomino.find(params[:id])
     @utente_id = @condomino.user_id
     id_cartella_condominio = GdriveCondoItem.find_by(condominio_id: @condomino.condominio_id).id

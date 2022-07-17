@@ -68,7 +68,8 @@ class CondominiosController < ApplicationController
   end
 
   def comunication_for_admin
-    authorize! :comunication_for_admin, Condominio
+    @condominio_comunicazione = Condominio.find_by(id: params[:condominio_id])
+    authorize! :comunication_for_admin, @condominio_comunicazione
     if params.has_key?(:comune) && params.has_key?(:via) && params.has_key?(:nome) && params.has_key?(:message)
       if current_user.from_oauth?
         session_time = Time.now - session[:time_login].to_datetime
@@ -97,10 +98,10 @@ class CondominiosController < ApplicationController
           body: params[:message])
         message_object = Google::Apis::GmailV1::Message.new(raw: m.encoded) 
         service.send_user_message('me', message_object)
-        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Mail inviata correttamente dal tuo account Gmail."
+        redirect_to condominio_url(@condominio_comunicazione), :notice => "Mail inviata correttamente dal tuo account Gmail."
       else
         CondominioMailer.with(name: current_user.uname, email: current_user.email, condominio: params[:nome],comune: params[:comune] ,via: params[:via], message: params[:message]).new_comunication_mailer.deliver_later
-        redirect_to condominio_url(Condominio.find_by(nome: params[:nome])), :notice => "Mail inviata correttamente."
+        redirect_to condominio_url(@condominio_comunicazione), :notice => "Mail inviata correttamente."
       end
     else
       redirect_to root_path, :alert => "Errore nella creazione della mail."
