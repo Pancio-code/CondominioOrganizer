@@ -1,7 +1,7 @@
 require 'rails_helper.rb'
 require 'user.rb'
 
-RSpec.describe User do
+RSpec.describe User,type: :model do
   before do
     @user = FactoryBot.create(:email)
     @user1 = FactoryBot.create(:email1)
@@ -36,8 +36,36 @@ RSpec.describe User do
   describe "update" do
     it "will not be update if not valid password" do
       @user.save!
-      @user.update(password:1234)
-      expect(@user).to be_valid
+      @user.update(password: "Test")
+      expect(@user).to_not be_valid
+    end
+
+    it "will not be update if not valid email address" do
+      @user.save!
+      @user.update(email: "InvalidAdress")
+      expect(@user).to_not be_valid
+    end
+
+    it "will not be update if email address exist" do
+      @user.save!
+      @user.update(email: "test1@example.com")
+
+      expect(@user).to_not be_valid
+    end
+  end
+
+  describe "destroy" do
+    it "will be destroy" do
+      @user.destroy
+      expect { @user.reload }.to raise_error ActiveRecord::RecordNotFound
+    end
+
+    it "will be canceled all shareholdings in condominiums" do
+      @condominio = FactoryBot.create(:condominio)
+      @partecipazione = FactoryBot.create(:condomino)
+      @user.destroy
+      expect { @user.reload }.to raise_error ActiveRecord::RecordNotFound
+      expect { @partecipazione.reload }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end
