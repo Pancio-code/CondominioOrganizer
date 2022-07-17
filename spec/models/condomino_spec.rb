@@ -17,7 +17,7 @@ RSpec.describe Condomino, type: :model do
       expect(@condomino).to_not be_valid
     end
     it 'can create the connected drive folder' do
-      expect(@condomino.gdrive_user_items).to exist
+      expect(@condomino.gdrive_user_items).to_not be_nil
     end
   end
 
@@ -26,6 +26,13 @@ RSpec.describe Condomino, type: :model do
       @condomino.update(is_condo_admin: true)
       @condomino.save
       expect(@condomino.reload.is_condo_admin).to match(true)
+    end
+  end
+  describe 'destruction' do
+    it 'can be destroyed' do
+      @condomino.destroy
+      expect{@condomino.reload}.to raise_error ActiveRecord::RecordNotFound
+      expect{@condomino.reload.gdrive_user_items}.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end

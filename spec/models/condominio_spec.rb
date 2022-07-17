@@ -11,6 +11,26 @@ RSpec.describe Condomino do
     it "can be created if valid" do
       expect(@condominio).to be_valid
     end
+    it "cant be created if nome comune longer than 25 characters" do
+      @condominio.comune = 'geagaghagasghagawgawgawsghfaeofhaofdhoavauiouhawofofohaw'
+      expect(@condominio).to_not be_valid
+    end
+    it 'cant be created if nome comune shorter than 1 character' do
+      @condominio.comune = ''
+      expect(@condominio).to_not be_valid
+    end
+    it 'cant be created if nome longer than 25 characters' do
+      @condominio.nome = 'jgsgfhaihgfouBAOGJUbaUGOUBgfoabgfshgoishogihapfihapfhawpghfah'
+      expect(@condominio).to_not be_valid
+    end
+    it 'cant be created if nome shorter than 1 character' do
+      @condominio.nome = ''
+      expect(@condominio).to_not be_valid
+    end
+    it 'cant be created if indirizzo is in the wrong format' do
+      @condominio.indirizzo = 'test'
+      expect(@condominio).to_not be_valid
+    end
   end
 
   describe "update" do
