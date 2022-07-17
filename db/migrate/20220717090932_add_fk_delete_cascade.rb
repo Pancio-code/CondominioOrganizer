@@ -12,7 +12,6 @@ class AddFkDeleteCascade < ActiveRecord::Migration[6.1]
     remove_foreign_key :posts, :users
     remove_foreign_key :requests, :condominios
     remove_foreign_key :requests, :users
-    remove_foreign_key :posts, :users
 
 
     add_foreign_key :comments, :condominios, on_delete: :cascade
@@ -27,6 +26,5 @@ class AddFkDeleteCascade < ActiveRecord::Migration[6.1]
     add_foreign_key :posts, :users, on_delete: :cascade
     add_foreign_key :requests, :condominios, on_delete: :cascade
     add_foreign_key :requests, :users, on_delete: :cascade
-    add_foreign_key :posts, :users, on_delete: :cascade
   end
 end
