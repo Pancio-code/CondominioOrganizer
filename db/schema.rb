@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_16_091645) do
+ActiveRecord::Schema.define(version: 2022_07_17_090932) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -140,24 +140,24 @@ ActiveRecord::Schema.define(version: 2022_07_16_091645) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uname"
-    t.boolean "from_oauth", default: false
     t.boolean "is_admin", default: false
+    t.boolean "from_oauth", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "comments", "condominios"
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
-  add_foreign_key "events", "condominios"
-  add_foreign_key "gdrive_condo_items", "condominios"
-  add_foreign_key "gdrive_file_items", "gdrive_user_items"
-  add_foreign_key "gdrive_user_items", "condominos"
-  add_foreign_key "gdrive_user_items", "gdrive_condo_items", column: "gdrive_condo_items_id"
-  add_foreign_key "posts", "condominios"
-  add_foreign_key "posts", "users"
-  add_foreign_key "requests", "condominios"
-  add_foreign_key "requests", "users"
+  add_foreign_key "comments", "condominios", on_delete: :cascade
+  add_foreign_key "comments", "posts", on_delete: :cascade
+  add_foreign_key "comments", "users", on_delete: :cascade
+  add_foreign_key "events", "condominios", on_delete: :cascade
+  add_foreign_key "gdrive_condo_items", "condominios", on_delete: :cascade
+  add_foreign_key "gdrive_file_items", "gdrive_user_items", on_delete: :cascade
+  add_foreign_key "gdrive_user_items", "condominos", on_delete: :cascade
+  add_foreign_key "gdrive_user_items", "gdrive_condo_items", column: "gdrive_condo_items_id", on_delete: :cascade
+  add_foreign_key "posts", "condominios", on_delete: :cascade
+  add_foreign_key "posts", "users", on_delete: :cascade
+  add_foreign_key "requests", "condominios", on_delete: :cascade
+  add_foreign_key "requests", "users", on_delete: :cascade
 end
