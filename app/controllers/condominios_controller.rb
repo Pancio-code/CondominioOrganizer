@@ -75,7 +75,7 @@ class CondominiosController < ApplicationController
         session_time = Time.now - session[:time_login].to_datetime
         require 'json' 
         token, refresh_token = *JSON.parse(File.read('credentials.data'))
-        client = Signet::OAuth2::Client.new(client_id: ENV['GOOGLE_API_ID'],client_secret: ENV['GOOGLE_API_SECRET'],access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
+        client = Signet::OAuth2::Client.new(client_id: Figaro.env.google_api_id,client_secret: Figaro.env.google_api_secret,access_token: token,refresh_token: refresh_token,token_credential_uri: 'https://accounts.google.com/o/oauth2/token',scope: 'gmail.send')
         if client.expired? || (session_time/60).to_i > 28
           session[:time_login] = Time.now 
           new_token = client.refresh!
@@ -92,7 +92,7 @@ class CondominiosController < ApplicationController
         service = Google::Apis::GmailV1::GmailService.new
         service.authorization = client
         m = Mail.new(
-          to: ENV['EMAIL_DI_SERVIZIO'],
+          to: Figaro.env.email_di_servizio,
           from: current_user.email, 
           subject: "Comunicazione da un amministratore:",
           body: params[:message])

@@ -44,14 +44,14 @@ Given /^I am not logged in$/ do
 end
 
 def create_user
-  @user = FactoryBot.create(:user)
+  @user = FactoryBot.create(:email)
 end     
 
 Given /^the following user exist:$/ do |instances|
   create_user
 end
 
-
+c
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
