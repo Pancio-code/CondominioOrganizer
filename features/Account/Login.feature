@@ -51,7 +51,7 @@ Feature: Accedere al proprio account
         Given I am logged in
         And I am on the account page
         When I fill in the following:
-            | user_change_password       | TestCambio123# |
+            | user_password       | TestCambio123# |
             | user_password_confirmation | TestCambio123# |
             | user_current_password      | Test1234@      |
         When I press "Modifica"
@@ -64,7 +64,7 @@ Feature: Accedere al proprio account
         And I am on the account page
         When I fill in the following:
             | user_email                 | andreatestcambio@example.com |
-            | user_change_password       | TestCambio123#               |
+            | user_password       | TestCambio123#               |
             | user_password_confirmation | TestCambio123#               |
         When I press "Modifica"
         Then I should be on the same account page
