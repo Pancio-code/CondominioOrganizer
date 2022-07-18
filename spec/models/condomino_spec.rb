@@ -4,7 +4,7 @@ RSpec.describe Condomino, type: :model do
   before do
     @user = FactoryBot.create(:email)
     @condominio = FactoryBot.create(:condominio)
-    @condomino = FactoryBot.create(:condomino)
+    @condomino = FactoryBot.create(:condomino,user_id: @user.id,condominio_id: @condominio.id )
   end
 
   describe 'creation' do

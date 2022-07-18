@@ -62,7 +62,7 @@ RSpec.describe User,type: :model do
 
     it "will be canceled all shareholdings in condominiums" do
       @condominio = FactoryBot.create(:condominio)
-      @partecipazione = FactoryBot.create(:condomino)
+      @partecipazione = FactoryBot.create(:condomino,user_id: @user.id,condominio_id: @condominio.id)
       @user.destroy
       expect { @user.reload }.to raise_error ActiveRecord::RecordNotFound
       expect { @partecipazione.reload }.to raise_error ActiveRecord::RecordNotFound

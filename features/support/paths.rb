@@ -47,7 +47,7 @@ module NavigationHelpers
       '/condominios/1'
 
     when /^the post page/
-      '/posts/2'
+      '/posts/1'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
