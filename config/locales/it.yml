@@ -5,6 +5,9 @@ it:
     week: Settimana
     month: Mese
   devise:
+    passwords:
+      user:
+        send_instructions: Email per recuperare la password inviata, controllare la posta.
     omniauth_callbacks:
       success: Login con account Google effettuato
       failure: Login con account Google fallito
