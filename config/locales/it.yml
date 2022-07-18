@@ -6,8 +6,8 @@ it:
     month: Mese
   devise:
     omniauth_callbacks:
-      success: Login con account google effettuato
-      failure: Login con account google fallito
+      success: Login con account Google effettuato
+      failure: Login con account Google fallito
     failure:
       user:
         not_found_in_database: Credenziali inserite errate
@@ -21,7 +21,7 @@ it:
         signed_out: Hai effettutato correttamente il logout
     registrations:
       user:
-        signed_up: Hai completato la registrazione,benvenuto in CondominioOrganizer
+        signed_up: Hai completato la registrazione, benvenuto in CondominioOrganizer
         updated: Hai aggiornato le tue informazioni
         destroyed: Hai cancellato correttamente il tuo account
   errors:

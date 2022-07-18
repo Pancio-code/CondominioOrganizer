@@ -62,7 +62,7 @@
     <% end %>
 
   <div class="actions">
-    <%= f.submit "Modifica",:class => "btn btn-primary" %>
+    <%= f.submit "Aggiorna",:class => "btn btn-primary" %>
   </div>
 <% end %>
 
@@ -70,7 +70,7 @@
 
 <p>Sei insoddisfatto? <%= button_to "Cancella il mio account", registration_path(resource_name), data: { confirm: "Sei sicuro di eliminare il tuo account?" }, method: :delete,:class => "btn btn-primary" %></p>
 
-<%= button_to "logout", destroy_user_session_path, method: :delete,:class => "btn btn-primary"  %>
+<%= button_to "Logout", destroy_user_session_path, method: :delete,:class => "btn btn-primary"  %>
 
 <br>
 <%= link_to "Indietro", :back,:class => "btn btn-primary" %>
