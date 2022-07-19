@@ -26,7 +26,7 @@ class GdriveUserItemsController < ApplicationController
     if email.sub(/.+@([^.]+).+/, '\1') == "gmail"
       @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
     else 
-      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: false)
+      @service.create_permission(cartella_utente_drive.id,Google::Apis::DriveV3::Permission.new(email_address: email,role: "writer",type: "user"),send_notification_email: true)
     end
 
     @gdrive_user_item = GdriveUserItem.new()
